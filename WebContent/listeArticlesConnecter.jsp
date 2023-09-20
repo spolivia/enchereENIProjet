@@ -147,7 +147,7 @@
 		        <table border="0" cellspacing="20" align="center">
 		            <c:forEach var="article" items="${listeArticles}" varStatus="loop">
 		                <c:if test="${loop.index % 2 == 0}">
-		                    <tr> <!-- Start a new row for every even-indexed item -->
+		                    <tr> 
 		                </c:if>
 		                <td>
 		                    <table border="1">
@@ -163,7 +163,7 @@
 		                    </table>
 		                </td>
 		                <c:if test="${loop.index % 2 == 1 || loop.last}">
-		                    </tr> <!-- Close the row for every odd-indexed item or the last item -->
+		                    </tr>
 		                </c:if>
 		            </c:forEach>
 		        </table>
