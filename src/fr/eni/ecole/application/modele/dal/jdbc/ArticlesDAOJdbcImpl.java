@@ -20,7 +20,7 @@ public class ArticlesDAOJdbcImpl {
         }
     }
 
-    public List<Articles> resultSetToArticlesList(ResultSet rs) throws SQLException {
+    private List<Articles> resultSetToArticlesList(ResultSet rs) throws SQLException {
         List<Articles> articlesList = new ArrayList<>();
 
         while (rs.next()) {
@@ -42,6 +42,46 @@ public class ArticlesDAOJdbcImpl {
         }
 
         return articlesList;
+    }
+    
+    public Articles selectById(int articleId) throws DALException {
+        PreparedStatement rqt = null;
+        ResultSet rs = null;
+        Articles article = null;
+
+        try {
+            rqt = JdbcTools.getConnection().prepareStatement(
+                    "SELECT * FROM ARTICLES_VENDUS " +
+                            "WHERE no_article = ?");
+            rqt.setInt(1, articleId);
+
+            rs = rqt.executeQuery();
+
+            if (rs.next()) {
+                List<Articles> articlesList = resultSetToArticlesList(rs);
+                if (!articlesList.isEmpty()) {
+                    article = articlesList.get(0);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new DALException("Error fetching article by ID", e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (rqt != null) {
+                    rqt.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                JdbcTools.closeConnection();
+            }
+        }
+
+        return article;
     }
     
     public List<Articles> selectAll() throws DALException {
@@ -76,7 +116,7 @@ public class ArticlesDAOJdbcImpl {
         return listeArticles;
     }
          
-    public void deleteArticle(int articleId) throws DALException {
+    public void delete(int articleId) throws DALException {
         PreparedStatement rqt = null;
 
         try {
@@ -104,7 +144,7 @@ public class ArticlesDAOJdbcImpl {
         }
     }
 
-    public void insertArticle(Articles article) throws DALException {
+    public void insert(Articles article) throws DALException {
         PreparedStatement rqt = null;
 
         try {
@@ -134,7 +174,7 @@ public class ArticlesDAOJdbcImpl {
         }
     }
 
-    public void updateArticle(Articles updatedArticle) throws DALException {
+    public void update(Articles updatedArticle) throws DALException {
         PreparedStatement rqt = null;
 
         try {
@@ -264,7 +304,7 @@ public class ArticlesDAOJdbcImpl {
     public List<Articles> filtrerArticlesParLesDeuxCriteres(List<Articles> articles, String rechercheInput, String selectionCategory) {
         List<Articles> articlesFiltres = new ArrayList<>();
 
-        if (articles != null) {
+        if (articles != null) {	
             for (Articles article : articles) {
                 Categories categorie = article.getCategorie();
                 
@@ -283,7 +323,5 @@ public class ArticlesDAOJdbcImpl {
 
         return articlesFiltres;
     }
-
-    
 
 }
