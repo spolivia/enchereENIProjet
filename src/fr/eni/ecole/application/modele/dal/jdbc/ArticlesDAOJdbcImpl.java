@@ -324,6 +324,4 @@ public class ArticlesDAOJdbcImpl {
         return articlesFiltres;
     }
 
-    
-
 }

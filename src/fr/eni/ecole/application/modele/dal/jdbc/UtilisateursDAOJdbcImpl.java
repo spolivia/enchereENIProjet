@@ -83,7 +83,7 @@ public class UtilisateursDAOJdbcImpl {
         }
     }
     
-    public void insert(Utilisateurs user) throws DALException {
+    public void	insert(Utilisateurs user) throws DALException {
         String sql = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = JdbcTools.getConnection();
