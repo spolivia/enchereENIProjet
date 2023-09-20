@@ -16,9 +16,9 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
 	private static final String SELECT_BY_ID = "SELECT * FROM Retraits WHERE idRetraits = ?";
 	private static final String SELECT_ALL = "SELECT * FROM Retraits";
-	update
+	//update
 	private static final String INSERT = "INSERT INTO Retraits (noArticle, rue, codePostale, ville) VALUES (?, ?, ?, ?)";
-	delete
+	//delete
 
 	@Override
 	public Retraits selectById(int id) throws DALException {
