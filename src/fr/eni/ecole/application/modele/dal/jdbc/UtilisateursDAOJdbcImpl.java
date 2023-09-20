@@ -20,7 +20,7 @@ public class UtilisateursDAOJdbcImpl {
         }
     }
 
-    public Utilisateurs resultSetToUtilisateur(ResultSet rs) throws SQLException {
+    private Utilisateurs resultSetToUtilisateur(ResultSet rs) throws SQLException {
         Utilisateurs utilisateur = new Utilisateurs();
 
         while (rs.next()) {

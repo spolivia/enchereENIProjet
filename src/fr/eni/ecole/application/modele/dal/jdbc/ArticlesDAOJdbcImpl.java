@@ -20,7 +20,7 @@ public class ArticlesDAOJdbcImpl {
         }
     }
 
-    public List<Articles> resultSetToArticlesList(ResultSet rs) throws SQLException {
+    private List<Articles> resultSetToArticlesList(ResultSet rs) throws SQLException {
         List<Articles> articlesList = new ArrayList<>();
 
         while (rs.next()) {
