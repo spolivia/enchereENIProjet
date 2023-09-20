@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charse	t="UTF-8">
+	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/ListeArticleFormat.css">
 	ENI-Encheres
 	<title>Liste des enchères</title>
