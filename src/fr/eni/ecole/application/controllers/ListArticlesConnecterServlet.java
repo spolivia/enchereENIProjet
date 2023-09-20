@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/listeArticles")
-public class ListArticlesServlet extends HttpServlet {
+@WebServlet("/listeArticlesConnecter")
+public class ListArticlesConnecterServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,7 +29,7 @@ public class ListArticlesServlet extends HttpServlet {
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
 
-            request.getRequestDispatcher("/listeArticles.jsp").forward(request, response);
+            request.getRequestDispatcher("/listeArticlesConnecter.jsp").forward(request, response);
             System.out.println("Nombre d'articles récupérés : " + listeArticles.size());
             
         } catch (DALException e) {
@@ -54,7 +54,7 @@ public class ListArticlesServlet extends HttpServlet {
 
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
-            request.getRequestDispatcher("/listeArticles.jsp").forward(request, response);
+            request.getRequestDispatcher("/listeArticlesConnecter.jsp").forward(request, response);
             System.out.println("Nombre d'articles récupérés : " + listeArticles.size());
             
         } catch (DALException e) {
