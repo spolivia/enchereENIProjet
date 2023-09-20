@@ -51,12 +51,12 @@ public class ListArticlesServlet extends HttpServlet {
 
             // Vérifier si le paramètre searchInput est présent dans la requête
             String searchInput = request.getParameter("searchInput");
-            System.out.println("Recherche : " + searchInput);
+            System.out.println("Recherche : '" + searchInput + "'");
 
             // Vérifier si le paramètre selectedCategory est présent dans la requête
             String selectedCategory = request.getParameter("selectedCategory");
-            System.out.println("Catégorie sélectionnée : " + selectedCategory);
-
+            	System.out.println("Catégorie sélectionnée : " + selectedCategory);
+            
             List<Articles> listeArticles;
 
             if ((selectedCategory != null && !selectedCategory.isEmpty()) && (searchInput != null && !searchInput.isEmpty())) {
@@ -95,9 +95,10 @@ public class ListArticlesServlet extends HttpServlet {
         if (articles != null) {
             for (Articles article : articles) {
                 Categories categorie = article.getCategorie();
-                // Vérifier si la catégorie est nulle ou si la catégorie sélectionnée correspond à la catégorie de l'article
+                
                 boolean correspondACategorie = categorie == null || selectionCategory == null || selectionCategory.isEmpty() ||
                         String.valueOf(categorie.getNoCategorie()).equals(selectionCategory);
+                
                 boolean correspondARecherche = rechercheInput == null || rechercheInput.isEmpty() ||
                         (article.getNomArticle() != null && article.getNomArticle().contains(rechercheInput)) ||
                         (article.getDescription() != null && article.getDescription().contains(rechercheInput));

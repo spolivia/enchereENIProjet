@@ -27,7 +27,7 @@
                 <table>
                     <tr>
                         <td>
-                            <input type="text" id="searchInput" name="searchInput" placeholder="Le nom de l'article contient">
+                            <input type="text" id="searchInput" name="searchInput" placeholder="Le nom ou la description de l'article contient">
                         </td>
                         <td>
                             <input type="submit" value="Rechercher">
