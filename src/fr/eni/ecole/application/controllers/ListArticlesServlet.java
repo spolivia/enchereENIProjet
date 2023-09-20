@@ -26,7 +26,7 @@ public class ListArticlesServlet extends HttpServlet {
             List<Articles> listeArticles = articlesDAO.selectAll();
             List<Categories> categories = categoriesDAO.selectAll();
 
-            request.setAttribute("listeA	rticles", listeArticles);
+            request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
 
             request.getRequestDispatcher("/listeArticles.jsp").forward(request, response);
@@ -50,7 +50,7 @@ public class ListArticlesServlet extends HttpServlet {
             String selectedCategory = request.getParameter("selectedCategory");
             System.out.println("Catégorie sélectionnée : " + selectedCategory);
 
-            List<Articles> listeArticles = articlesDAO.filterAndRetrieveArticles(searchInput, selectedCategory);
+            List<Articles> listeArticles = articlesDAO.logicFiltrerTirageArticles(searchInput, selectedCategory);
 
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);

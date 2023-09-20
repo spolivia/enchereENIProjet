@@ -172,7 +172,30 @@ public class ArticlesDAOJdbcImpl {
         }
     }
 
-    public List<Articles> rechercherArticles(String requeteRecherche, String filtreCategorie) throws DALException {
+    public List<Articles> logicFiltrerTirageArticles(String searchInput, String selectedCategory) throws DALException {
+        List<Articles> listeArticles = new ArrayList<>();
+
+        try {
+            if ((selectedCategory != null && !selectedCategory.isEmpty()) && (searchInput != null && !searchInput.isEmpty())) {
+                listeArticles = filtrerArticlesParRecherche(searchInput, selectedCategory);
+            } else if (selectedCategory != null && !selectedCategory.isEmpty()) {
+                listeArticles = filtrerArticlesParCategorie(Integer.parseInt(selectedCategory));
+            } else if (searchInput != null && !searchInput.isEmpty()) {
+                listeArticles = filtrerArticlesParRecherche(searchInput, null);
+            } else {
+                listeArticles = selectAll();
+            }
+
+            listeArticles = filtrerArticlesParLesDeuxCriteres(listeArticles, searchInput, selectedCategory);
+
+        } catch (DALException e) {
+            throw new DALException("ERREUR_FILTER_AND_RETRIEVE_ARTICLES - ", e);
+        }
+
+        return listeArticles;
+    }
+    
+    public List<Articles> filtrerArticlesParRecherche(String requeteRecherche, String filtreCategorie) throws DALException {
         List<Articles> tousLesArticles = selectAll();
         List<Articles> articlesFiltres = new ArrayList<>();
         
@@ -261,27 +284,6 @@ public class ArticlesDAOJdbcImpl {
         return articlesFiltres;
     }
 
-    public List<Articles> filterAndRetrieveArticles(String searchInput, String selectedCategory) throws DALException {
-        List<Articles> listeArticles = new ArrayList<>();
-
-        try {
-            if ((selectedCategory != null && !selectedCategory.isEmpty()) && (searchInput != null && !searchInput.isEmpty())) {
-                listeArticles = rechercherArticles(searchInput, selectedCategory);
-            } else if (selectedCategory != null && !selectedCategory.isEmpty()) {
-                listeArticles = filtrerArticlesParCategorie(Integer.parseInt(selectedCategory));
-            } else if (searchInput != null && !searchInput.isEmpty()) {
-                listeArticles = rechercherArticles(searchInput, null);
-            } else {
-                listeArticles = selectAll();
-            }
-
-            listeArticles = filtrerArticlesParLesDeuxCriteres(listeArticles, searchInput, selectedCategory);
-
-        } catch (DALException e) {
-            throw new DALException("ERREUR_FILTER_AND_RETRIEVE_ARTICLES - ", e);
-        }
-
-        return listeArticles;
-    }
+    
 
 }

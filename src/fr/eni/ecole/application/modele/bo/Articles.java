@@ -12,18 +12,21 @@ public class Articles {
     private int prixVente;
     private int noUtilisateur;
     private int noCategorie;
-    private Categories categorie; // Assuming you have a Categories property
+    private Categories categorie;
 
     public Articles() {
     }
 
-    public Articles(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial) {
+    public Articles(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur, int noCategorie) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
         this.dateDebutEncheres = dateDebutEncheres;
         this.dateFinEncheres = dateFinEncheres;
         this.prixInitial = prixInitial;
+        this.prixVente = prixVente;
+        this.noUtilisateur = noUtilisateur;
+        this.noCategorie = noCategorie;
     }
 
     public int getNoArticle() {
@@ -74,12 +77,34 @@ public class Articles {
         this.prixInitial = prixInitial;
     }
 
-    // Additional method to set the category
+	public int getPrixVente() {
+		return prixVente;
+	}
+
+	public void setPrixVente(int prixVente) {
+		this.prixVente = prixVente;
+	}
+
+	public int getNoUtilisateur() {
+		return noUtilisateur;
+	}
+
+	public void setNoUtilisateur(int noUtilisateur) {
+		this.noUtilisateur = noUtilisateur;
+	}
+
+	public int getNoCategorie() {
+		return noCategorie;
+	}
+
+	public void setNoCategorie(int noCategorie) {
+		this.noCategorie = noCategorie;
+	}
+
     public void setCategorie(Categories categorie) {
         this.categorie = categorie;
     }
 
-    // Additional method to get the category
     public Categories getCategorie() {
         return categorie;
     }
