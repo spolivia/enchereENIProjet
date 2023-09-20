@@ -14,11 +14,11 @@ import fr.eni.ecole.application.modele.dal.RetraitsDAO;
 
 public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
-	private static final String SELECT_BY_ID = "SELECT * FROM Retraits WHERE idRetraits = ?";
+	private static final String SELECT_BY_ID = "SELECT * FROM Retraits WHERE id_retraits = ?";
 	private static final String SELECT_ALL = "SELECT * FROM Retraits";
-	update
-	private static final String INSERT = "INSERT INTO Retraits (noArticle, rue, codePostale, ville) VALUES (?, ?, ?, ?)";
-	delete
+	private static final String UPDATE = "UPDATE Retraits SET rue = ?, code_postale = ?, ville = ? WHERE id_retraits = ?";
+	private static final String INSERT = "INSERT INTO Retraits (no_article, rue, code_postale, ville) VALUES (?, ?, ?, ?)";
+	private static final String DELETE = "DELETE FROM Retraits WHERE id_retraits = ?";
 
 	@Override
 	public Retraits selectById(int id) throws DALException {
@@ -32,7 +32,7 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 				return null;
 			}
 		} catch (SQLException e) {
-			throw new DALException("Erreur lors de la récupération de l'article par ID", e);
+			throw new DALException("Erreur lors de la récupération des informations de retrait par ID", e);
 		}
 	}
 
@@ -47,32 +47,86 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 				articles.add(article);
 			}
 		} catch (SQLException e) {
-			throw new DALException("Erreur lors de la récupération de tous les articles", e);
+			throw new DALException("Erreur lors de la récupération de la liste des retraits", e);
 		}
 		return articles;
 	}
 
 	@Override
 	public void update(Retraits a) throws DALException {
-		// TODO Auto-generated method stub
+		Retraits existingArticle = selectById(a.getIdRetraits());
+		if (existingArticle == null) {
+			throw new DALException(
+					"Le Retrait avec l'ID " + a.getIdRetraits() + " n'existe pas dans la base de données.");
+		}
 
+		try (Connection connection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE)) {
+
+			preparedStatement.setString(1, a.getRue());
+			preparedStatement.setInt(2, a.getCodePostale());
+			preparedStatement.setString(3, a.getVille());
+
+			preparedStatement.setInt(4, a.getIdRetraits());
+
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la mise à jour de l'adresse de retrait", e);
+		}
 	}
 
 	@Override
 	public void insert(Retraits a) throws DALException {
-		// TODO Auto-generated method stub
+		try (Connection connection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(INSERT,
+						Statement.RETURN_GENERATED_KEYS)) {
 
+			preparedStatement.setInt(1, a.getNoArticle());
+			preparedStatement.setString(2, a.getRue());
+			preparedStatement.setInt(3, a.getCodePostale());
+			preparedStatement.setString(4, a.getVille());
+
+			preparedStatement.executeUpdate();
+
+			try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					int generatedId = generatedKeys.getInt(1);
+					a.setIdRetraits(generatedId);
+				} else {
+					throw new SQLException("La génération des clés a échoué");
+				}
+			}
+
+		} catch (
+
+		SQLException e) {
+			throw new DALException("Erreur lors de l'insertion de l'article", e);
+		}
 	}
 
 	@Override
 	public void delete(int id) throws DALException {
-		// TODO Auto-generated method stub
+		Retraits existingArticle = selectById(id);
+		if (existingArticle == null) {
+			throw new DALException("Le Retraits avec l'ID " + id + " n'existe pas dans la base de données.");
+		}
+
+		try (Connection connection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
+
+			preparedStatement.setInt(1, id);
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la suppression du Retraits", e);
+		}
 
 	}
 
 	@Override
 	public void delete(Retraits a) throws DALException {
-		// TODO Auto-generated method stub
+		this.delete(a.getIdRetraits());
 
 	}
 
