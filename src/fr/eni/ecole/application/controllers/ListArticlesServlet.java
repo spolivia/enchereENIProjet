@@ -24,6 +24,7 @@ public class ListArticlesServlet extends HttpServlet {
 
         try {
             List<Articles> listeArticles = articlesDAO.selectAll();
+            System.out.println(articlesDAO.selectAll());
             List<Categories> categories = categoriesDAO.selectAll();
 
             request.setAttribute("listeArticles", listeArticles);

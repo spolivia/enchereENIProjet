@@ -44,7 +44,7 @@ public class ArticlesDAOJdbcImpl {
         return articlesList;
     }
     
-    public Articles selectByIdArticle(int articleId) throws DALException {
+    public Articles selectById(int articleId) throws DALException {
         PreparedStatement rqt = null;
         ResultSet rs = null;
         Articles article = null;
@@ -116,7 +116,7 @@ public class ArticlesDAOJdbcImpl {
         return listeArticles;
     }
          
-    public void deleteArticle(int articleId) throws DALException {
+    public void delete(int articleId) throws DALException {
         PreparedStatement rqt = null;
 
         try {
@@ -144,7 +144,7 @@ public class ArticlesDAOJdbcImpl {
         }
     }
 
-    public void insertArticle(Articles article) throws DALException {
+    public void insert(Articles article) throws DALException {
         PreparedStatement rqt = null;
 
         try {
@@ -174,7 +174,7 @@ public class ArticlesDAOJdbcImpl {
         }
     }
 
-    public void updateArticle(Articles updatedArticle) throws DALException {
+    public void update(Articles updatedArticle) throws DALException {
         PreparedStatement rqt = null;
 
         try {

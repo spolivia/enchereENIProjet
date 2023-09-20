@@ -41,7 +41,7 @@ public class UtilisateursDAOJdbcImpl {
         return utilisateur;
     }
 
-    public Utilisateurs selectByIdUtilisateur(int userId) throws DALException {
+    public Utilisateurs selectById(int userId) throws DALException {
         String sql = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
         try (Connection connection = JdbcTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -57,7 +57,7 @@ public class UtilisateursDAOJdbcImpl {
         return null;
     }
 
-    public List<Utilisateurs> selectAllUtilisateur() throws DALException {
+    public List<Utilisateurs> selectAll() throws DALException {
         List<Utilisateurs> users = new ArrayList<>();
         String sql = "SELECT * FROM UTILISATEURS";
         try (Connection connection = JdbcTools.getConnection();
@@ -72,7 +72,7 @@ public class UtilisateursDAOJdbcImpl {
         return users;
     }
 
-    public void deleteUtilisateur(int userId) throws DALException {
+    public void delete(int userId) throws DALException {
         String sql = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
         try (Connection connection = JdbcTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -83,7 +83,7 @@ public class UtilisateursDAOJdbcImpl {
         }
     }
     
-    public void insertUtilisateur(Utilisateurs user) throws DALException {
+    public void insert(Utilisateurs user) throws DALException {
         String sql = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = JdbcTools.getConnection();
@@ -105,7 +105,7 @@ public class UtilisateursDAOJdbcImpl {
         }
     }
 
-    public void updateUtilisateur(Utilisateurs user) throws DALException {
+    public void update(Utilisateurs user) throws DALException {
         String sql = "UPDATE UTILISATEURS " +
                 "SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, " +
                 "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? " +
@@ -129,6 +129,5 @@ public class UtilisateursDAOJdbcImpl {
             throw new DALException("Error updating user", e);
         }
     }
-
 
 }
