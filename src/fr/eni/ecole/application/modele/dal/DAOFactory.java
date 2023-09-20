@@ -4,7 +4,7 @@ import fr.eni.ecole.application.modele.dal.jdbc.RetraitsDAOJdbcImpl;
 
 public class DAOFactory {
 
-	// public static ArticleDAO getArticleDAO() {
+	// public static ArticlesDAO getArticlesDAO() {
 	// return new ArticlesDAOJdbcImpl();
 	// }
 

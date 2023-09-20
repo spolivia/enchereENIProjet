@@ -24,14 +24,12 @@ public class ListArticlesServlet extends HttpServlet {
 
         try {
             List<Articles> listeArticles = articlesDAO.selectAll();
-            System.out.println(articlesDAO.selectAll());
-            List<Categories> categories = categoriesDAO.selectAll();
+            List<Categories> categories = categoriesDAO.selectAll();	
 
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
 
             request.getRequestDispatcher("/listeArticles.jsp").forward(request, response);
-            System.out.println("Nombre d'articles récupérés : " + listeArticles.size());
             
         } catch (DALException e) {
             e.printStackTrace();
