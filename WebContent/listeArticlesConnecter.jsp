@@ -137,7 +137,7 @@
 		    });
 		</script>
     
-<br><br>
+<br>
 
 		<c:choose>
 		    <c:when test="${empty listeArticles}">
