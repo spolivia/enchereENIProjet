@@ -9,6 +9,10 @@ public class Articles {
     private Date dateDebutEncheres;
     private Date dateFinEncheres;
     private int prixInitial;
+    private int prixVente;
+    private int noUtilisateur;
+    private int noCategorie;
+    private Categories categorie; // Assuming you have a Categories property
 
     public Articles() {
     }
@@ -68,5 +72,15 @@ public class Articles {
 
     public void setPrixInitial(int prixInitial) {
         this.prixInitial = prixInitial;
+    }
+
+    // Additional method to set the category
+    public void setCategorie(Categories categorie) {
+        this.categorie = categorie;
+    }
+
+    // Additional method to get the category
+    public Categories getCategorie() {
+        return categorie;
     }
 }
