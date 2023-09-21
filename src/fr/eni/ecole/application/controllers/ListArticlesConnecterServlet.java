@@ -24,17 +24,16 @@ public class ListArticlesConnecterServlet extends HttpServlet {
 
         try {
             List<Articles> listeArticles = articlesDAO.selectAll();
-            List<Categories> categories = categoriesDAO.selectAll();
+            List<Categories> categories = categoriesDAO.selectAll();	
 
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
 
             request.getRequestDispatcher("/listeArticlesConnecter.jsp").forward(request, response);
-            System.out.println("Nombre d'articles récupérés : " + listeArticles.size());
             
         } catch (DALException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles.");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles. 1");
         }
     }
 
@@ -59,10 +58,7 @@ public class ListArticlesConnecterServlet extends HttpServlet {
             
         } catch (DALException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles.");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles. 2");
         }
     }
-
-
-
 }

@@ -11,7 +11,10 @@
 
 </head>
 <body>
-	<div style="float : right;"><a href="">S'inscrire - Se connecter</a></div>
+	<div style="float : right;">
+    <a href="compteCreation">S'inscrire - Se connecter</a>
+</div>
+
 
 	<h1 align="center">Liste des enchères</h1>
 
@@ -38,11 +41,11 @@
                             Catégorie :
                         
                             <select id="categorie" name="selectedCategory">
-                                <option value="">Toutes</option> <!-- Default option -->
-                                <c:forEach var="category" items="${categories}">
-                                    <option value="${category.noCategorie}">${category.libelle}</option>
-                                </c:forEach>
-                            </select>
+							    <option value="">Toutes</option> <!-- Default option -->
+							    <c:forEach var="category" items="${categories}">
+							        <option value="${category.noCategorie}">${category.libelle}</option>
+							    </c:forEach>
+							</select>
                         </td>
                     </tr>
                 </table>

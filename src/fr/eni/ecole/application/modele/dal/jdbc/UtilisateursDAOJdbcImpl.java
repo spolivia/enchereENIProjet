@@ -2,6 +2,7 @@ package fr.eni.ecole.application.modele.dal.jdbc;
 
 import fr.eni.ecole.application.modele.bo.Utilisateurs;
 import fr.eni.ecole.application.modele.dal.DALException;
+import fr.eni.ecole.application.modele.dal.UtilisateursDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UtilisateursDAOJdbcImpl {
+public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 
     static {
         try {
@@ -19,11 +20,9 @@ public class UtilisateursDAOJdbcImpl {
             e.printStackTrace();
         }
     }
-
+    
     private Utilisateurs resultSetToUtilisateur(ResultSet rs) throws SQLException {
         Utilisateurs utilisateur = new Utilisateurs();
-
-        while (rs.next()) {
             utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
             utilisateur.setPseudo(rs.getString("pseudo"));
             utilisateur.setNom(rs.getString("nom"));
@@ -36,11 +35,10 @@ public class UtilisateursDAOJdbcImpl {
             utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
             utilisateur.setCredit(rs.getInt("credit"));
             utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
-        }
-
         return utilisateur;
     }
-
+    
+    @Override
     public Utilisateurs selectById(int userId) throws DALException {
         String sql = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
         try (Connection connection = JdbcTools.getConnection();
@@ -56,7 +54,8 @@ public class UtilisateursDAOJdbcImpl {
         }
         return null;
     }
-
+    
+    @Override
     public List<Utilisateurs> selectAll() throws DALException {
         List<Utilisateurs> users = new ArrayList<>();
         String sql = "SELECT * FROM UTILISATEURS";
@@ -71,7 +70,8 @@ public class UtilisateursDAOJdbcImpl {
         }
         return users;
     }
-
+    
+    @Override
     public void delete(int userId) throws DALException {
         String sql = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?";
         try (Connection connection = JdbcTools.getConnection();
@@ -83,6 +83,7 @@ public class UtilisateursDAOJdbcImpl {
         }
     }
     
+    @Override
     public void	insert(Utilisateurs user) throws DALException {
         String sql = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -104,7 +105,8 @@ public class UtilisateursDAOJdbcImpl {
             throw new DALException("Error inserting user", e);
         }
     }
-
+    
+    @Override
     public void update(Utilisateurs user) throws DALException {
         String sql = "UPDATE UTILISATEURS " +
                 "SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, " +
@@ -129,5 +131,11 @@ public class UtilisateursDAOJdbcImpl {
             throw new DALException("Error updating user", e);
         }
     }
+
+	@Override
+	public void delete(Utilisateurs a) throws DALException {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

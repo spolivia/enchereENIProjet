@@ -8,9 +8,10 @@ import java.util.List;
 
 import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.bo.Categories;
+import fr.eni.ecole.application.modele.dal.ArticlesDAO;
 import fr.eni.ecole.application.modele.dal.DALException;
 
-public class ArticlesDAOJdbcImpl {
+public class ArticlesDAOJdbcImpl implements ArticlesDAO{
 
     static {
         try {
@@ -44,6 +45,7 @@ public class ArticlesDAOJdbcImpl {
         return articlesList;
     }
     
+    @Override
     public Articles selectById(int articleId) throws DALException {
         PreparedStatement rqt = null;
         ResultSet rs = null;
@@ -83,7 +85,8 @@ public class ArticlesDAOJdbcImpl {
 
         return article;
     }
-    
+
+    @Override
     public List<Articles> selectAll() throws DALException {
         PreparedStatement rqt = null;
         ResultSet rs = null;
@@ -115,7 +118,8 @@ public class ArticlesDAOJdbcImpl {
         }
         return listeArticles;
     }
-         
+   
+    @Override     
     public void delete(int articleId) throws DALException {
         PreparedStatement rqt = null;
 
@@ -143,7 +147,8 @@ public class ArticlesDAOJdbcImpl {
             JdbcTools.closeConnection();
         }
     }
-
+   
+    @Override
     public void insert(Articles article) throws DALException {
         PreparedStatement rqt = null;
 
@@ -173,7 +178,8 @@ public class ArticlesDAOJdbcImpl {
             JdbcTools.closeConnection();
         }
     }
-
+  
+    @Override
     public void update(Articles updatedArticle) throws DALException {
         PreparedStatement rqt = null;
 
@@ -211,7 +217,8 @@ public class ArticlesDAOJdbcImpl {
             JdbcTools.closeConnection();
         }
     }
-
+  
+    @Override
     public List<Articles> logicFiltrerTirageArticles(String searchInput, String selectedCategory) throws DALException {
         List<Articles> listeArticles = new ArrayList<>();
 
@@ -234,7 +241,8 @@ public class ArticlesDAOJdbcImpl {
 
         return listeArticles;
     }
-    
+ 
+    @Override
     public List<Articles> filtrerArticlesParRecherche(String requeteRecherche, String filtreCategorie) throws DALException {
         List<Articles> tousLesArticles = selectAll();
         List<Articles> articlesFiltres = new ArrayList<>();
@@ -255,7 +263,9 @@ public class ArticlesDAOJdbcImpl {
 
         return articlesFiltres;
     }
-    
+   
+  
+    @Override
     public List<Articles> filtrerArticlesParCategorie(int idCategorie) throws DALException {
         PreparedStatement rqt = null;
         ResultSet rs = null;
@@ -300,7 +310,8 @@ public class ArticlesDAOJdbcImpl {
 
         return articlesFiltres;
     }
-    
+
+    @Override
     public List<Articles> filtrerArticlesParLesDeuxCriteres(List<Articles> articles, String rechercheInput, String selectionCategory) {
         List<Articles> articlesFiltres = new ArrayList<>();
 
@@ -323,5 +334,11 @@ public class ArticlesDAOJdbcImpl {
 
         return articlesFiltres;
     }
+
+	@Override
+	public void delete(Articles a) throws DALException {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
