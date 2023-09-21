@@ -20,46 +20,59 @@ import javax.servlet.http.HttpServletResponse;
 public class ListArticlesServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private CategoriesManager categoriesManager;
     private ArticlesManager articlesManager;
+    private CategoriesManager categoriesManager;
 
     public void init() throws ServletException {
         super.init();
-        categoriesManager = new CategoriesManager(DAOFactory.getCategoriesDAO());
         articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
+        categoriesManager = new CategoriesManager(DAOFactory.getCategoriesDAO());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<Articles> listeArticles = articlesManager.getAllArticles();
-
             List<Categories> categories = categoriesManager.getAllCategories();
+
+            String requeteRecherche = "";
+            int filtreCategorie = 0;
+            List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche, filtreCategorie);
 
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
-
+            
             request.getRequestDispatcher("/listeArticles.jsp").forward(request, response);
+            
         } catch (BLLException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles.");
         }
     }
+
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<Categories> categories = categoriesManager.getAllCategories();
 
-            String searchInput = request.getParameter("searchInput");
-            String selectedCategory = request.getParameter("selectedCategory");
+            String requeteRecherche = request.getParameter("requeteRecherche");
+            int filtreCategorie = Integer.parseInt(request.getParameter("filtreCategorie"));
 
-            List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(searchInput, selectedCategory);
+            request.getSession().setAttribute("requeteRecherche", requeteRecherche);
+            request.getSession().setAttribute("filtreCategorie", filtreCategorie);
+
+            List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche, filtreCategorie);
 
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
+
             request.getRequestDispatcher("/listeArticles.jsp").forward(request, response);
+            
         } catch (BLLException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles.");
         }
     }
+
+
+
 }

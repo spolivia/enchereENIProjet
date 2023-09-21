@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 
     static {
@@ -138,4 +141,47 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 		
 	}
 
+    @Override
+    public boolean login(HttpServletRequest request, String username, String password) throws DALException {
+        String sql = "SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
+        try (Connection connection = JdbcTools.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            statement.setString(2, password);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int userId = resultSet.getInt("no_utilisateur");
+                    HttpSession session = request.getSession();
+                    session.setAttribute("userId", userId); // Store user ID in the session
+                    return true; // Authentication successful
+                } else {
+                    return false; // Authentication failed
+                }
+            }
+        } catch (SQLException e) {
+            throw new DALException("Error during login", e);
+        }
+    }
+
+    @Override
+    public void logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Invalidate the session
+        }
+    }
+
+    @Override
+    public boolean isAuthenticated(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        return session != null && session.getAttribute("userId") != null;
+    }
+    
+    @Override
+    public int trouverIDUtilisateur(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int userID = (int) session.getAttribute("userID");
+        
+        return userID;
+    }
 }

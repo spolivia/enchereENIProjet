@@ -6,12 +6,11 @@ import fr.eni.ecole.application.modele.bo.Articles;
 
 public interface ArticlesDAO extends DAO<Articles> {
 
-	 public List<Articles> logicFiltrerTirageArticles(String searchInput, String selectedCategory) throws DALException;
+	 public List<Articles> logicFiltrerTirageArticles(String requeteRecherche, int filtreCategorie) throws DALException;
 	 
-	 public List<Articles> filtrerArticlesParRecherche(String requeteRecherche, String filtreCategorie) throws DALException;
+	 public List<Articles> filtrerArticlesParRecherche(String requeteRecherche) throws DALException;
 	 
-	 public List<Articles> filtrerArticlesParCategorie(int idCategorie) throws DALException;
+	 public List<Articles> filtrerArticlesParCategorie(int filtreCategorie) throws DALException;
 	 
-	 public List<Articles> filtrerArticlesParLesDeuxCriteres(List<Articles> articles, String rechercheInput, String selectionCategory);
-	
+	 public List<Articles> filtrerArticlesParLesDeuxCriteres(String requeteRecherche, int filtreCategorie) throws DALException;	
 }

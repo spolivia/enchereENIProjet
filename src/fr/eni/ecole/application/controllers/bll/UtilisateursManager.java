@@ -6,6 +6,8 @@ import fr.eni.ecole.application.modele.dal.UtilisateursDAO;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class UtilisateursManager {
     private UtilisateursDAO utilisateursDAO;
 
@@ -52,4 +54,24 @@ public class UtilisateursManager {
             throw new BLLException("Error deleting user", e);
         }
     }
+
+    public boolean login(HttpServletRequest request, String username, String password) throws BLLException {
+        try {
+            return utilisateursDAO.login(request, username, password);
+        } catch (DALException e) {
+            throw new BLLException("Error during login", e);
+        }
+    }
+
+    public void logout(HttpServletRequest request) {
+        utilisateursDAO.logout(request);
+    }
+
+    public boolean isAuthenticated(HttpServletRequest request) {
+        return utilisateursDAO.isAuthenticated(request);
+    }
+
+	public int trouverIDUtilisateur(HttpServletRequest request) {
+		return utilisateursDAO.trouverIDUtilisateur(request);
+	}
 }

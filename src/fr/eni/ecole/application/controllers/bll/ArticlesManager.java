@@ -52,33 +52,33 @@ public class ArticlesManager {
         }
     }
 
-    public List<Articles> logicFiltrerTirageArticles(String searchInput, String selectedCategory) throws BLLException {
+    public List<Articles> logicFiltrerTirageArticles(String requeteRecherche, int filtreCategorie) throws BLLException {
         try {
-            return articleDAO.logicFiltrerTirageArticles(searchInput, selectedCategory);
+            return articleDAO.logicFiltrerTirageArticles(requeteRecherche, filtreCategorie);
         } catch (DALException e) {
             throw new BLLException("Error filtering articles", e);
         }
     }
 
-    public List<Articles> filterArticlesBySearch(String requeteRecherche, String filtreCategorie) throws BLLException {
+    public List<Articles> filtrerArticlesParRecherche(String requeteRecherche) throws BLLException {
         try {
-            return articleDAO.filtrerArticlesParRecherche(requeteRecherche, filtreCategorie);
+            return articleDAO.filtrerArticlesParRecherche(requeteRecherche);
         } catch (DALException e) {
             throw new BLLException("Error filtering articles by search", e);
         }
     }
 
-    public List<Articles> filterArticlesByCategory(int idCategorie) throws BLLException {
+    public List<Articles> filtrerArticlesParCategorie(int filtreCategorie) throws BLLException {
         try {
-            return articleDAO.filtrerArticlesParCategorie(idCategorie);
+            return articleDAO.filtrerArticlesParCategorie(filtreCategorie);
         } catch (DALException e) {
             throw new BLLException("Error filtering articles by category", e);
         }
     }
     
-    public List<Articles> filterArticlesByBothCriteria(String searchInput, String selectedCategory) throws BLLException {
+    public List<Articles> filtrerArticlesParLesDeuxCriteres(String requeteRecherche, int filtreCategorie) throws BLLException {
         try {
-            return articleDAO.logicFiltrerTirageArticles(searchInput, selectedCategory);
+            return articleDAO.filtrerArticlesParLesDeuxCriteres(requeteRecherche, filtreCategorie);
         } catch (DALException e) {
             throw new BLLException("Error filtering articles by both criteria", e);
         }
