@@ -42,12 +42,14 @@ public class ListArticlesServlet extends HttpServlet {
             
             request.getRequestDispatcher("/listeArticles.jsp").forward(request, response);
             
+            
         } catch (BLLException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles.");
         }
+       
     }
-
+    
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

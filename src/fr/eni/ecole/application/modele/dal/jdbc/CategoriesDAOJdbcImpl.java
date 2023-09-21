@@ -50,17 +50,15 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
         try (Connection connection = JdbcTools.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM CATEGORIES");
              ResultSet rs = statement.executeQuery()) {
+
             while (rs.next()) {
                 Categories categorie = resultSetToCategorie(rs);
                 listeCategories.add(categorie);
             }
-
         } catch (SQLException e) {
             throw new DALException("ERREUR_SELECT_ALL_CATEGORIES - ", e);
-        } finally {
-            JdbcTools.closeConnection();
         }
-        
+
         return listeCategories;
     }
 

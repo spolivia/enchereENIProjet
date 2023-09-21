@@ -11,25 +11,17 @@ public class JdbcTools {
 	private static Connection connection;
 
 	
-	//Classe a tirer l'info de connexion par administrateur a travers Settings.java dans la couche DAL
 	public static Connection getConnection() throws SQLException {
-		if (connection == null) {
+		if (connection == null || connection.isClosed())  {
 			connection = DriverManager.getConnection(Settings.getUrlDB(), Settings.getUserDB(), Settings.getPwDB());
 		}
 		return connection;
 	}
 	
-	
-	//Classe de fermeture de connexion.
-	public static Connection closeConnection() {
-		if(connection!=null){
-			try {
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			connection=null;
-		}
-		return connection;
+	public static void closeConnection() throws SQLException {
+	    if (connection != null && !connection.isClosed()) {
+	        connection.close();
+	    }
 	}
+
 }

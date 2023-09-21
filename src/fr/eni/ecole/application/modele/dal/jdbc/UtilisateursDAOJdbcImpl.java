@@ -137,8 +137,6 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
 
 	@Override
 	public void delete(Utilisateurs a) throws DALException {
-		// TODO Auto-generated method stub
-		
 	}
 
     @Override
@@ -152,10 +150,10 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
                 if (resultSet.next()) {
                     int userId = resultSet.getInt("no_utilisateur");
                     HttpSession session = request.getSession();
-                    session.setAttribute("userId", userId); // Store user ID in the session
-                    return true; // Authentication successful
+                    session.setAttribute("userId", userId); 
+                    return true; 
                 } else {
-                    return false; // Authentication failed
+                    return false;
                 }
             }
         } catch (SQLException e) {
@@ -167,9 +165,14 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
     public void logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.invalidate(); // Invalidate the session
+            System.out.println("Before logout - no_utilisateur: " + session.getAttribute("no_utilisateur"));
+            
+            session.setAttribute("no_utilisateur", -1);
+            
+            System.out.println("After logout - no_utilisateur: " + session.getAttribute("no_utilisateur"));
         }
     }
+
 
     @Override
     public boolean isAuthenticated(HttpServletRequest request) {
@@ -177,11 +180,83 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
         return session != null && session.getAttribute("userId") != null;
     }
     
-    @Override
-    public int trouverIDUtilisateur(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        int userID = (int) session.getAttribute("userID");
-        
-        return userID;
+    public int authenticateUser(String pseudo, String motDePasse) throws DALException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            connection = JdbcTools.getConnection();
+
+            if (connection.isClosed()) {
+                connection = JdbcTools.getConnection();
+            }
+
+            String sql = "SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, pseudo);
+            preparedStatement.setString(2, motDePasse);
+
+            rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                System.out.println("User authenticated successfully");
+                return rs.getInt("no_utilisateur");
+            } else {
+                System.out.println("Authentication failed");
+                return -1; 
+            }
+        } catch (SQLException e) {
+            throw new DALException("Error while authenticating user", e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+
+
+    @Override
+    public Utilisateurs getUtilisateursByPseudo(String pseudo) throws DALException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = JdbcTools.getConnection();
+
+            String sql = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, pseudo);
+
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSetToUtilisateur(resultSet);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new DALException("Error while fetching user by pseudo", e);
+        } finally {
+            try {
+                if (connection != null) {
+                    JdbcTools.closeConnection();
+                }
+            } catch (SQLException e) {
+            	e.printStackTrace();
+            }
+        }
+    }
+
+
 }

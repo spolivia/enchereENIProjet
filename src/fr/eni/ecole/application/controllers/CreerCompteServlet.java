@@ -6,16 +6,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import fr.eni.ecole.application.controllers.bll.BLLException;
+import fr.eni.ecole.application.controllers.bll.UtilisateursManager;
 import fr.eni.ecole.application.modele.bo.Utilisateurs;
 import fr.eni.ecole.application.modele.dal.DALException;
+import fr.eni.ecole.application.modele.dal.UtilisateursDAO;
 import fr.eni.ecole.application.modele.dal.jdbc.UtilisateursDAOJdbcImpl;
 
 @WebServlet("/compteCreation")
 public class CreerCompteServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("compteCreation.jsp").forward(request, response);
     }
 
@@ -41,15 +45,31 @@ public class CreerCompteServlet extends HttpServlet {
         user.setVille(ville);
         user.setMotDePasse(password);
 
-        UtilisateursDAOJdbcImpl userDao = new UtilisateursDAOJdbcImpl();
-        try {
-            userDao.insert(user);
-            System.out.println("Compte Créer");
-            request.getRequestDispatcher("/listeArticlesConnecter").forward(request, response);
+        UtilisateursDAO utilisateursDAO = new UtilisateursDAOJdbcImpl();
 
-        	} catch (DALException e) {
-            e.printStackTrace(); 
-            System.out.println("Echec");     
-        }
+        UtilisateursManager userManager = new UtilisateursManager(utilisateursDAO);
+
+            try {
+				userManager.addUtilisateurs(user);
+			} catch (BLLException e) {
+				e.printStackTrace();
+			}
+            int newUserId = 0;
+			try {
+				newUserId = userManager.authenticateUser(user.getPseudo(), user.getMotDePasse());
+			} catch (DALException e) {
+				e.printStackTrace();
+			}
+
+            HttpSession session = request.getSession();
+            session.setAttribute("no_utilisateur", newUserId);
+
+            response.sendRedirect(request.getContextPath() + "listeArticles");
     }
+
+
+
 }
+
+
+

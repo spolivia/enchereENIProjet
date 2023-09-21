@@ -1,5 +1,6 @@
 package fr.eni.ecole.application.modele.dal.jdbc;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +31,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         article.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
         article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
         article.setPrixInitial(rs.getInt("prix_initial"));
+        article.setNoUtilisateur(rs.getInt("no_utilisateur"));
 
         return article;
     }
@@ -39,9 +41,12 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         PreparedStatement rqt = null;
         ResultSet rs = null;
         Articles article = null;
+        Connection connection = null;
 
         try {
-            rqt = JdbcTools.getConnection().prepareStatement(
+            connection = JdbcTools.getConnection();
+
+            rqt = connection.prepareStatement(
                     "SELECT * FROM ARTICLES_VENDUS " +
                             "WHERE no_article = ?");
             rqt.setInt(1, articleId);
@@ -49,7 +54,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
             rs = rqt.executeQuery();
 
             if (rs.next()) {
-                article = resultSetToArticles(rs); // Use the modified method to get a single Articles object
+                article = resultSetToArticles(rs);
             }
 
         } catch (SQLException e) {
@@ -65,55 +70,53 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
             } catch (SQLException e) {
                 e.printStackTrace();
             } finally {
-                JdbcTools.closeConnection();
+                try {
+                    if (connection != null) {
+                        JdbcTools.closeConnection();
+                    }
+                } catch (SQLException e) {
+                	e.printStackTrace();                
+                }
             }
         }
 
         return article;
     }
 
+
+
     @Override
     public List<Articles> selectAll() throws DALException {
-        PreparedStatement rqt = null;
-        ResultSet rs = null;
         List<Articles> listeArticles = new ArrayList<>();
 
-        try {
-            rqt = JdbcTools.getConnection().prepareStatement(
-                    "SELECT * FROM ARTICLES_VENDUS");
-            rs = rqt.executeQuery();
+        try (Connection connection = JdbcTools.getConnection();
+             PreparedStatement rqt = connection.prepareStatement("SELECT * FROM ARTICLES_VENDUS");
+             ResultSet rs = rqt.executeQuery()) {
 
             while (rs.next()) {
                 Articles article = resultSetToArticles(rs);
                 listeArticles.add(article);
             }
-
         } catch (SQLException e) {
             throw new DALException("ERREUR_SELECT_ALL - ", e);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (rqt != null) {
-                    rqt.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            JdbcTools.closeConnection();
         }
+
         return listeArticles;
     }
+
+
+
    
-    @Override     
+    @Override
     public void delete(int articleId) throws DALException {
         PreparedStatement rqt = null;
+        Connection connection = null;
 
         try {
             String deleteQuery = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
             
-            rqt = JdbcTools.getConnection().prepareStatement(deleteQuery);
+            connection = JdbcTools.getConnection();
+            rqt = connection.prepareStatement(deleteQuery);
             rqt.setInt(1, articleId);
 
             int rowsAffected = rqt.executeUpdate();
@@ -130,20 +133,29 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (connection != null) {
+                        JdbcTools.closeConnection();
+                    }
+                } catch (SQLException e) {
+                	e.printStackTrace();               
+                }
             }
-            JdbcTools.closeConnection();
         }
     }
    
     @Override
     public void insert(Articles article) throws DALException {
         PreparedStatement rqt = null;
+        Connection connection = null;
 
         try {
             String insertQuery = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial) " +
-                                "VALUES (?, ?, ?, ?, ?, ?)";
+                                "VALUES (?, ?, ?, ?, ?)";
             
-            rqt = JdbcTools.getConnection().prepareStatement(insertQuery);
+            connection = JdbcTools.getConnection();
+            rqt = connection.prepareStatement(insertQuery);
             rqt.setString(1, article.getNomArticle());
             rqt.setString(2, article.getDescription());
             rqt.setDate(3, new java.sql.Date(article.getDateDebutEncheres().getTime()));
@@ -160,14 +172,23 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (connection != null) {
+                        JdbcTools.closeConnection();
+                    }
+                } catch (SQLException e) {
+                	e.printStackTrace();               
+                }
             }
-            JdbcTools.closeConnection();
         }
     }
+
   
     @Override
     public void update(Articles updatedArticle) throws DALException {
         PreparedStatement rqt = null;
+        Connection connection = null;
 
         try {
             String updateQuery = "UPDATE ARTICLES_VENDUS " +
@@ -175,14 +196,15 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                                 "prix_initial = ? " +
                                 "WHERE no_article = ?";
             
-            rqt = JdbcTools.getConnection().prepareStatement(updateQuery);
+            connection = JdbcTools.getConnection();
+            rqt = connection.prepareStatement(updateQuery);
             
             rqt.setString(1, updatedArticle.getNomArticle());
             rqt.setString(2, updatedArticle.getDescription());
             rqt.setDate(3, new java.sql.Date(updatedArticle.getDateDebutEncheres().getTime()));
             rqt.setDate(4, new java.sql.Date(updatedArticle.getDateFinEncheres().getTime()));
             rqt.setInt(5, updatedArticle.getPrixInitial());
-            rqt.setInt(7, updatedArticle.getNoArticle());
+            rqt.setInt(6, updatedArticle.getNoArticle());
 
             int rowsAffected = rqt.executeUpdate();
             
@@ -198,10 +220,18 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (connection != null) {
+                        JdbcTools.closeConnection();
+                    }
+                } catch (SQLException e) {
+                	e.printStackTrace();               
+                }
             }
-            JdbcTools.closeConnection();
         }
     }
+
   
     @Override
     public List<Articles> logicFiltrerTirageArticles(String requeteRecherche, int filtreCategorie) throws DALException {
@@ -263,6 +293,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         PreparedStatement rqt = null;
         ResultSet rs = null;
         List<Articles> articlesFiltres = new ArrayList<Articles>();
+        Connection connection = null;
 
         try {
             rqt = JdbcTools.getConnection().prepareStatement(
@@ -296,31 +327,36 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (connection != null) {
+                        JdbcTools.closeConnection();
+                    }
+                } catch (SQLException e) {
+                	e.printStackTrace();
+                }
             }
-            JdbcTools.closeConnection();
         }
 
         return articlesFiltres;
     }
+
 
     @Override
     public List<Articles> filtrerArticlesParLesDeuxCriteres(String requeteRecherche, int filtreCategorie) throws DALException {
         PreparedStatement rqt = null;
         ResultSet rs = null;
         List<Articles> articlesFiltres = new ArrayList<>();
+        Connection connection = null;
 
         try {
-        	String query = "SELECT * FROM ARTICLES_VENDUS WHERE "
+            String query = "SELECT * FROM ARTICLES_VENDUS WHERE "
                     + "(no_categorie = ?) AND (nom_article LIKE ? OR description LIKE ?)";
-
-            
 
             rqt = JdbcTools.getConnection().prepareStatement(query);
             rqt.setInt(1, filtreCategorie);
-            System.out.println("Int Set");
             rqt.setString(2, "%" + requeteRecherche + "%");
             rqt.setString(3, "%" + requeteRecherche + "%");
-            System.out.println("String Set");
 
             rs = rqt.executeQuery();
 
@@ -347,12 +383,20 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (connection != null) {
+                        JdbcTools.closeConnection();
+                    }
+                } catch (SQLException e) {
+                	e.printStackTrace();
+                }
             }
-            JdbcTools.closeConnection();
         }
 
         return articlesFiltres;
     }
+
 
 
       

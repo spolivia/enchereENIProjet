@@ -71,7 +71,11 @@ public class UtilisateursManager {
         return utilisateursDAO.isAuthenticated(request);
     }
 
-	public int trouverIDUtilisateur(HttpServletRequest request) {
-		return utilisateursDAO.trouverIDUtilisateur(request);
+    public int authenticateUser(String pseudo, String motDePasse) throws DALException {
+		return utilisateursDAO.authenticateUser(pseudo, motDePasse);
+	}
+
+	public Utilisateurs getUtilisateursByPseudo(String pseudo) throws DALException {
+		return utilisateursDAO.getUtilisateursByPseudo(pseudo);
 	}
 }

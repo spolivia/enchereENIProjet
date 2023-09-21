@@ -7,29 +7,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="css/ListeArticleFormat.css">
-	ENI-Encheres
-	<title>Liste des enchères</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/ListeArticleFormat.css">
+    ENI-Encheres
+    <title>Liste des enchères</title>
 
 </head>
 <body>
 <div style="float : right;">
     <c:choose>
-        <c:when test="${sessionScope.userID > 0}">
-        	<a href="">Enchères</a>
-			<a href="">Vendre un article</a>
-			<a href="">Mon Profil</a>
-            <a href="DeconnexionServlet">Déconnexion</a>
+        <c:when test="${sessionScope.no_utilisateur > 0}">
+            <!-- User is authenticated -->
+            <a href="#">Enchères</a>
+            <a href="#">Vendre un article</a>
+            <a href="MonProfil.jsp">Mon Profil</a>
+            <a href="Deconnexion">Déconnexion</a>
+            <p>Connected as ${sessionScope.pseudo}<p>
         </c:when>
         <c:otherwise>
-            <a href="Connexion">S'inscrire - Se connecter</a>
+            <!-- User is not authenticated -->
+            <a href="Connexion.jsp">S'inscrire - Se connecter</a>
         </c:otherwise>
     </c:choose>
 </div>
 
-
-	<h1 align="center">Liste des enchères</h1>
+<h1 align="center">Liste des enchères</h1>
 
 <table align="center">
     <tr>
@@ -71,7 +73,7 @@
 <br>
 
     <c:choose>
-        <c:when test="${sessionScope.userID > 0}">
+         <c:when test="${sessionScope.no_utilisateur > 0}">
             <table align="center">
 			<tr>
 				<td>
@@ -109,10 +111,6 @@
 			</tr>
 		</table>
 		        </c:when>
-        <c:otherwise>
-            <!-- Display a message or alternative content for non-logged-in users -->
-            <p align="center">You must be logged in to see the forms.</p>
-        </c:otherwise>
     </c:choose>
 		<script>
 		    const achatsRadio = document.getElementById('achatsRadio');
@@ -161,9 +159,6 @@
     
 <br>
 
-<%
-    List<Articles> articles = SessionManager.getArticlesFromSession(request);
-%>
 <c:choose>
     <c:when test="${empty listeArticles}">
         <p align="center">Aucun article trouvé.</p>
@@ -182,7 +177,7 @@
                                 <h3>${article.nomArticle}</h3>
                                 <p>Prix : BESOIN MONTANT_ENCHERE</p>
                                 <p>Fin Enchere : ${article.dateFinEncheres}</p>
-                                <p>Vendeur : BESOIN PSEUDO(UTILISATEUR)</p>
+                                <p>Vendeur : ${article.noUtilisateur}</p>
                             </td>
                         </tr>
                     </table>

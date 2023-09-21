@@ -12,8 +12,4 @@ public class BLLException extends Exception {
     public BLLException(String message, Throwable exception) {
         super(message, exception);
     }
-
-  //  public String getMessage() {
-  //  	return DALException.getMessage();
-  //  }
 }

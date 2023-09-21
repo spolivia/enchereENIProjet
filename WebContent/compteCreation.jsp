@@ -8,7 +8,7 @@
 <body>
     <h1>Create a New User Account</h1>
     
-    <form action="compteCreation" method="post">
+    <form action="listeArticles" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br>
         

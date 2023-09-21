@@ -12,5 +12,7 @@ public interface UtilisateursDAO extends DAO<Utilisateurs> {
 
     boolean isAuthenticated(HttpServletRequest request);
     
-    public int trouverIDUtilisateur(HttpServletRequest request);
+    public int authenticateUser(String pseudo, String motDePasse) throws DALException;
+
+	public Utilisateurs getUtilisateursByPseudo(String pseudo) throws DALException;
 }

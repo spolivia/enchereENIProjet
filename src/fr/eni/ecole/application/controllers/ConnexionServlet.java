@@ -1,9 +1,9 @@
 package fr.eni.ecole.application.controllers;
 
-import fr.eni.ecole.application.controllers.bll.BLLException;
 import fr.eni.ecole.application.controllers.bll.UtilisateursManager;
-import fr.eni.ecole.application.modele.dal.DAOFactory;
-import fr.eni.ecole.application.modele.bo.Articles;
+import fr.eni.ecole.application.modele.dal.DALException;
+import fr.eni.ecole.application.modele.dal.UtilisateursDAO;
+import fr.eni.ecole.application.modele.dal.jdbc.UtilisateursDAOJdbcImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/Connexion")
 public class ConnexionServlet extends HttpServlet {
@@ -22,37 +21,36 @@ public class ConnexionServlet extends HttpServlet {
     private UtilisateursManager utilisateursManager;
 
     public void init() throws ServletException {
-        super.init();
-        utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
+        UtilisateursDAO utilisateursDAO = new UtilisateursDAOJdbcImpl();
+        utilisateursManager = new UtilisateursManager(utilisateursDAO);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("Connexion.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String pseudo = request.getParameter("pseudo");
         String motDePasse = request.getParameter("motDePasse");
 
-        try {
-            boolean isAuthenticated = utilisateursManager.login(request, pseudo, motDePasse);
+        int no_utilisateur;
+		try {
+			no_utilisateur = utilisateursManager.authenticateUser(pseudo, motDePasse);
+			  if (no_utilisateur != -1) {
+		            HttpSession session = request.getSession();
+		            session.setAttribute("no_utilisateur", no_utilisateur);
+		            session.setAttribute("pseudo", pseudo);
 
-            if (isAuthenticated) {
-                // Fetch the authenticated user's ID
-                int userID = utilisateursManager.trouverIDUtilisateur(request);
+		            response.sendRedirect("listeArticles"); 
+		            System.out.println("Connected");
 
-                // Redirect the authenticated user to a protected resource or dashboard
-                response.sendRedirect("listeArticles.jsp");
-                System.out.println("connected");
-            } else {
-                // If authentication fails, redirect back to the login page with an error message
-                response.sendRedirect("Connexion.jsp");
-                System.out.println("connection failed");
-            }
-        } catch (BLLException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Authentication error.");
-        }
+		        } else {
+		            response.sendRedirect("Connexion.jsp");
+		            System.out.println("Failed Connection");
+		        }
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
     }
-
 }
