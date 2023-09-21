@@ -40,7 +40,7 @@
                         <td>
                             Catégorie :
                         
-                            <select id="categorie" name="selectedCategory">
+							<select id="categorie" name="selectedCategory">
 							    <option value="">Toutes</option> <!-- Default option -->
 							    <c:forEach var="category" items="${categories}">
 							        <option value="${category.noCategorie}">${category.libelle}</option>
