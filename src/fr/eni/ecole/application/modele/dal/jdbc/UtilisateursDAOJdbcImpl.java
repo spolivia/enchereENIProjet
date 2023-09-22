@@ -258,5 +258,50 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
         }
     }
 
+    @Override
+    public void updateUtilisateurProfile(Utilisateurs user) throws DALException {
+        String sql = "UPDATE UTILISATEURS " +
+                "SET nom = ?, prenom = ?, email = ?, telephone = ?, " +
+                "rue = ?, code_postal = ?, ville = ? " +
+                "WHERE no_utilisateur = ?";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        Utilisateurs currentUser = getUtilisateursByPseudo(user.getPseudo());
+        user.setNoUtilisateur(currentUser.getNoUtilisateur());
+        
+        try {
+            connection = JdbcTools.getConnection();
+            
+            user.setNoUtilisateur(currentUser.getNoUtilisateur());
+           
+
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, user.getNom());
+                statement.setString(2, user.getPrenom());
+                statement.setString(3, user.getEmail());
+                statement.setString(4, user.getTelephone());
+                statement.setString(5, user.getRue());
+                statement.setString(6, user.getCodePostal());
+                statement.setString(7, user.getVille());
+                statement.setInt(8, user.getNoUtilisateur());
+                statement.executeUpdate();
+        
+        } catch (SQLException e) {
+            throw new DALException("Error while updating user profile", e);
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    JdbcTools.closeConnection();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
 }

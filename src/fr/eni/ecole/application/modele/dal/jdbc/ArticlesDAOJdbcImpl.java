@@ -242,7 +242,6 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                 requeteRecherche = "";
             }
 
-            // Check if both search input and category are provided
             if (!requeteRecherche.isEmpty() && filtreCategorie != 0) {
                 listeArticles = filtrerArticlesParLesDeuxCriteres(requeteRecherche, filtreCategorie);
                 System.out.println("Dual Search Initiated");
@@ -403,7 +402,6 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         ResultSet rs = null;
         List<Articles> articlesList = new ArrayList<>();
         Connection connection = null;
-        System.out.println("FILTERING BY USER ID");
         try {
             connection = JdbcTools.getConnection();
 
@@ -448,6 +446,10 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
 
         return articlesList;
     }
+
+
+
+
 
 	@Override
 	public void delete(Articles a) throws DALException {
