@@ -21,8 +21,9 @@
             <a href="#">Enchères</a>
             <a href="#">Vendre un article</a>
             <a href="MonProfil.jsp">Mon Profil</a>
+            ${sessionScope.pseudo}
             <a href="Deconnexion">Déconnexion</a>
-            <p>Connected as ${sessionScope.pseudo}<p>
+            
         </c:when>
         <c:otherwise>
             <!-- User is not authenticated -->
@@ -74,6 +75,7 @@
 
     <c:choose>
          <c:when test="${sessionScope.no_utilisateur > 0}">
+         	<center><p style="color:red;"><b>Functionaliter des Radio et Checkboxes pas actif</b></p></center>
             <table align="center">
 			<tr>
 				<td>
@@ -177,7 +179,7 @@
                                 <h3>${article.nomArticle}</h3>
                                 <p>Prix : BESOIN MONTANT_ENCHERE</p>
                                 <p>Fin Enchere : ${article.dateFinEncheres}</p>
-                                <p>Vendeur : ${article.noUtilisateur}</p>
+                                <p style="color:red;"><b>Vendeur : ${article.noUtilisateur} <- numero util, Besoin lier entre pseudo</b></p>
                             </td>
                         </tr>
                     </table>
