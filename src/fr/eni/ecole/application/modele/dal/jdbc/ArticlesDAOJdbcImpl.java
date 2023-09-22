@@ -397,16 +397,57 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         return articlesFiltres;
     }
 
+    @Override
+    public List<Articles> selectByUserID(int userId) throws DALException {
+        PreparedStatement rqt = null;
+        ResultSet rs = null;
+        List<Articles> articlesList = new ArrayList<>();
+        Connection connection = null;
+        System.out.println("FILTERING BY USER ID");
+        try {
+            connection = JdbcTools.getConnection();
 
+            rqt = connection.prepareStatement(
+                    "SELECT * FROM ARTICLES_VENDUS " +
+                            "WHERE no_utilisateur = ?");
+            rqt.setInt(1, userId);
 
-      
+            rs = rqt.executeQuery();
 
+            while (rs.next()) {
+                Articles article = resultSetToArticles(rs);
+                articlesList.add(article);
+                
+                System.out.println("Retrieved article: " + article.getNomArticle());
 
+            }
+            System.out.println("Number of articles retrieved: " + articlesList.size());
 
+        } catch (SQLException e) {
+            throw new DALException("Error fetching articles by user ID", e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (rqt != null) {
+                    rqt.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (connection != null) {
+                        JdbcTools.closeConnection();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();                
+                }
+            }
+        }
 
-
-
-
+        return articlesList;
+    }
 
 	@Override
 	public void delete(Articles a) throws DALException {

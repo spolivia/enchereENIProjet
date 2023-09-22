@@ -13,4 +13,6 @@ public interface ArticlesDAO extends DAO<Articles> {
 	 public List<Articles> filtrerArticlesParCategorie(int filtreCategorie) throws DALException;
 	 
 	 public List<Articles> filtrerArticlesParLesDeuxCriteres(String requeteRecherche, int filtreCategorie) throws DALException;	
+
+	 public List<Articles> selectByUserID(int userId) throws DALException; 
 }

@@ -8,6 +8,7 @@ import fr.eni.ecole.application.modele.bo.Articles;
 import java.util.List;
 
 public class SessionManager {
+	
     public static List<Articles> getArticlesFromSession(HttpServletRequest request) {
         HttpSession session = request.getSession();
         return (List<Articles>) session.getAttribute("articles");

@@ -19,7 +19,7 @@
             <button type="submit">Connecter</button>
         </form>
 
-        <p><a href="compteCreation.jsp">Créer un compte</a></p>
+        <p><a href="ProfileCreation.jsp">Créer un compte</a></p>
     </div>
 </body>
 </html>

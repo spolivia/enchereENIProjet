@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/listeArticles")
 public class ListArticlesServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-
+    
     private ArticlesManager articlesManager;
     private CategoriesManager categoriesManager;
 
@@ -31,17 +31,17 @@ public class ListArticlesServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<Categories> categories = categoriesManager.getAllCategories();
-
+            
             String requeteRecherche = "";
             int filtreCategorie = 0;
+          
             List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche, filtreCategorie);
+            List<Categories> categories = categoriesManager.getAllCategories();
 
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
             
-            request.getRequestDispatcher("/listeArticles.jsp").forward(request, response);
-            
+            request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
             
         } catch (BLLException e) {
             e.printStackTrace();
@@ -67,7 +67,7 @@ public class ListArticlesServlet extends HttpServlet {
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
 
-            request.getRequestDispatcher("/listeArticles.jsp").forward(request, response);
+            request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
             
         } catch (BLLException e) {
             e.printStackTrace();

@@ -20,7 +20,7 @@
             <!-- User is authenticated -->
             <a href="#">Enchères</a>
             <a href="#">Vendre un article</a>
-            <a href="MonProfil.jsp">Mon Profil</a>
+            <a href="ProfileMon.jsp">Mon Profil</a>
             ${sessionScope.pseudo}
             <a href="Deconnexion">Déconnexion</a>
             
@@ -179,7 +179,7 @@
                                 <h3>${article.nomArticle}</h3>
                                 <p>Prix : BESOIN MONTANT_ENCHERE</p>
                                 <p>Fin Enchere : ${article.dateFinEncheres}</p>
-                                <p style="color:red;"><b>Vendeur : ${article.noUtilisateur} <- numero util, Besoin lier entre pseudo</b></p>
+                                <p style="color:red;"><b>Vendeur : ${article.noUtilisateur} <- numero util, Besoin lier entre pseudo<br>bug quand recherche par categorie toujour 0</b></p>
                             </td>
                         </tr>
                     </table>

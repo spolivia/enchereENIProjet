@@ -31,7 +31,7 @@ public class UtilisateursManager {
         }
     }
 
-    public void addUtilisateurs(Utilisateurs user) throws BLLException {
+    public void addUtilisateur(Utilisateurs user) throws BLLException {
         try {
             utilisateursDAO.insert(user);
         } catch (DALException e) {
@@ -39,7 +39,7 @@ public class UtilisateursManager {
         }
     }
 
-    public void updateUtilisateurs(Utilisateurs user) throws BLLException {
+    public void updateUtilisateur(Utilisateurs user) throws BLLException {
         try {
             utilisateursDAO.update(user);
         } catch (DALException e) {
@@ -47,7 +47,7 @@ public class UtilisateursManager {
         }
     }
 
-    public void deleteUtilisateurs(int userId) throws BLLException {
+    public void deleteUtilisateur(int userId) throws BLLException {
         try {
             utilisateursDAO.delete(userId);
         } catch (DALException e) {

@@ -50,7 +50,7 @@ public class CreerCompteServlet extends HttpServlet {
         UtilisateursManager userManager = new UtilisateursManager(utilisateursDAO);
 
             try {
-				userManager.addUtilisateurs(user);
+				userManager.addUtilisateur(user);
 			} catch (BLLException e) {
 				e.printStackTrace();
 			}

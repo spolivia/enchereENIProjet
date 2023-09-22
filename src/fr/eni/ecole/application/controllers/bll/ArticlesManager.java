@@ -83,5 +83,13 @@ public class ArticlesManager {
             throw new BLLException("Error filtering articles by both criteria", e);
         }
     }
+    
+    public List<Articles> selectByUserID(int userId) throws BLLException {
+        try {
+            return articleDAO.selectByUserID(userId);
+        } catch (DALException e) {
+            throw new BLLException("Error filtering articles by both criteria", e);
+        }
+    }
 
 }

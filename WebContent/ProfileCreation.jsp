@@ -9,8 +9,8 @@
     <h1>Create a New User Account</h1>
     
     <form action="listeArticles" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+        <label for="pseudo">Pseudo:</label>
+        <input type="text" id="pseudo" name="pseudo" required><br>
         
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required><br>
