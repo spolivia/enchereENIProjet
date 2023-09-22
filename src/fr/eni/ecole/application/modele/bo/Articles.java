@@ -11,13 +11,12 @@ public class Articles {
     private int prixInitial;
     private int prixVente;
     private int noUtilisateur;
-    private int noCategorie;
-    private Categories categorie;
+    private Integer noCategorie;
 
     public Articles() {
     }
 
-    public Articles(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur, int noCategorie) {
+    public Articles(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -26,7 +25,6 @@ public class Articles {
         this.prixInitial = prixInitial;
         this.prixVente = prixVente;
         this.noUtilisateur = noUtilisateur;
-        this.noCategorie = noCategorie;
     }
 
     public int getNoArticle() {
@@ -93,19 +91,12 @@ public class Articles {
 		this.noUtilisateur = noUtilisateur;
 	}
 
-	public int getNoCategorie() {
-		return noCategorie;
-	}
-
-	public void setNoCategorie(int noCategorie) {
-		this.noCategorie = noCategorie;
-	}
-
-    public void setCategorie(Categories categorie) {
-        this.categorie = categorie;
+    public Integer getNoCategorie() {
+        return noCategorie;
     }
 
-    public Categories getCategorie() {
-        return categorie;
+    public void setNoCategorie(Integer noCategorie) {
+        this.noCategorie = noCategorie;
     }
+
 }

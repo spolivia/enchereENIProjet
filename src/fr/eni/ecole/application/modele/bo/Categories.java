@@ -1,7 +1,7 @@
 package fr.eni.ecole.application.modele.bo;
 
 public class Categories {
-    private int noCategorie;
+	private int noCategorie;
     private String libelle;
 
     public Categories() {
@@ -27,4 +27,9 @@ public class Categories {
     public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
+    
+    @Override
+	public String toString() {
+		return "Categories [noCategorie=" + noCategorie + ", libelle=" + libelle + "]";
+	}
 }
