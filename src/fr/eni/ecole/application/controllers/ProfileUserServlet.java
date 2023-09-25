@@ -1,0 +1,46 @@
+package fr.eni.ecole.application.controllers;
+
+import fr.eni.ecole.application.controllers.bll.UtilisateursManager;
+import fr.eni.ecole.application.controllers.bll.BLLException;
+import fr.eni.ecole.application.modele.bo.Utilisateurs;
+import fr.eni.ecole.application.modele.dal.DAOFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/ProfileUserServlet")
+public class ProfileUserServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            // Get the userId parameter from the request
+            String userIdParam = request.getParameter("userId");
+
+            if (userIdParam != null && !userIdParam.isEmpty()) {
+                // Parse the userId parameter to an integer
+                int userId = Integer.parseInt(userIdParam);
+
+                // Create a UtilisateursManager and retrieve the user by ID
+                UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
+                Utilisateurs user = utilisateursManager.getUtilisateursById(userId);
+
+                // Set the user as an attribute to be used in the JSP
+                request.setAttribute("user", user);
+
+                // Forward the request to the user profile JSP
+                request.getRequestDispatcher("/ProfileUser.jsp").forward(request, response);
+            } else {
+                // Handle the case when userIdParam is missing or invalid
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID");
+            }
+        } catch (BLLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while retrieving the user's profile.");
+        }
+    }
+}
