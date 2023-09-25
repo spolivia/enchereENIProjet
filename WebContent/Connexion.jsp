@@ -19,7 +19,8 @@
             <button type="submit">Connecter</button>
         </form>
 
-        <p><a href="ProfileCreation.jsp">Créer un compte</a></p>
+        <p><a href="ProfileCreationServlet">Créer un compte</a></p>
+        <p><a href="listeArticles">Retourner a l'accueil</a></p>
     </div>
 </body>
 </html>

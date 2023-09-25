@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="fr.eni.ecole.application.modele.bo.Utilisateurs" %>
+<%@ page import="fr.eni.ecole.application.controllers.bll.UtilisateursManager" %>
+<%@ page import="fr.eni.ecole.application.controllers.bll.BLLException" %>
+<%@ page import="fr.eni.ecole.application.modele.dal.DALException" %>
+<%@ page import="fr.eni.ecole.application.modele.dal.DAOFactory" %>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Create User</title>
+    <title>Create Account</title>
 </head>
 <body>
-    <h1>Create a New User Account</h1>
-    
-    <form action="listeArticles" method="post">
+    <h1>Create Your Account</h1>
+
+    <form action="ProfileCreationServlet" method="post">
         <label for="pseudo">Pseudo:</label>
         <input type="text" id="pseudo" name="pseudo" required><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
 
         <label for="nom">Nom:</label>
         <input type="text" id="nom" name="nom" required><br>
@@ -35,8 +38,15 @@
 
         <label for="ville">Ville:</label>
         <input type="text" id="ville" name="ville" required><br>
-        
+
+        <label for="motDePasse">Mot de passe:</label>
+        <input type="password" id="motDePasse" name="motDePasse" required><br>
+
         <input type="submit" value="Create Account">
     </form>
+
+    <br>
+
+    <a href="Connexion">Deja un compte? Connecter ici!</a>
 </body>
 </html>
