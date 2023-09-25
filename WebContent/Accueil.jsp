@@ -177,14 +177,21 @@
                                 <h3>${article.nomArticle}</h3>
                                 <p>Prix : BESOIN MONTANT_ENCHERE</p>
                                 <p>Fin Enchere : ${article.dateFinEncheres}</p>
-								<c:choose>
-								    <c:when test="${sessionScope.no_utilisateur > 0}">
-								        <p><b>Vendeur : <a href="ProfileUserServlet?userId=${article.utilisateur.noUtilisateur}">${article.utilisateur.pseudo}</a></b></p>
-								    </c:when>
-								    <c:otherwise>
-								        <p><b>Vendeur : ${article.utilisateur.pseudo}</b></p>
-								    </c:otherwise>
-								</c:choose>
+                                <c:choose>
+                                    <c:when test="${sessionScope.no_utilisateur > 0}">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.no_utilisateur == article.utilisateur.noUtilisateur}">
+                                                <p><b>Vendeur : <a href="ProfileMon.jsp">${article.utilisateur.pseudo}</a></b></p>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <p><b>Vendeur : <a href="ProfileUserServlet?userId=${article.utilisateur.noUtilisateur}">${article.utilisateur.pseudo}</a></b></p>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p><b>Vendeur : ${article.utilisateur.pseudo}</b></p>
+                                    </c:otherwise>
+                                </c:choose>
                             </td>
                         </tr>
                     </table>
@@ -192,10 +199,11 @@
                 <c:if test="${loop.index % 2 == 1 || loop.last}">
                     </tr> 
                 </c:if>
-          </c:forEach>
+            </c:forEach>
         </table>
     </c:otherwise>
 </c:choose>
+
     
 </body>
 </html>

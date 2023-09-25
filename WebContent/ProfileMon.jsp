@@ -14,7 +14,7 @@
     <title>User Profile</title>
 </head>
 <body>
-    <h1>User Profile</h1>
+    <h1>Votre Profile</h1>
     
 
 <%
