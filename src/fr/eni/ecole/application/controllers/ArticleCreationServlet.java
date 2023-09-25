@@ -37,7 +37,6 @@ public class ArticleCreationServlet extends HttpServlet {
         Date dateDebutEncheres = Date.valueOf(dateDebutEncheresStr);
         Date dateFinEncheres = Date.valueOf(dateFinEncheresStr);
         int prixInitial = Integer.parseInt(prixInitialStr);
-        int prixVente = 0;
 
         // Retrieve selected category
         String categorieStr = request.getParameter("categorie");
