@@ -18,7 +18,7 @@
     <c:choose>
         <c:when test="${sessionScope.no_utilisateur > 0}">
             <a href="#">Enchères</a>
-            <a href="#">Vendre un article</a>
+            <a href="ArticleCreation.jsp">Vendre un article</a>
             <a href="ProfileMon.jsp">Mon Profil</a>
             ${sessionScope.pseudo}
             <a href="Deconnexion">Déconnexion</a>

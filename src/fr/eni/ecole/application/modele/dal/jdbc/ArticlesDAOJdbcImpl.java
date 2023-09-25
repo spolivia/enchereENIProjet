@@ -154,8 +154,8 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
 
         try {
             System.out.println("Executing insert: Articles");
-            String insertQuery = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial) " +
-                                "VALUES (?, ?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) " +
+                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             
             connection = JdbcTools.getConnection();
             rqt = connection.prepareStatement(insertQuery);
@@ -164,6 +164,9 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
             rqt.setDate(3, new java.sql.Date(article.getDateDebutEncheres().getTime()));
             rqt.setDate(4, new java.sql.Date(article.getDateFinEncheres().getTime()));
             rqt.setInt(5, article.getPrixInitial());
+            rqt.setInt(6, article.getPrixVente()); // Add the prixVente
+            rqt.setInt(7, article.getNoUtilisateur()); // Add the noUtilisateur
+            rqt.setInt(8, article.getNoCategorie()); // Add the noCategorie
 
             rqt.executeUpdate();
         } catch (SQLException e) {
@@ -181,11 +184,12 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                         JdbcTools.closeConnection();
                     }
                 } catch (SQLException e) {
-                	e.printStackTrace();               
+                    e.printStackTrace();               
                 }
             }
         }
     }
+
 
   
     @Override

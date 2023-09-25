@@ -55,16 +55,18 @@
 
     <c:choose>
         <c:when test="${!empty listeArticles}">
+        <h2><center>Enchères de ${user.pseudo}</center></h2>
             <table border="0" cellspacing="20" align="center">
                 <c:forEach var="article" items="${listeArticles}" varStatus="loop">
                     <c:if test="${loop.index % 2 == 0}">
                         <tr>
                     </c:if>
-                    <td>Enchères de ${user.pseudo}
+                    <td>
                         <table border="1">
                             <tr>
                                 <td>Photo</td>
                                 <td>
+
                                     <h3>${article.nomArticle}</h3>
                                     <p>Prix : BESOIN MONTANT_ENCHERE</p>
                                     <p>Fin Enchere : ${article.dateFinEncheres}</p>
