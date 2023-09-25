@@ -17,7 +17,6 @@
 <div style="float : right;">
     <c:choose>
         <c:when test="${sessionScope.no_utilisateur > 0}">
-            <!-- User is authenticated -->
             <a href="#">Enchères</a>
             <a href="#">Vendre un article</a>
             <a href="ProfileMon.jsp">Mon Profil</a>
@@ -26,7 +25,6 @@
             
         </c:when>
         <c:otherwise>
-            <!-- User is not authenticated -->
             <a href="Connexion.jsp">S'inscrire - Se connecter</a>
         </c:otherwise>
     </c:choose>
@@ -169,7 +167,7 @@
         <table border="0" cellspacing="20" align="center">
             <c:forEach var="article" items="${listeArticles}" varStatus="loop">
                 <c:if test="${loop.index % 2 == 0}">
-                    <tr> <!-- Start a new row for every even-indexed item -->
+                    <tr> 
                 </c:if>
                 <td>
                     <table border="1">
@@ -179,13 +177,13 @@
                                 <h3>${article.nomArticle}</h3>
                                 <p>Prix : BESOIN MONTANT_ENCHERE</p>
                                 <p>Fin Enchere : ${article.dateFinEncheres}</p>
-                                <p style="color:red;"><b>Vendeur : ${article.noUtilisateur} <- numero util, Besoin lier entre pseudo</p>
+                               <p><b>Vendeur : ${article.utilisateur.pseudo}</p>
                             </td>
                         </tr>
                     </table>
                 </td>
                 <c:if test="${loop.index % 2 == 1 || loop.last}">
-                    </tr> <!-- Close the row for every odd-indexed item or the last item -->
+                    </tr> 
                 </c:if>
           </c:forEach>
         </table>

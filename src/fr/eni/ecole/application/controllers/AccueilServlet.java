@@ -2,9 +2,11 @@ package fr.eni.ecole.application.controllers;
 
 import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.bo.Categories;
+import fr.eni.ecole.application.modele.bo.Utilisateurs;
 import fr.eni.ecole.application.controllers.bll.ArticlesManager;
 import fr.eni.ecole.application.controllers.bll.BLLException;
 import fr.eni.ecole.application.controllers.bll.CategoriesManager;
+import fr.eni.ecole.application.controllers.bll.UtilisateursManager;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
 
 import java.io.IOException;
@@ -22,35 +24,40 @@ public class AccueilServlet extends HttpServlet {
     
     private ArticlesManager articlesManager;
     private CategoriesManager categoriesManager;
+    private UtilisateursManager utilisateursManager;
 
     public void init() throws ServletException {
         super.init();
         articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
         categoriesManager = new CategoriesManager(DAOFactory.getCategoriesDAO());
+        utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            
             String requeteRecherche = "";
             int filtreCategorie = 0;
-          
+
             List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche, filtreCategorie);
+
+            // Iterate through the articles to fetch associated users
+            for (Articles article : listeArticles) {
+                Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(article.getNoUtilisateur());
+                article.setUtilisateur(utilisateur);
+            }
+
             List<Categories> categories = categoriesManager.getAllCategories();
 
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
-            
+
             request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
-            
+
         } catch (BLLException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles.");
         }
-       
     }
-    
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -64,17 +71,20 @@ public class AccueilServlet extends HttpServlet {
 
             List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche, filtreCategorie);
 
+            // Iterate through the articles to fetch associated users
+            for (Articles article : listeArticles) {
+                Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(article.getNoUtilisateur());
+                article.setUtilisateur(utilisateur);
+            }
+
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
 
             request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
-            
+
         } catch (BLLException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles.");
         }
     }
-
-
-
 }

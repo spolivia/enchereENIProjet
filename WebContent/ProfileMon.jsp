@@ -99,7 +99,7 @@
 	                                <h3>${article.nomArticle}</h3>
 	                                <p>Prix : BESOIN MONTANT_ENCHERE</p>
 	                                <p>Fin Enchere : ${article.dateFinEncheres}</p>
-	                                <p style="color:red;"><b>Vendeur : ${article.noUtilisateur} <- numero util, Besoin lier entre pseudo</p>
+	                                <p><b>Vendeur : <%= utilisateur.getPseudo() %> </p>
 	                            </td>
 	                        </tr>
 	                    </table>
