@@ -1,4 +1,4 @@
-package fr.eni.ecole.application.controllers.bll;
+package fr.eni.ecole.application.modele.bll;
 
 import fr.eni.ecole.application.modele.bo.Utilisateurs;
 import fr.eni.ecole.application.modele.dal.DALException;

@@ -1,9 +1,9 @@
 package fr.eni.ecole.application.controllers;
 
-import fr.eni.ecole.application.controllers.bll.UtilisateursManager;
-import fr.eni.ecole.application.controllers.bll.ArticlesManager;
-import fr.eni.ecole.application.controllers.bll.BLLException;
 import fr.eni.ecole.application.modele.bo.Utilisateurs;
+import fr.eni.ecole.application.modele.bll.ArticlesManager;
+import fr.eni.ecole.application.modele.bll.BLLException;
+import fr.eni.ecole.application.modele.bll.UtilisateursManager;
 import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
 

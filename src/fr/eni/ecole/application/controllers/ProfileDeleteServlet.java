@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.eni.ecole.application.controllers.bll.BLLException;
-import fr.eni.ecole.application.controllers.bll.UtilisateursManager;
+import fr.eni.ecole.application.modele.bll.BLLException;
+import fr.eni.ecole.application.modele.bll.UtilisateursManager;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
 
 @WebServlet("/ProfileDeleteServlet")
