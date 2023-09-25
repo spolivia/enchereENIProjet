@@ -1,6 +1,6 @@
 package fr.eni.ecole.application.controllers;
 
-import fr.eni.ecole.application.controllers.bll.UtilisateursManager;
+import fr.eni.ecole.application.modele.bll.UtilisateursManager;
 import fr.eni.ecole.application.modele.dal.DALException;
 import fr.eni.ecole.application.modele.dal.UtilisateursDAO;
 import fr.eni.ecole.application.modele.dal.jdbc.UtilisateursDAOJdbcImpl;

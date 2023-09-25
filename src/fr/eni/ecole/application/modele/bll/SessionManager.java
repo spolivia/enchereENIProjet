@@ -1,4 +1,4 @@
-package fr.eni.ecole.application.controllers.bll;
+package fr.eni.ecole.application.modele.bll;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

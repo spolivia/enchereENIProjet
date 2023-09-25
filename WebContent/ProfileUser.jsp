@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="fr.eni.ecole.application.modele.bo.Articles" %>
-<%@ page import="fr.eni.ecole.application.controllers.bll.ArticlesManager" %>
+<%@ page import="fr.eni.ecole.application.modele.bll.ArticlesManager" %>
 <%@ page import="fr.eni.ecole.application.modele.bo.Utilisateurs" %>
-<%@ page import="fr.eni.ecole.application.controllers.bll.UtilisateursManager" %>
+<%@ page import="fr.eni.ecole.application.modele.bll.UtilisateursManager" %>
 <%@ page import="fr.eni.ecole.application.modele.dal.DAOFactory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>

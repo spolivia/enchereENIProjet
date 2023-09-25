@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="fr.eni.ecole.application.modele.bo.Utilisateurs" %>
-<%@ page import="fr.eni.ecole.application.controllers.bll.UtilisateursManager" %>
-<%@ page import="fr.eni.ecole.application.controllers.bll.BLLException" %>
+<%@ page import="fr.eni.ecole.application.modele.bll.UtilisateursManager" %>
+<%@ page import="fr.eni.ecole.application.modele.bll.BLLException" %>
 <%@ page import="fr.eni.ecole.application.modele.dal.DALException" %>
 <%@ page import="fr.eni.ecole.application.modele.dal.DAOFactory" %>
 
