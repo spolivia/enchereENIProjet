@@ -1,6 +1,6 @@
 package fr.eni.ecole.application.modele.bll;
 
-public class EncheresManager {
+public class EncheresManagerTooDooList {
 //	
 //	Vendre un article
 //	En tant qu’utilisateur, je peux vendre un article sur la plateforme ENI-Enchères. Pour cela je donne les informations sur l’article vendu :

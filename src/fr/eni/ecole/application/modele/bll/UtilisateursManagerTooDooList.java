@@ -1,6 +1,6 @@
 package fr.eni.ecole.application.modele.bll;
 
-public class UtilisateursManager {
+public class UtilisateursManagerTooDooList {
 //
 //	"Se connecter"
 //	"En tant qu'utilisateur, je peux me connecter sur la plateforme Enchères.org avec un login (adresse mail ou pseudo) et un mot de passe.
