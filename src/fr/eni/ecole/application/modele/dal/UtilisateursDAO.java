@@ -15,4 +15,6 @@ public interface UtilisateursDAO extends DAO<Utilisateurs> {
     public int authenticateUser(String pseudo, String motDePasse) throws DALException;
 
 	public Utilisateurs getUtilisateursByPseudo(String pseudo) throws DALException;
+
+	void updateUtilisateurProfile(Utilisateurs user) throws DALException;
 }

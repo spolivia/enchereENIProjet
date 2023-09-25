@@ -12,6 +12,7 @@ public class Articles {
     private int prixVente;
     private int noUtilisateur;
     private Integer noCategorie;
+	private Utilisateurs utilisateur;
 
     public Articles() {
     }
@@ -98,5 +99,13 @@ public class Articles {
     public void setNoCategorie(Integer noCategorie) {
         this.noCategorie = noCategorie;
     }
+
+    public Utilisateurs getUtilisateur() {
+        return utilisateur;
+    }
+    
+	public void setUtilisateur(Utilisateurs utilisateur) {
+		this.utilisateur = utilisateur;		
+	}
 
 }

@@ -81,36 +81,36 @@
 	</form>
 
 	
-<c:choose>
-    <c:when test="${empty listeArticles}">
-        <p align="center">Aucun article trouvé.</p>
-    </c:when>
-    <c:otherwise>
-        <table border="0" cellspacing="20" align="center">
-            <c:forEach var="article" items="${listeArticles}" varStatus="loop">
-                <c:if test="${loop.index % 2 == 0}">
-                    <tr>
-                </c:if>
-                <td>Mes enchères
-                    <table border="1">
-                        <tr>
-                            <td>Photo</td>
-                            <td>
-                                <h3>${article.nomArticle}</h3>
-                                <p>Prix : BESOIN MONTANT_ENCHERE</p>
-                                <p>Fin Enchere : ${article.dateFinEncheres}</p>
-                                <p style="color:red;"><b>Vendeur : ${article.noUtilisateur} <- numero util, Besoin lier entre pseudo</p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <c:if test="${loop.index % 2 == 1 || loop.last}">
-                    </tr>
-                </c:if>
-          </c:forEach>
-        </table>
-    </c:otherwise>
-</c:choose>
+	<c:choose>
+	    <c:when test="${empty listeArticles}">
+	        <p align="center">Aucun article trouvé.</p>
+	    </c:when>
+	    <c:otherwise>
+	        <table border="0" cellspacing="20" align="center">
+	            <c:forEach var="article" items="${listeArticles}" varStatus="loop">
+	                <c:if test="${loop.index % 2 == 0}">
+	                    <tr>
+	                </c:if>
+	                <td>Mes enchères
+	                    <table border="1">
+	                        <tr>
+	                            <td>Photo</td>
+	                            <td>
+	                                <h3>${article.nomArticle}</h3>
+	                                <p>Prix : BESOIN MONTANT_ENCHERE</p>
+	                                <p>Fin Enchere : ${article.dateFinEncheres}</p>
+	                                <p><b>Vendeur : <%= utilisateur.getPseudo() %> </p>
+	                            </td>
+	                        </tr>
+	                    </table>
+	                </td>
+	                <c:if test="${loop.index % 2 == 1 || loop.last}">
+	                    </tr>
+	                </c:if>
+	          </c:forEach>
+	        </table>
+	    </c:otherwise>
+	</c:choose>
 
 </body>
 </html>

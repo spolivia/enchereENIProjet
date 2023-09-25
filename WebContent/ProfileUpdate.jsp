@@ -14,17 +14,13 @@
 <body>
     <h1>Update Your Profile</h1>
     
-<%
-    int userId = (int) session.getAttribute("no_utilisateur");
+    <%
+        int userId = (int) session.getAttribute("no_utilisateur");
+        UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
+        Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(userId);
+    %>
 
-    UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
-    Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(userId);
-
-
-%>
-
-
-    <form action="ProfileUpdate.jsp" method="post">		
+    <form id="updateProfileForm" action="ProfileUpdateServlet" method="post" onsubmit="displaySuccessMessage()">		
         <label for="nom">Nom:</label>
         <input type="text" id="nom" name="nom" value="<%= utilisateur.getNom() %>" required><br>
 
@@ -42,47 +38,26 @@
 
         <label for="codePostal">Code Postal:</label>
         <input type="text" id="codePostal" name="codePostal" value="<%= utilisateur.getCodePostal() %>" required><br>
-        <label for="ville">Ville:</label>
-        <input type="text" id="ville" name="ville" value="<%= utilisateur.getNom() %>" required><br>
         
-        <input type="submit" value="Update Profile">
-        <%
-    if (request.getMethod().equalsIgnoreCase("post")) {
-        // Retrieve form parameters
-        String newNom = request.getParameter("nom");
-        String newPrenom = request.getParameter("prenom");
-        String newEmail = request.getParameter("email");
-        String newTelephone = request.getParameter("telephone");
-        String newRue = request.getParameter("rue");
-        String newCodePostal = request.getParameter("codePostal");
-        String newVille = request.getParameter("ville");
-
-        // Create a Utilisateurs object with updated values
-    //    utilisateur.setNoUtilisateur(noUtilisateur);
-      //  utilisateur.setPseudo(pseudo);
-        utilisateur.setNom(newNom);
-        utilisateur.setPrenom(newPrenom);
-        utilisateur.setEmail(newEmail);
-        utilisateur.setTelephone(newTelephone);
-        utilisateur.setRue(newRue);
-        utilisateur.setCodePostal(newCodePostal);
-        utilisateur.setVille(newVille);
-
-        try {
-            // Update the user's profile
-            utilisateursManager.updateUtilisateur(utilisateur);
-            out.println("Profile updated successfully!");
-        } catch (BLLException e) {
-            out.println("Error updating profile: " + e.getMessage());
-        }
-    }
- 
- %>
+        <label for="ville">Ville:</label>
+        <input type="text" id="ville" name="ville" value="<%= utilisateur.getVille() %>" required><br>
+        
+        <input type="submit" value="UpdateProfile">
     </form>
-
+	<script>
+	    function displaySuccessMessage() {
+	        alert("Success Updating Profile");
+	    }
+	    
+	    function displayDeleteMessage() {
+	    	alert("Account Deleted");
+	    }
+	</script>
 
     <br>
-
+	<form id="DeleteProfileButton" action="ProfileDeleteServlet" method="post" onsubmit="displayDeleteMessage()">
+        <input type="submit" value="Delete Account">
+    </form>
     <form action="listeArticles">
         <input type="submit" value="Return to Home">
     </form>

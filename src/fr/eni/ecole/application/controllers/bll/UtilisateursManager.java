@@ -78,4 +78,13 @@ public class UtilisateursManager {
 	public Utilisateurs getUtilisateursByPseudo(String pseudo) throws DALException {
 		return utilisateursDAO.getUtilisateursByPseudo(pseudo);
 	}
+
+    public void updateUtilisateurProfile(Utilisateurs user) throws BLLException {
+        try {
+            utilisateursDAO.updateUtilisateurProfile(user);
+        } catch (DALException e) {
+            throw new BLLException("Error updating user", e);
+        }
+    }
 }
+
