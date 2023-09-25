@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
 <%@ page import="fr.eni.ecole.application.modele.bo.Articles" %>
 <%@ page import="fr.eni.ecole.application.controllers.bll.ArticlesManager" %>
 <%@ page import="fr.eni.ecole.application.modele.bo.Utilisateurs" %>
 <%@ page import="fr.eni.ecole.application.controllers.bll.UtilisateursManager" %>
 <%@ page import="fr.eni.ecole.application.modele.dal.DAOFactory" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="now" value="<%= new java.util.Date() %>" />
+
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +17,7 @@
     <title>User Profile</title>
 </head>
 <body>
-    <h1>User Profile</h1>
+    <h1>Votre Profile</h1>
     
 
 <%
@@ -79,7 +82,7 @@
 	<form action="ProfileUpdate.jsp" method="post">
 	    <input type="submit" value="Changer vos détails">
 	</form>
-
+	
 	
 	<c:choose>
 	    <c:when test="${empty listeArticles}">
@@ -87,19 +90,32 @@
 	    </c:when>
 	    <c:otherwise>
 	        <table border="0" cellspacing="20" align="center">
+	        <h2><center>Mes enchères</center></h2>
 	            <c:forEach var="article" items="${listeArticles}" varStatus="loop">
 	                <c:if test="${loop.index % 2 == 0}">
 	                    <tr>
 	                </c:if>
-	                <td>Mes enchères
+	                <td>
 	                    <table border="1">
 	                        <tr>
 	                            <td>Photo</td>
 	                            <td>
-	                                <h3>${article.nomArticle}</h3>
-	                                <p>Prix : BESOIN MONTANT_ENCHERE</p>
-	                                <p>Fin Enchere : ${article.dateFinEncheres}</p>
-	                                <p><b>Vendeur : <%= utilisateur.getPseudo() %> </p>
+									<c:choose>
+									    <c:when test="${article.dateDebutEncheres.after(now)}">
+									        <h3>${article.nomArticle}</h3>
+									        <p>Prix : BESOIN MONTANT_ENCHERE</p>
+									        <p>Fin Enchere : ${article.dateFinEncheres}</p>
+									        <p><b>Vendeur : <%= utilisateur.getPseudo() %></b></p>
+									        <p><a href="Edit.jsp">Edit</a></p>
+									        <p>Debut Encheres : ${article.dateDebutEncheres}</p>
+									    </c:when>
+									    <c:otherwise>
+									        <h3>${article.nomArticle}</h3>
+									        <p>Prix : BESOIN MONTANT_ENCHERE</p>
+									        <p>Fin Enchere : ${article.dateFinEncheres}</p>
+									        <p><b>Vendeur : <%= utilisateur.getPseudo() %></b></p>
+									    </c:otherwise>
+									</c:choose>
 	                            </td>
 	                        </tr>
 	                    </table>

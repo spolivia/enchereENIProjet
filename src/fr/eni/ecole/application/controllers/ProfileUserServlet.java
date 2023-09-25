@@ -1,8 +1,10 @@
 package fr.eni.ecole.application.controllers;
 
 import fr.eni.ecole.application.controllers.bll.UtilisateursManager;
+import fr.eni.ecole.application.controllers.bll.ArticlesManager;
 import fr.eni.ecole.application.controllers.bll.BLLException;
 import fr.eni.ecole.application.modele.bo.Utilisateurs;
+import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
 
 import javax.servlet.ServletException;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/ProfileUserServlet")
 public class ProfileUserServlet extends HttpServlet {
@@ -20,7 +23,7 @@ public class ProfileUserServlet extends HttpServlet {
         try {
             // Get the userId parameter from the request
             String userIdParam = request.getParameter("userId");
-
+            System.out.println("Visiting ID verifired as " + userIdParam);
             if (userIdParam != null && !userIdParam.isEmpty()) {
                 // Parse the userId parameter to an integer
                 int userId = Integer.parseInt(userIdParam);
@@ -31,6 +34,11 @@ public class ProfileUserServlet extends HttpServlet {
 
                 // Set the user as an attribute to be used in the JSP
                 request.setAttribute("user", user);
+
+                // Create an ArticlesManager and fetch the user's articles filtered by userID
+                ArticlesManager articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
+                List<Articles> listeArticles = articlesManager.selectByUserID(userId);
+                request.setAttribute("listeArticles", listeArticles);
 
                 // Forward the request to the user profile JSP
                 request.getRequestDispatcher("/ProfileUser.jsp").forward(request, response);
