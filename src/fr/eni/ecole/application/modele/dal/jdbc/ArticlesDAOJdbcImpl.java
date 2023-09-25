@@ -32,7 +32,8 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
         article.setPrixInitial(rs.getInt("prix_initial"));
         article.setNoUtilisateur(rs.getInt("no_utilisateur"));
-
+        
+        System.out.println("ResultSetArticles returning to method");
         return article;
     }
     
@@ -45,7 +46,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
 
         try {
             connection = JdbcTools.getConnection();
-
+            System.out.println("Executing selectById: Articles");
             rqt = connection.prepareStatement(
                     "SELECT * FROM ARTICLES_VENDUS " +
                             "WHERE no_article = ?");
@@ -92,7 +93,8 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         try (Connection connection = JdbcTools.getConnection();
              PreparedStatement rqt = connection.prepareStatement("SELECT * FROM ARTICLES_VENDUS");
              ResultSet rs = rqt.executeQuery()) {
-
+            System.out.println("Executing selectAll: Articles");
+            
             while (rs.next()) {
                 Articles article = resultSetToArticles(rs);
                 listeArticles.add(article);
@@ -114,7 +116,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
 
         try {
             String deleteQuery = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
-            
+            System.out.println("Executing delete: Articles");
             connection = JdbcTools.getConnection();
             rqt = connection.prepareStatement(deleteQuery);
             rqt.setInt(1, articleId);
@@ -151,6 +153,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         Connection connection = null;
 
         try {
+            System.out.println("Executing insert: Articles");
             String insertQuery = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial) " +
                                 "VALUES (?, ?, ?, ?, ?)";
             
@@ -191,6 +194,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         Connection connection = null;
 
         try {
+            System.out.println("Executing update: Articles");
             String updateQuery = "UPDATE ARTICLES_VENDUS " +
                                 "SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, " +
                                 "prix_initial = ? " +
@@ -236,10 +240,11 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
     @Override
     public List<Articles> logicFiltrerTirageArticles(String requeteRecherche, int filtreCategorie) throws DALException {
         List<Articles> listeArticles = new ArrayList<>();
-
+        System.out.println("Executing FilterLogicSelector: Articles");
         try {
             if (requeteRecherche == null) {
                 requeteRecherche = "";
+                System.out.println("Search Empty");
             }
 
             if (!requeteRecherche.isEmpty() && filtreCategorie != 0) {
@@ -255,6 +260,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                 System.out.println("Searchbar Search Initiated");
             } else {
                 listeArticles = selectAll();
+                System.out.println("General Display Initiated");
             }
         } catch (DALException e) {
             throw new DALException("ERREUR_FILTER_AND_RETRIEVE_ARTICLES - ", e);
@@ -268,6 +274,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
     public List<Articles> filtrerArticlesParRecherche(String requeteRecherche) throws DALException {
         List<Articles> tousLesArticles = selectAll();
         List<Articles> articlesFiltres = new ArrayList<Articles>();
+        System.out.println("Executing FilterByString: Articles");
         
         if (requeteRecherche != null && !requeteRecherche.isEmpty()) {
             for (Articles article : tousLesArticles) {
@@ -289,6 +296,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
   
     @Override
     public List<Articles> filtrerArticlesParCategorie(int filtreCategorie) throws DALException {
+        System.out.println("Executing FilterByCategorie: Articles");
         PreparedStatement rqt = null;
         ResultSet rs = null;
         List<Articles> articlesFiltres = new ArrayList<Articles>();
@@ -311,6 +319,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                 article.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
                 article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
                 article.setPrixInitial(rs.getInt("prix_initial"));
+                article.setNoUtilisateur(rs.getInt("no_utilisateur"));
 
                 articlesFiltres.add(article);
             }
@@ -343,6 +352,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
 
     @Override
     public List<Articles> filtrerArticlesParLesDeuxCriteres(String requeteRecherche, int filtreCategorie) throws DALException {
+        System.out.println("Executing FilterByCategoryAndString: Articles");
         PreparedStatement rqt = null;
         ResultSet rs = null;
         List<Articles> articlesFiltres = new ArrayList<>();
@@ -367,6 +377,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
                 article.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
                 article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
                 article.setPrixInitial(rs.getInt("prix_initial"));
+                article.setNoUtilisateur(rs.getInt("no_utilisateur"));
 
                 articlesFiltres.add(article);
             }
@@ -398,6 +409,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
 
     @Override
     public List<Articles> selectByUserID(int userId) throws DALException {
+        System.out.println("Executing selectByUserId: Articles");
         PreparedStatement rqt = null;
         ResultSet rs = null;
         List<Articles> articlesList = new ArrayList<>();
@@ -411,7 +423,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
             rqt.setInt(1, userId);
 
             rs = rqt.executeQuery();
-
+            
             while (rs.next()) {
                 Articles article = resultSetToArticles(rs);
                 articlesList.add(article);

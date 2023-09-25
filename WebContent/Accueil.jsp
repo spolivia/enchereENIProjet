@@ -179,7 +179,7 @@
                                 <h3>${article.nomArticle}</h3>
                                 <p>Prix : BESOIN MONTANT_ENCHERE</p>
                                 <p>Fin Enchere : ${article.dateFinEncheres}</p>
-                                <p style="color:red;"><b>Vendeur : ${article.noUtilisateur} <- numero util, Besoin lier entre pseudo<br>bug quand recherche par categorie toujour 0</b></p>
+                                <p style="color:red;"><b>Vendeur : ${article.noUtilisateur} <- numero util, Besoin lier entre pseudo</p>
                             </td>
                         </tr>
                     </table>
