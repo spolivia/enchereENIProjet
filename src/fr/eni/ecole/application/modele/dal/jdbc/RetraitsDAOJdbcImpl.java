@@ -14,11 +14,11 @@ import fr.eni.ecole.application.modele.dal.RetraitsDAO;
 
 public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
-	private static final String SELECT_BY_ID = "SELECT * FROM Retraits WHERE id_retraits = ?";
+	private static final String SELECT_BY_ID = "SELECT * FROM Retraits WHERE no_article = ?";
 	private static final String SELECT_ALL = "SELECT * FROM Retraits";
-	private static final String UPDATE = "UPDATE Retraits SET rue = ?, code_postale = ?, ville = ? WHERE id_retraits = ?";
+	private static final String UPDATE = "UPDATE Retraits SET rue = ?, code_postale = ?, ville = ? WHERE getNoArticle = ?";
 	private static final String INSERT = "INSERT INTO Retraits (no_article, rue, code_postale, ville) VALUES (?, ?, ?, ?)";
-	private static final String DELETE = "DELETE FROM Retraits WHERE id_retraits = ?";
+	private static final String DELETE = "DELETE FROM Retraits WHERE no_article = ?";
 
 	@Override
 	public Retraits selectById(int id) throws DALException {
@@ -54,10 +54,10 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
 	@Override
 	public void update(Retraits a) throws DALException {
-		Retraits existingArticle = selectById(a.getIdRetraits());
+		Retraits existingArticle = selectById(a.getNoArticle());
 		if (existingArticle == null) {
 			throw new DALException(
-					"Le Retrait avec l'ID " + a.getIdRetraits() + " n'existe pas dans la base de données.");
+					"Le Retrait lié à l'objet" + a.getNoArticle() + " n'existe pas dans la base de données.");
 		}
 
 		try (Connection connection = JdbcTools.getConnection();
@@ -67,7 +67,7 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 			preparedStatement.setInt(2, a.getCodePostale());
 			preparedStatement.setString(3, a.getVille());
 
-			preparedStatement.setInt(4, a.getIdRetraits());
+			preparedStatement.setInt(4, a.getNoArticle());
 
 			preparedStatement.executeUpdate();
 
@@ -89,15 +89,6 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
 			preparedStatement.executeUpdate();
 
-			try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-				if (generatedKeys.next()) {
-					int generatedId = generatedKeys.getInt(1);
-					a.setIdRetraits(generatedId);
-				} else {
-					throw new SQLException("La génération des clés a échoué");
-				}
-			}
-
 		} catch (
 
 		SQLException e) {
@@ -109,7 +100,7 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 	public void delete(int id) throws DALException {
 		Retraits existingArticle = selectById(id);
 		if (existingArticle == null) {
-			throw new DALException("Le Retraits avec l'ID " + id + " n'existe pas dans la base de données.");
+			throw new DALException("Le Retraits lié à l'objet " + id + " n'existe pas dans la base de données.");
 		}
 
 		try (Connection connection = JdbcTools.getConnection();
@@ -126,18 +117,18 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
 	@Override
 	public void delete(Retraits a) throws DALException {
-		this.delete(a.getIdRetraits());
+		this.delete(a.getNoArticle());
 
 	}
 
 	private Retraits resultSetToRetraits(ResultSet resultSet) throws SQLException {
-		int idRetraits = resultSet.getInt("idRetrait");
+
 		int noArticle = resultSet.getInt("noArticle");
 		String rue = resultSet.getString("rue");
 		int codePostale = resultSet.getInt("codePostale");
 		String ville = resultSet.getString("ville");
 
-		Retraits retraits = new Retraits(idRetraits, noArticle, rue, codePostale, ville);
+		Retraits retraits = new Retraits(noArticle, rue, codePostale, ville);
 
 		return retraits;
 	}
