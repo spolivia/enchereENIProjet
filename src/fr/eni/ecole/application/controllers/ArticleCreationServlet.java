@@ -52,7 +52,7 @@ public class ArticleCreationServlet extends HttpServlet {
         article.setDateDebutEncheres(dateDebutEncheres);
         article.setDateFinEncheres(dateFinEncheres);
         article.setPrixInitial(prixInitial);
-        article.setPrixVente(prixVente);
+        article.setPrixVente(prixInitial);
         article.setNoUtilisateur(userId);
         article.setNoCategorie(categorie);
 
