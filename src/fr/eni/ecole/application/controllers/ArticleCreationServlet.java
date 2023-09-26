@@ -17,63 +17,68 @@ import fr.eni.ecole.application.modele.dal.DAOFactory;
 
 @WebServlet("/ArticleCreationServlet")
 public class ArticleCreationServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("/ArticleCreation.jsp").forward(request, response);
-    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("/ArticleCreation.jsp").forward(request, response);
+	}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String nomArticle = request.getParameter("nomArticle");
-        String description = request.getParameter("description");
-        String dateDebutEncheresStr = request.getParameter("dateDebutEncheresStr");
-        String dateFinEncheresStr = request.getParameter("dateFinEncheresStr");
-        String prixInitialStr = request.getParameter("prixInitial");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-        Date dateDebutEncheres = Date.valueOf(dateDebutEncheresStr);
-        Date dateFinEncheres = Date.valueOf(dateFinEncheresStr);
-        int prixInitial = Integer.parseInt(prixInitialStr);
+		// Retrieve form parameters
 
-        String categorieStr = request.getParameter("categorie");
-        int categorie = Integer.parseInt(categorieStr);
+		String nomArticle = request.getParameter("nomArticle");
+		String description = request.getParameter("description");
+		String dateDebutEncheresStr = request.getParameter("dateDebutEncheresStr"); // Updated field name
+		String dateFinEncheresStr = request.getParameter("dateFinEncheresStr"); // Updated field name
+		String prixInitialStr = request.getParameter("prixInitial");
 
-        int userId = (int) request.getSession().getAttribute("no_utilisateur");
+		// Validate and parse form input into appropriate data types
+		Date dateDebutEncheres = Date.valueOf(dateDebutEncheresStr);
+		Date dateFinEncheres = Date.valueOf(dateFinEncheresStr);
+		int prixInitial = Integer.parseInt(prixInitialStr);
 
-        Articles article = new Articles();
-        article.setNomArticle(nomArticle);
-        article.setDescription(description);
-        article.setDateDebutEncheres(dateDebutEncheres);
-        article.setDateFinEncheres(dateFinEncheres);
-        article.setPrixInitial(prixInitial);
-        article.setPrixVente(prixInitial);
-        article.setNoUtilisateur(userId);
-        article.setNoCategorie(categorie);
+		// Retrieve selected category
+		String categorieStr = request.getParameter("categorie");
+		int categorie = Integer.parseInt(categorieStr);
 
-        String rue = request.getParameter("rue");
-        String codePostalStr = request.getParameter("codePostal");
-        int codePostal = Integer.parseInt(codePostalStr);
-        String ville = request.getParameter("ville");
+		// Create an Articles object
+		int userId = (int) request.getSession().getAttribute("no_utilisateur");
 
-        Retraits retraits = new Retraits();
-        retraits.setRue(rue);
-        retraits.setCodePostale(codePostal);
-        retraits.setVille(ville);
+		Articles article = new Articles();
+		article.setNomArticle(nomArticle);
+		article.setDescription(description);
+		article.setDateDebutEncheres(dateDebutEncheres);
+		article.setDateFinEncheres(dateFinEncheres);
+		article.setPrixInitial(prixInitial);
+		article.setPrixVente(prixInitial);
+		article.setNoUtilisateur(userId);
+		article.setNoCategorie(categorie);
 
-        ArticlesManager articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
-        try {
-            articlesManager.addArticleWithRetraits(article, retraits);
+		String rue = request.getParameter("rue");
+		String codePostalStr = request.getParameter("codePostal");
+		int codePostal = Integer.parseInt(codePostalStr);
+		String ville = request.getParameter("ville");
 
-            request.setAttribute("successMessage", "Article Created Successfully!");
-            response.sendRedirect(request.getContextPath() + "/listeArticles");
-        } catch (NumberFormatException e) {
-            request.setAttribute("errorMessage", "Error parsing numeric values: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            request.setAttribute("errorMessage", "Error parsing date values: " + e.getMessage());
-        } catch (BLLException e) {
-            request.setAttribute("errorMessage", "Error creating article: " + e.getMessage());
-        }
-    }
+		Retraits retraits = new Retraits();
+		retraits.setRue(rue);
+		retraits.setCodePostale(codePostal);
+		retraits.setVille(ville);
+
+		ArticlesManager articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
+		try {
+			articlesManager.addArticleWithRetraits(article, retraits);
+
+			request.setAttribute("successMessage", "Article Created Successfully!");
+			response.sendRedirect(request.getContextPath() + "/listeArticles");
+		} catch (NumberFormatException e) {
+			request.setAttribute("errorMessage", "Error parsing numeric values: " + e.getMessage());
+		} catch (IllegalArgumentException e) {
+			request.setAttribute("errorMessage", "Error parsing date values: " + e.getMessage());
+		} catch (BLLException e) {
+			request.setAttribute("errorMessage", "Error creating article: " + e.getMessage());
+		}
+	}
 }
-
