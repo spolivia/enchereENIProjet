@@ -21,6 +21,8 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	private static final String UPDATE = "UPDATE Encheres SET no_utilisateur = ?, no_article = ?, date_enchere = ?,  montant_enchere = ? WHERE id_encheres = ?";
 	private static final String INSERT = "INSERT INTO Encheres (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?, ?, ?, ?)";
 	private static final String DELETE = "DELETE FROM Encheres WHERE id_encheres = ?";
+	private static final String SELECT_BY_ARTICLE_ID = "SELECT * FROM Encheres WHERE no_article = ?";
+	private static final String SELECT_BY_USER_ID = "SELECT * FROM Encheres WHERE no_utilisateur = ?";
 
 	@Override
 	public Encheres selectById(int id) throws DALException {
@@ -145,4 +147,35 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		return encheres;
 	}
 
+	@Override
+	public List<Encheres> selectByArticleId(int articleId) throws DALException {
+		List<Encheres> encheres = new ArrayList<>();
+		try (Connection connection = JdbcTools.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(SELECT_BY_ARTICLE_ID)) {
+			while (resultSet.next()) {
+				Encheres enchere = resultSetToEncheres(resultSet);
+				encheres.add(enchere);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la récupération de la liste des enchères par article", e);
+		}
+		return encheres;
+	}
+
+	@Override
+	public List<Encheres> selectByUserId(int userId) throws DALException {
+		List<Encheres> encheres = new ArrayList<>();
+		try (Connection connection = JdbcTools.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(SELECT_BY_USER_ID)) {
+			while (resultSet.next()) {
+				Encheres enchere = resultSetToEncheres(resultSet);
+				encheres.add(enchere);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la récupération de la liste des enchères par article", e);
+		}
+		return encheres;
+	}
 }
