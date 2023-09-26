@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.ecole.application.modele.bll.ArticlesManager;
 import fr.eni.ecole.application.modele.bll.BLLException;
 import fr.eni.ecole.application.modele.bo.Articles;
+import fr.eni.ecole.application.modele.bo.Retraits;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
 
 @WebServlet("/ArticleCreationServlet")
@@ -20,14 +21,12 @@ public class ArticleCreationServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Forward to the JSP for account creation
         request.getRequestDispatcher("/ArticleCreation.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-    	String nomArticle = request.getParameter("nomArticle");
+        String nomArticle = request.getParameter("nomArticle");
         String description = request.getParameter("description");
         String dateDebutEncheresStr = request.getParameter("dateDebutEncheresStr");
         String dateFinEncheresStr = request.getParameter("dateFinEncheresStr");
@@ -52,9 +51,20 @@ public class ArticleCreationServlet extends HttpServlet {
         article.setNoUtilisateur(userId);
         article.setNoCategorie(categorie);
 
+        String rue = request.getParameter("rue");
+        String codePostalStr = request.getParameter("codePostal");
+        int codePostal = Integer.parseInt(codePostalStr);
+        String ville = request.getParameter("ville");
+
+        Retraits retraits = new Retraits();
+        retraits.setRue(rue);
+        retraits.setCodePostale(codePostal);
+        retraits.setVille(ville);
+
         ArticlesManager articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
         try {
-            articlesManager.addArticle(article);
+            articlesManager.addArticleWithRetraits(article, retraits);
+
             request.setAttribute("successMessage", "Article Created Successfully!");
             response.sendRedirect(request.getContextPath() + "/listeArticles");
         } catch (NumberFormatException e) {
@@ -65,5 +75,5 @@ public class ArticleCreationServlet extends HttpServlet {
             request.setAttribute("errorMessage", "Error creating article: " + e.getMessage());
         }
     }
-
 }
+

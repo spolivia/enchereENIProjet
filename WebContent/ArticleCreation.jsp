@@ -11,6 +11,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Article</title>
+    <script>
+        function toggleAddressFields() {
+            var checkbox = document.getElementById("useOwnAddressCheckbox");
+            var addressFields = document.getElementById("addressFields");
+
+            if (checkbox.checked) {
+                addressFields.style.display = "none";
+            } else {
+                addressFields.style.display = "block";
+            }
+        }
+    </script>
 </head>
 <body>
     <%
@@ -50,6 +62,20 @@
             <option value="4">Sports</option>
             <option value="5">Loisirs</option>
         </select><br>
+
+        <label for="useOwnAddressCheckbox">Use My Address for Retraits</label>
+        <input type="checkbox" id="useOwnAddressCheckbox" name="useOwnAddressCheckbox" checked onclick="toggleAddressFields()"><br>
+
+        <div id="addressFields" style="display: none;">
+            <label for="rue">Rue :</label>
+            <input type="text" id="rue" name="rue" value="<%= utilisateur.getRue() %>"><br>
+
+            <label for="codePostal">Code Postal :</label>
+            <input type="number" id="codePostal" name="codePostal" value="<%= utilisateur.getCodePostal() %> "><br>
+
+            <label for="ville">Ville :</label>
+            <input type="text" id="ville" name="ville" value="<%= utilisateur.getVille() %>"><br>
+        </div>
 
         <input type="submit" value="Create Article">
     </form>

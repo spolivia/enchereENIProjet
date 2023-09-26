@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.ecole.application.modele.bo.Articles;
+import fr.eni.ecole.application.modele.bo.Retraits;
 import fr.eni.ecole.application.modele.dal.ArticlesDAO;
 import fr.eni.ecole.application.modele.dal.DALException;
 
@@ -472,5 +473,85 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
 		// TODO Auto-generated method stub
 		
 	}
+
+    @Override
+    public Object addArticleWithRetraits(Articles article, Retraits retraits) throws DALException {
+        Connection connection = null;
+        PreparedStatement articleStatement = null;
+        PreparedStatement retraitsStatement = null;
+
+        try {
+            connection = JdbcTools.getConnection();
+            connection.setAutoCommit(false); // Start a transaction
+
+            // Insert the article
+            String insertArticleQuery = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            articleStatement = connection.prepareStatement(insertArticleQuery, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            articleStatement.setString(1, article.getNomArticle());
+            articleStatement.setString(2, article.getDescription());
+            articleStatement.setDate(3, new java.sql.Date(article.getDateDebutEncheres().getTime()));
+            articleStatement.setDate(4, new java.sql.Date(article.getDateFinEncheres().getTime()));
+            articleStatement.setInt(5, article.getPrixInitial());
+            articleStatement.setInt(6, article.getPrixVente());
+            articleStatement.setInt(7, article.getNoUtilisateur());
+            articleStatement.setInt(8, article.getNoCategorie());
+
+            int affectedRows = articleStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new DALException("Failed to insert article, no rows affected.");
+            }
+
+            ResultSet generatedKeys = articleStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int generatedArticleId = generatedKeys.getInt(1);
+                article.setNoArticle(generatedArticleId);
+            } else {
+                throw new DALException("Failed to retrieve generated article ID.");
+            }
+
+            String insertRetraitsQuery = "INSERT INTO RETRAITS (no_article, rue, code_postal, ville) VALUES (?, ?, ?, ?)";
+            retraitsStatement = connection.prepareStatement(insertRetraitsQuery);
+
+            retraitsStatement.setInt(1, article.getNoArticle());
+            retraitsStatement.setString(2, retraits.getRue());
+            retraitsStatement.setInt(3, retraits.getCodePostale());
+            retraitsStatement.setString(4, retraits.getVille());
+
+            retraitsStatement.executeUpdate();
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            throw new DALException("Error adding article with retraits", e);
+        } finally {
+            try {
+                if (articleStatement != null) {
+                    articleStatement.close();
+                }
+                if (retraitsStatement != null) {
+                    retraitsStatement.close();
+                }
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                    JdbcTools.closeConnection();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return article;
+    }
+
 
 }

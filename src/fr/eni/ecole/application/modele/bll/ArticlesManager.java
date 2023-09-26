@@ -1,6 +1,7 @@
 package fr.eni.ecole.application.modele.bll;
 
 import fr.eni.ecole.application.modele.bo.Articles;
+import fr.eni.ecole.application.modele.bo.Retraits;
 import fr.eni.ecole.application.modele.dal.*;
 
 import java.util.Date;
@@ -99,6 +100,14 @@ public class ArticlesManager {
         Date dateFinEncheres = article.getDateFinEncheres();
         return dateDebutEncheres.before(now) && dateFinEncheres.after(now);
     }
+
+	public Object addArticleWithRetraits(Articles article, Retraits retraits) throws BLLException{
+        try {
+            return articleDAO.addArticleWithRetraits(article, retraits);
+        } catch (DALException e) {
+            throw new BLLException("Error adding articles with retraits", e);
+        }		
+	}
     
 
 }
