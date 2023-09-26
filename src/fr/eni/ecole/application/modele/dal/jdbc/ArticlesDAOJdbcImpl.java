@@ -164,9 +164,9 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
             rqt.setDate(3, new java.sql.Date(article.getDateDebutEncheres().getTime()));
             rqt.setDate(4, new java.sql.Date(article.getDateFinEncheres().getTime()));
             rqt.setInt(5, article.getPrixInitial());
-            rqt.setInt(6, article.getPrixVente()); // Add the prixVente
-            rqt.setInt(7, article.getNoUtilisateur()); // Add the noUtilisateur
-            rqt.setInt(8, article.getNoCategorie()); // Add the noCategorie
+            rqt.setInt(6, article.getPrixVente());
+            rqt.setInt(7, article.getNoUtilisateur());
+            rqt.setInt(8, article.getNoCategorie()); 
 
             rqt.executeUpdate();
         } catch (SQLException e) {

@@ -26,23 +26,20 @@ public class ArticleCreationServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Retrieve form parameters
-        String nomArticle = request.getParameter("nomArticle");
+
+    	String nomArticle = request.getParameter("nomArticle");
         String description = request.getParameter("description");
-        String dateDebutEncheresStr = request.getParameter("dateDebutEncheresStr"); // Updated field name
-        String dateFinEncheresStr = request.getParameter("dateFinEncheresStr"); // Updated field name
+        String dateDebutEncheresStr = request.getParameter("dateDebutEncheresStr");
+        String dateFinEncheresStr = request.getParameter("dateFinEncheresStr");
         String prixInitialStr = request.getParameter("prixInitial");
 
-        // Validate and parse form input into appropriate data types
         Date dateDebutEncheres = Date.valueOf(dateDebutEncheresStr);
         Date dateFinEncheres = Date.valueOf(dateFinEncheresStr);
         int prixInitial = Integer.parseInt(prixInitialStr);
 
-        // Retrieve selected category
         String categorieStr = request.getParameter("categorie");
         int categorie = Integer.parseInt(categorieStr);
 
-        // Create an Articles object
         int userId = (int) request.getSession().getAttribute("no_utilisateur");
 
         Articles article = new Articles();

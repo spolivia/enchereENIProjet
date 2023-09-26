@@ -130,16 +130,15 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
 	}
 
-	private Retraits resultSetToRetraits(ResultSet resultSet) throws SQLException {
-		int idRetraits = resultSet.getInt("idRetrait");
-		int noArticle = resultSet.getInt("noArticle");
-		String rue = resultSet.getString("rue");
-		int codePostale = resultSet.getInt("codePostale");
-		String ville = resultSet.getString("ville");
+	private Retraits resultSetToRetraits(ResultSet rs) throws SQLException {
+		Retraits retrait = new Retraits();
+		retrait.setNoArticle(rs.getInt("noArticle"));
+		retrait.setRue(rs.getString("rue"));
+		retrait.setCodePostale(rs.getInt("codePostale"));
+		retrait.setVille(rs.getString("ville"));
 
-		Retraits retraits = new Retraits(idRetraits, noArticle, rue, codePostale, ville);
-
-		return retraits;
+        System.out.println("ResultSetRetraites returning to method");
+		return retrait;
 	}
 
 }

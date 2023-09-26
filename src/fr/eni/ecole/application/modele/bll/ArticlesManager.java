@@ -3,6 +3,7 @@ package fr.eni.ecole.application.modele.bll;
 import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.dal.*;
 
+import java.util.Date;
 import java.util.List;
 
 public class ArticlesManager {
@@ -91,5 +92,13 @@ public class ArticlesManager {
             throw new BLLException("Error filtering articles by both criteria", e);
         }
     }
+
+    public boolean etatVente(Articles article) {
+        Date now = new Date();
+        Date dateDebutEncheres = article.getDateDebutEncheres();
+        Date dateFinEncheres = article.getDateFinEncheres();
+        return dateDebutEncheres.before(now) && dateFinEncheres.after(now);
+    }
+    
 
 }
