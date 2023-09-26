@@ -464,14 +464,9 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         return articlesList;
     }
 
-
-
-
-
 	@Override
 	public void delete(Articles a) throws DALException {
 		// TODO Auto-generated method stub
-		
 	}
 
     @Override
