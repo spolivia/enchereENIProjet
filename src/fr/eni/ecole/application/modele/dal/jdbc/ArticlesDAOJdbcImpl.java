@@ -32,7 +32,9 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         article.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
         article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
         article.setPrixInitial(rs.getInt("prix_initial"));
+        article.setPrixInitial(rs.getInt("prix_vente"));
         article.setNoUtilisateur(rs.getInt("no_utilisateur"));
+        article.setNoCategorie(rs.getInt("no_categorie"));
         
         System.out.println("ResultSetArticles returning to method");
         return article;
@@ -202,7 +204,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
             System.out.println("Executing update: Articles");
             String updateQuery = "UPDATE ARTICLES_VENDUS " +
                                 "SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, " +
-                                "prix_initial = ? " +
+                                "prix_initial = ?, prix_vente = ?, no_categorie = ? " +
                                 "WHERE no_article = ?";
             
             connection = JdbcTools.getConnection();
@@ -213,7 +215,9 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
             rqt.setDate(3, new java.sql.Date(updatedArticle.getDateDebutEncheres().getTime()));
             rqt.setDate(4, new java.sql.Date(updatedArticle.getDateFinEncheres().getTime()));
             rqt.setInt(5, updatedArticle.getPrixInitial());
-            rqt.setInt(6, updatedArticle.getNoArticle());
+            rqt.setInt(6, updatedArticle.getPrixVente());
+            rqt.setInt(7, updatedArticle.getNoCategorie());
+            rqt.setInt(8, updatedArticle.getNoArticle());
 
             int rowsAffected = rqt.executeUpdate();
             
