@@ -79,6 +79,13 @@ public class UtilisateursManager {
 		return utilisateursDAO.getUtilisateursByPseudo(pseudo);
 	}
 
+    public Utilisateurs getUtilisateursByArticle(int articleId) throws BLLException {
+        try {
+            return utilisateursDAO.selectByArticle(articleId);
+        } catch (DALException e) {
+            throw new BLLException("Error retrieving user by article", e);
+        }
+    }
     public void updateUtilisateurProfile(Utilisateurs user) throws BLLException {
         try {
             utilisateursDAO.updateUtilisateurProfile(user);

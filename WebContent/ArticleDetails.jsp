@@ -2,6 +2,8 @@
 <%@ page import="fr.eni.ecole.application.modele.bo.Articles" %>
 <%@ page import="fr.eni.ecole.application.modele.bo.Retraits" %>
 <%@ page import="fr.eni.ecole.application.modele.bo.Utilisateurs" %>
+<%@ page import="fr.eni.ecole.application.modele.bo.Categories" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -9,21 +11,33 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Article Details</title>
+    <title>Détails de l'Article</title>
 </head>
 <body>
-    <h1>Article Details</h1>
+    <h1>Détails de l'Article</h1>
 
     <c:if test="${not empty requestScope.article}">
-        <h2>${requestScope.article.nomArticle}</h2>
+		<h2>Propriétaire: ${requestScope.utilisateur.pseudo}</h2>
+        <h3>${requestScope.article.nomArticle}</h3>
         <p>Description: ${requestScope.article.description}</p>
-        <p>Start Date: ${requestScope.article.dateDebutEncheres}</p>
-        <p>End Date: ${requestScope.article.dateFinEncheres}</p>
-        <p>Initial Price: ${requestScope.article.prixInitial}</p>
+        <p>Date de début: ${requestScope.article.dateDebutEncheres}</p>
+        <p>Date de fin: ${requestScope.article.dateFinEncheres}</p>
+        <p>Prix initial: ${requestScope.article.prixInitial}</p>
         <p>Montant Courant: BESOIN MONTANT_ENCHERE</p>
-        <p>Category: ${requestScope.article.noCategorie}</p>
+       	<p>Catégorie:
+		    <c:choose>
+		        <c:when test="${requestScope.article.noCategorie == 1}">Informatique</c:when>
+		        <c:when test="${requestScope.article.noCategorie == 2}">Ameublement</c:when>
+		        <c:when test="${requestScope.article.noCategorie == 3}">Vêtement</c:when>
+		        <c:when test="${requestScope.article.noCategorie == 4}">Sports</c:when>
+		        <c:when test="${requestScope.article.noCategorie == 5}">Loisirs</c:when>
+		        <c:otherwise>Unknown</c:otherwise>
+		    </c:choose>
+		</p>
+
+
         
-        <h2>Retrait Address</h2>
+        <h2>Adresse de Retrait</h2>
         <p>Rue: ${requestScope.retrait.rue}</p>
         <p>Code Postal: ${requestScope.retrait.codePostale}</p>
         <p>Ville: ${requestScope.retrait.ville}</p>
@@ -31,6 +45,6 @@
 
     <br>
 
-    <a href="listeArticles">Back to Articles List</a>
+    <a href="listeArticles">Retour à la Liste d'Articles</a>
 </body>
 </html>

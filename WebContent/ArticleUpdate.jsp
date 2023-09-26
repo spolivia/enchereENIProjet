@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%@ page import="fr.eni.ecole.application.modele.bo.Articles" %>
 <%@ page import="fr.eni.ecole.application.modele.bo.Retraits" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -54,11 +56,11 @@
         </form>
     </c:if>
 
-<script>
-function displaySuccessMessage() {
-    alert("Success Updating Article");
-}
-</script>
+    <script>
+        function displaySuccessMessage() {
+            alert("Success Updating Article");
+        }
+    </script>
     <br>
 
     <a href="ProfileMon.jsp">Cancel</a>

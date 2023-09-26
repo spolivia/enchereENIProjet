@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%@ page import="fr.eni.ecole.application.modele.bo.Utilisateurs" %>
 <%@ page import="fr.eni.ecole.application.modele.bll.UtilisateursManager" %>
 <%@ page import="fr.eni.ecole.application.modele.bll.BLLException" %>
 <%@ page import="fr.eni.ecole.application.modele.dal.DALException" %>
 <%@ page import="fr.eni.ecole.application.modele.dal.DAOFactory" %>
-<%@ page import="java.text.SimpleDateFormat" %> <!-- Import SimpleDateFormat -->
+
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <!DOCTYPE html>
 <html>
@@ -36,10 +38,10 @@
     <h1>Create Your Article</h1>
 
     <form action="ArticleCreationServlet" method="post">
-        <label for="noUtilisateurs">User Identity Number: </label>
+        <label for="noUtilisateurs">User Identity Number:</label>
         <input type="number" id="noUtilisateurs" name="noUtilisateurs" value="<%= utilisateur.getNoUtilisateur() %>" readonly required><br>
 
-        <label for="nomArticle">Nom d'article : </label>
+        <label for="nomArticle">Nom d'article :</label>
         <input type="text" id="nomArticle" name="nomArticle" required><br>
 
         <label for="description">Description :</label>
@@ -58,7 +60,7 @@
         <select id="categorie" name="categorie">
             <option value="1">Informatique</option>
             <option value="2">Ameublement</option>
-            <option value="3">Vetement</option>
+            <option value="3">Vêtement</option>
             <option value="4">Sports</option>
             <option value="5">Loisirs</option>
         </select><br>

@@ -302,6 +302,29 @@ public class UtilisateursDAOJdbcImpl implements UtilisateursDAO {
         }
     }
 
+	@Override
+	public Utilisateurs selectByArticle(int articleId) throws DALException {
+	    String sql = "SELECT u.* " +
+	                 "FROM UTILISATEURS u " +
+	                 "INNER JOIN ARTICLES_VENDUS a ON u.no_utilisateur = a.no_utilisateur " +
+	                 "WHERE a.no_article = ?";
+	    
+	    try (Connection connection = JdbcTools.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(sql)) {
+	        statement.setInt(1, articleId);
+	        
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                return resultSetToUtilisateur(resultSet);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        throw new DALException("Error fetching user by article ID", e);
+	    }
+	    
+	    return null;
+	}
+
 
 
 }
