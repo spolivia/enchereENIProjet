@@ -72,8 +72,8 @@
             <label for="rue">Rue :</label>
             <input type="text" id="rue" name="rue" value="<%= utilisateur.getRue() %>"><br>
 
-            <label for="codePostal">Code Postal :</label>
-            <input type="number" id="codePostal" name="codePostal" value="<%= utilisateur.getCodePostal() %> "><br>
+            <label for="codePostale">Code Postale :</label>
+            <input type="text" id="codePostale" name="codePostale" value="<%= utilisateur.getCodePostal() %> "><br>
 
             <label for="ville">Ville :</label>
             <input type="text" id="ville" name="ville" value="<%= utilisateur.getVille() %>"><br>

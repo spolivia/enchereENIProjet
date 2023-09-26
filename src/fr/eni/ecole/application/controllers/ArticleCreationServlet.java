@@ -52,7 +52,7 @@ public class ArticleCreationServlet extends HttpServlet {
         article.setNoCategorie(categorie);
 
         String rue = request.getParameter("rue");
-        String codePostalStr = request.getParameter("codePostal");
+        String codePostalStr = request.getParameter("codePostale");
         int codePostal = Integer.parseInt(codePostalStr);
         String ville = request.getParameter("ville");
 

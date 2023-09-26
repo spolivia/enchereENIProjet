@@ -15,7 +15,6 @@
 <body>
     <h1>Article Update</h1>
 
-    <c:if test="${not empty requestScope.article}">
         <form action="ArticleUpdateServlet" method="post" onsubmit="displaySuccessMessage()">
             <input type="hidden" name="articleId" value="${requestScope.article.noArticle}">
             
@@ -54,7 +53,6 @@
 
             <input type="submit" value="Update Article">
         </form>
-    </c:if>
 
     <script>
         function displaySuccessMessage() {

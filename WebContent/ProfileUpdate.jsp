@@ -55,7 +55,7 @@
 	</script>
 
     <br>
-	<form id="DeleteProfileButton" action="ProfileDeleteServlet" method="post" onsubmit="displayDeleteMessage()">
+	<form id="DeleteProfileButton" action="ProfileDeleteServlet" method="post" onsubmit="return confirm('Are you sure you want to delete your account?');"">
         <input type="submit" value="Delete Account">
     </form>
     <form action="listeArticles">
