@@ -50,7 +50,7 @@
             
             <label for="retraitVille">Ville de retrait :</label>
             <input type="text" id="retraitVille" name="retraitVille" value="${requestScope.retrait.ville}" required><br>
-
+	
             <input type="submit" value="Update Article">
         </form>
 

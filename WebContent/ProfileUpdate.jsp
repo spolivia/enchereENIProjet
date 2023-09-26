@@ -59,6 +59,7 @@
         <input type="submit" value="Delete Account">
     </form>
     <form action="listeArticles">
+    
         <input type="submit" value="Return to Home">
     </form>
 </body>
