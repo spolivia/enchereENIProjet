@@ -76,7 +76,14 @@
 			                         <td>
 
                                     <h3>${article.nomArticle}</h3>
-                                    <p>Prix : BESOIN MONTANT_ENCHERE</p>
+                                    <c:choose>
+										<c:when test="${article.enchere == null || article.enchere.montant_enchere == 0}">
+									        Prix : ${article.prixInitial}
+									    </c:when>
+									    <c:otherwise>
+									        <p>Prix : ${article.enchere.montant_enchere}</p>
+									    </c:otherwise>
+									</c:choose>
                                     <p>Fin Enchere : ${article.dateFinEncheres}</p>
                                     <p><b>Vendeur : ${user.pseudo}</b></p>
                                 </td>

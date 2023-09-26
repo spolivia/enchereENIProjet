@@ -189,8 +189,15 @@
                             <td>Photo</td>
                             <td>
                                 <h3>${article.nomArticle}</h3>
-                                <p>Prix : BESOIN MONTANT_ENCHERES</p>
-                                <p>Fin Enchere : ${article.dateFinEncheres}</p>
+                                <c:choose>
+								    <c:when test="${article.enchere.montant_enchere == null || article.enchere.montant_enchere == 0}">
+								        Prix : ${article.prixInitial}
+								    </c:when>
+								    <c:otherwise>
+								        <p>Prix : ${article.enchere.montant_enchere}</p>
+								    </c:otherwise>
+								</c:choose>
+                                	<p>Fin Enchere : ${article.dateFinEncheres}</p>
                                 <c:choose>
                                     <c:when test="${sessionScope.no_utilisateur > 0}">
                                         <c:choose>

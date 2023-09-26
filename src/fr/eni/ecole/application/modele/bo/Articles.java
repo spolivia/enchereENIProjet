@@ -14,8 +14,10 @@ public class Articles {
     private Integer noCategorie;
 	private Utilisateurs utilisateur;
 	private Retraits retrait;
+	private Encheres enchere;
 
-    public Articles() {
+
+	public Articles() {
     }
 
     public Articles(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur) {
@@ -113,4 +115,19 @@ public class Articles {
 		this.retrait = retrait;
 	}
 
+    public Retraits getRetrait() {
+		return retrait;
+	}
+
+	public void setRetrait(Retraits retrait) {
+		this.retrait = retrait;
+	}
+
+	public Encheres getEnchere() {
+		return enchere;
+	}
+
+	public void setEnchere(Encheres enchere) {
+		this.enchere = enchere;
+	}
 }

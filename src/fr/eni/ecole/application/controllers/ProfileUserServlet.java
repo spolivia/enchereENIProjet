@@ -3,8 +3,10 @@ package fr.eni.ecole.application.controllers;
 import fr.eni.ecole.application.modele.bo.Utilisateurs;
 import fr.eni.ecole.application.modele.bll.ArticlesManager;
 import fr.eni.ecole.application.modele.bll.BLLException;
+import fr.eni.ecole.application.modele.bll.EncheresManager;
 import fr.eni.ecole.application.modele.bll.UtilisateursManager;
 import fr.eni.ecole.application.modele.bo.Articles;
+import fr.eni.ecole.application.modele.bo.Encheres;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
 
 import javax.servlet.ServletException;
@@ -23,7 +25,7 @@ public class ProfileUserServlet extends HttpServlet {
         try {
             // Get the userId parameter from the request
             String userIdParam = request.getParameter("userId");
-            System.out.println("Visiting ID verifired as " + userIdParam);
+            System.out.println("Visiting ID verified as " + userIdParam);
             if (userIdParam != null && !userIdParam.isEmpty()) {
                 // Parse the userId parameter to an integer
                 int userId = Integer.parseInt(userIdParam);
@@ -38,6 +40,17 @@ public class ProfileUserServlet extends HttpServlet {
                 // Create an ArticlesManager and fetch the user's articles filtered by userID
                 ArticlesManager articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
                 List<Articles> listeArticles = articlesManager.selectByUserID(userId);
+
+                // Create an EncheresManager
+                EncheresManager encheresManager = new EncheresManager(DAOFactory.getEncheresDAO());
+
+                // Retrieve the highest enchere for each article in the user's list
+                for (Articles article : listeArticles) {
+                    Encheres enchere = encheresManager.highestEnchere(article.getNoArticle());
+                    article.setEnchere(enchere);
+                }
+
+                // Set the user's articles with enchere information as an attribute
                 request.setAttribute("listeArticles", listeArticles);
 
                 // Forward the request to the user profile JSP
@@ -51,4 +64,5 @@ public class ProfileUserServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while retrieving the user's profile.");
         }
     }
+
 }
