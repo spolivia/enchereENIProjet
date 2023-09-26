@@ -71,7 +71,6 @@ public class AccueilServlet extends HttpServlet {
 
             List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche, filtreCategorie);
 
-            // Iterate through the articles to fetch associated users
             for (Articles article : listeArticles) {
                 Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(article.getNoUtilisateur());
                 article.setUtilisateur(utilisateur);

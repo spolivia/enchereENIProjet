@@ -62,7 +62,15 @@
                         <tr>
                     </c:if>
                     <td>
-                        <table border="1">
+                                            <table border="1"
+                           <c:choose>
+                               <c:when test="${sessionScope.no_utilisateur > 0}">
+                                   onclick="window.location.href='ArticleDetailsServlet?articleId=${article.noArticle}'"
+                               </c:when>
+                               <c:otherwise>
+                               </c:otherwise>
+                           </c:choose>
+                    >
                             <tr>
                                 <td>Photo</td>
                                 <td>

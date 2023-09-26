@@ -165,17 +165,30 @@
     </c:when>
     <c:otherwise>
         <table border="0" cellspacing="20" align="center">
+            <tr>
+                <td colspan="2" align="center">
+                    <h2>Mes enchères</h2>
+                </td>
+            </tr>
             <c:forEach var="article" items="${listeArticles}" varStatus="loop">
                 <c:if test="${loop.index % 2 == 0}">
-                    <tr> 
+                    <tr>
                 </c:if>
                 <td>
-                    <table border="1">
+                    <table border="1"
+                           <c:choose>
+                               <c:when test="${sessionScope.no_utilisateur > 0}">
+                                   onclick="window.location.href='ArticleDetailsServlet?articleId=${article.noArticle}'"
+                               </c:when>
+                               <c:otherwise>
+                               </c:otherwise>
+                           </c:choose>
+                    >
                         <tr>
                             <td>Photo</td>
                             <td>
                                 <h3>${article.nomArticle}</h3>
-                                <p>Prix : BESOIN MONTANT_ENCHERE</p>
+                                <p>Prix : BESOIN MONTANT_ENCHERES</p>
                                 <p>Fin Enchere : ${article.dateFinEncheres}</p>
                                 <c:choose>
                                     <c:when test="${sessionScope.no_utilisateur > 0}">
@@ -197,12 +210,15 @@
                     </table>
                 </td>
                 <c:if test="${loop.index % 2 == 1 || loop.last}">
-                    </tr> 
+                    </tr>
                 </c:if>
             </c:forEach>
         </table>
     </c:otherwise>
 </c:choose>
+
+
+
 
     
 </body>
