@@ -23,6 +23,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	private static final String DELETE = "DELETE FROM Encheres WHERE id_encheres = ?";
 	private static final String SELECT_BY_ARTICLE_ID = "SELECT * FROM Encheres WHERE no_article = ?";
 	private static final String SELECT_BY_USER_ID = "SELECT * FROM Encheres WHERE no_utilisateur = ?";
+	private static final String HIGHEST_ENCHERE = "SELECT MAX(montant_enchere) FROM Encheres WHERE no_article = ?";
 
 	@Override
 	public Encheres selectById(int id) throws DALException {
@@ -177,5 +178,22 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			throw new DALException("Erreur lors de la récupération de la liste des enchères par article", e);
 		}
 		return encheres;
+	}
+
+	@Override
+	public Encheres highestEnchere(int no_article) throws DALException {
+
+		try (Connection connection = JdbcTools.getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(HIGHEST_ENCHERE)) {
+			preparedStatement.setInt(1, no_article);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSetToEncheres(resultSet);
+				}
+				return null;
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la récupération de l'enchère la plus haute", e);
+		}
 	}
 }

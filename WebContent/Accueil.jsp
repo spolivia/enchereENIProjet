@@ -175,7 +175,7 @@
                             <td>Photo</td>
                             <td>
                                 <h3>${article.nomArticle}</h3>
-                                <p>Prix : BESOIN MONTANT_ENCHERE</p>
+                                <p>Prix : ${article.enchere.montant_enchere}</p>
                                 <p>Fin Enchere : ${article.dateFinEncheres}</p>
                                 <c:choose>
                                     <c:when test="${sessionScope.no_utilisateur > 0}">

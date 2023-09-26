@@ -1,14 +1,5 @@
 package fr.eni.ecole.application.controllers;
 
-import fr.eni.ecole.application.modele.bll.ArticlesManager;
-import fr.eni.ecole.application.modele.bll.BLLException;
-import fr.eni.ecole.application.modele.bll.CategoriesManager;
-import fr.eni.ecole.application.modele.bll.UtilisateursManager;
-import fr.eni.ecole.application.modele.bo.Articles;
-import fr.eni.ecole.application.modele.bo.Categories;
-import fr.eni.ecole.application.modele.bo.Utilisateurs;
-import fr.eni.ecole.application.modele.dal.DAOFactory;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -18,73 +9,94 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.ecole.application.modele.bll.ArticlesManager;
+import fr.eni.ecole.application.modele.bll.BLLException;
+import fr.eni.ecole.application.modele.bll.CategoriesManager;
+import fr.eni.ecole.application.modele.bll.EncheresManager;
+import fr.eni.ecole.application.modele.bll.UtilisateursManager;
+import fr.eni.ecole.application.modele.bo.Articles;
+import fr.eni.ecole.application.modele.bo.Categories;
+import fr.eni.ecole.application.modele.bo.Encheres;
+import fr.eni.ecole.application.modele.bo.Utilisateurs;
+import fr.eni.ecole.application.modele.dal.DAOFactory;
+
 @WebServlet("/listeArticles")
 public class AccueilServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    
-    private ArticlesManager articlesManager;
-    private CategoriesManager categoriesManager;
-    private UtilisateursManager utilisateursManager;
+	private static final long serialVersionUID = 1L;
 
-    public void init() throws ServletException {
-        super.init();
-        articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
-        categoriesManager = new CategoriesManager(DAOFactory.getCategoriesDAO());
-        utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
-    }
+	private ArticlesManager articlesManager;
+	private CategoriesManager categoriesManager;
+	private UtilisateursManager utilisateursManager;
+	private EncheresManager encheresManager;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String requeteRecherche = "";
-            int filtreCategorie = 0;
+	public void init() throws ServletException {
+		super.init();
+		articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
+		categoriesManager = new CategoriesManager(DAOFactory.getCategoriesDAO());
+		utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
+		encheresManager = new EncheresManager(DAOFactory.getEncheresDAO());
+	}
 
-            List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche, filtreCategorie);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			String requeteRecherche = "";
+			int filtreCategorie = 0;
 
-            // Iterate through the articles to fetch associated users
-            for (Articles article : listeArticles) {
-                Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(article.getNoUtilisateur());
-                article.setUtilisateur(utilisateur);
-            }
+			List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche,
+					filtreCategorie);
 
-            List<Categories> categories = categoriesManager.getAllCategories();
+			// Iterate through the articles to fetch associated users
+			for (Articles article : listeArticles) {
+				Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(article.getNoUtilisateur());
+				article.setUtilisateur(utilisateur);
+				Encheres enchere = encheresManager.highestEnchere(article.getNoArticle());
+				article.setEnchere(enchere);
+			}
 
-            request.setAttribute("listeArticles", listeArticles);
-            request.setAttribute("categories", categories);
+			List<Categories> categories = categoriesManager.getAllCategories();
 
-            request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
+			request.setAttribute("listeArticles", listeArticles);
+			request.setAttribute("categories", categories);
 
-        } catch (BLLException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles.");
-        }
-    }
+			request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            List<Categories> categories = categoriesManager.getAllCategories();
+		} catch (BLLException e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+					"Une erreur s'est produite lors de la récupération des articles.");
+		}
+	}
 
-            String requeteRecherche = request.getParameter("requeteRecherche");
-            int filtreCategorie = Integer.parseInt(request.getParameter("filtreCategorie"));
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			List<Categories> categories = categoriesManager.getAllCategories();
 
-            request.getSession().setAttribute("requeteRecherche", requeteRecherche);
-            request.getSession().setAttribute("filtreCategorie", filtreCategorie);
+			String requeteRecherche = request.getParameter("requeteRecherche");
+			int filtreCategorie = Integer.parseInt(request.getParameter("filtreCategorie"));
 
-            List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche, filtreCategorie);
+			request.getSession().setAttribute("requeteRecherche", requeteRecherche);
+			request.getSession().setAttribute("filtreCategorie", filtreCategorie);
 
-            // Iterate through the articles to fetch associated users
-            for (Articles article : listeArticles) {
-                Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(article.getNoUtilisateur());
-                article.setUtilisateur(utilisateur);
-            }
+			List<Articles> listeArticles = articlesManager.logicFiltrerTirageArticles(requeteRecherche,
+					filtreCategorie);
 
-            request.setAttribute("listeArticles", listeArticles);
-            request.setAttribute("categories", categories);
+			// Iterate through the articles to fetch associated users
+			for (Articles article : listeArticles) {
+				Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(article.getNoUtilisateur());
+				article.setUtilisateur(utilisateur);
+			}
 
-            request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
+			request.setAttribute("listeArticles", listeArticles);
+			request.setAttribute("categories", categories);
 
-        } catch (BLLException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite lors de la récupération des articles.");
-        }
-    }
+			request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
+
+		} catch (BLLException e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+					"Une erreur s'est produite lors de la récupération des articles.");
+		}
+	}
 }

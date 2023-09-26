@@ -4,20 +4,19 @@ import java.util.List;
 
 import fr.eni.ecole.application.modele.bo.Encheres;
 import fr.eni.ecole.application.modele.dal.DALException;
-import fr.eni.ecole.application.modele.dal.DAOFactory;
 import fr.eni.ecole.application.modele.dal.EncheresDAO;
 
 public class EncheresManager {
 
-	private EncheresDAO EncheresDAO;
+	private EncheresDAO encheresDAO;
 
-	public EncheresManager() throws BLLException {
-		EncheresDAO = DAOFactory.getEncheresDAO();
+	public EncheresManager(EncheresDAO encheresDAO) {
+		this.encheresDAO = encheresDAO;
 	}
 
 	public List<Encheres> getAllEncheres() throws BLLException {
 		try {
-			return EncheresDAO.selectAll();
+			return encheresDAO.selectAll();
 		} catch (DALException e) {
 			throw new BLLException("Erreur récuperation enchères", e);
 		}
@@ -25,7 +24,7 @@ public class EncheresManager {
 
 	public List<Encheres> getEncheresByArticle(int articleId) throws BLLException {
 		try {
-			return EncheresDAO.selectByArticleId(articleId);
+			return encheresDAO.selectByArticleId(articleId);
 		} catch (DALException e) {
 			throw new BLLException("Erreur récupération enchères par article", e);
 		}
@@ -34,7 +33,7 @@ public class EncheresManager {
 
 	public List<Encheres> selectEncheresByUserId(int userId) throws BLLException {
 		try {
-			return EncheresDAO.selectByUserId(userId);
+			return encheresDAO.selectByUserId(userId);
 		} catch (DALException e) {
 			throw new BLLException("Erreur récupération enchères par utilisateur", e);
 		}
@@ -42,7 +41,7 @@ public class EncheresManager {
 
 	public Encheres selectEncheresById(int encheresId) throws BLLException {
 		try {
-			return EncheresDAO.selectById(encheresId);
+			return encheresDAO.selectById(encheresId);
 		} catch (DALException e) {
 			throw new BLLException("Erreur récupération enchères par ID", e);
 		}
@@ -50,7 +49,7 @@ public class EncheresManager {
 
 	public List<Encheres> selectAllEncheres() throws BLLException {
 		try {
-			return EncheresDAO.selectAll();
+			return encheresDAO.selectAll();
 		} catch (DALException e) {
 			throw new BLLException("Erreur récupération enchères ", e);
 		}
@@ -58,7 +57,7 @@ public class EncheresManager {
 
 	public void updateEncheres(Encheres encheres) throws BLLException {
 		try {
-			EncheresDAO.update(encheres);
+			encheresDAO.update(encheres);
 		} catch (DALException e) {
 			throw new BLLException("Erreur mise à jour enchères ", e);
 		}
@@ -66,7 +65,7 @@ public class EncheresManager {
 
 	public void insertEncheres(Encheres encheres) throws BLLException {
 		try {
-			EncheresDAO.insert(encheres);
+			encheresDAO.insert(encheres);
 		} catch (DALException e) {
 			throw new BLLException("Erreur insertion enchère ", e);
 		}
@@ -76,7 +75,7 @@ public class EncheresManager {
 	public void deleteEncheresByID(int encheresId) throws BLLException {
 
 		try {
-			EncheresDAO.delete(encheresId);
+			encheresDAO.delete(encheresId);
 		} catch (DALException e) {
 			throw new BLLException("Erreur suppression enchère par ID ", e);
 		}
@@ -85,9 +84,18 @@ public class EncheresManager {
 	public void deleteEncheres(Encheres encheres) throws BLLException {
 
 		try {
-			EncheresDAO.delete(encheres);
+			encheresDAO.delete(encheres);
 		} catch (DALException e) {
 			throw new BLLException("Erreur suppression enchère ", e);
+		}
+	}
+
+	public Encheres highestEnchere(int highestEnchere) throws BLLException {
+
+		try {
+			return encheresDAO.highestEnchere(highestEnchere);
+		} catch (DALException e) {
+			throw new BLLException("Erreur récupération dernière enchère ", e);
 		}
 	}
 
