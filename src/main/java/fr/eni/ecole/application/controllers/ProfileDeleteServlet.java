@@ -21,7 +21,7 @@ public class ProfileDeleteServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/ProfileDelete.jsp").forward(request, response);
+        //request.getRequestDispatcher("/WEB-INF/ProfileDelete.jsp").forward(request, response);
 	}
 	
 	

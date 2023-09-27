@@ -15,5 +15,4 @@ public interface DAO<T> {
 	public void delete(int id) throws DALException;
 
 	public void delete(T a) throws DALException;
-
 }

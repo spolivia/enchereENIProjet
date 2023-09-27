@@ -84,6 +84,7 @@
 	</form>
 	
 	
+	
 	<c:choose>
 	    <c:when test="${empty listeArticles}">
 	        <p align="center">Aucun article trouvé.</p>
@@ -96,29 +97,39 @@
 	                    <tr>
 	                </c:if>
 	                <td>
-	                    <table border="1">
-	                        <tr>
-	                            <td>Photo</td>
-	                            <td>
+						<table border="1"
+	                        <c:choose>
+	                        	<c:when test="${sessionScope.no_utilisateur > 0}">
+	                            	onclick="window.location.href='ArticleDetailsServlet?articleId=${article.noArticle}'"
+	                            </c:when>
+	                            <c:otherwise>
+	                            </c:otherwise>
+                           	</c:choose>
+                    	>
+						   	<tr>
+						   	<td>Photo</td>
+						        <td>
+						            <h3>${article.nomArticle}</h3>
+										<c:choose>
+										    <c:when test="${article.enchere == null || article.enchere.montant_enchere == 0}">
+										        Prix : ${article.prixInitial}
+										    </c:when>
+										    <c:otherwise>
+										        <p>Prix : ${article.enchere.montant_enchere}</p>
+										    </c:otherwise>
+										</c:choose>
+
+						            <p>Fin Enchere : ${article.dateFinEncheres}</p>
+						            <p><b>Vendeur : <%= utilisateur.getPseudo() %></b></p>
 									<c:choose>
 									    <c:when test="${article.dateDebutEncheres.after(now)}">
-									        <h3>${article.nomArticle}</h3>
-									        <p>Prix : BESOIN MONTANT_ENCHERE</p>
-									        <p>Fin Enchere : ${article.dateFinEncheres}</p>
-									        <p><b>Vendeur : <%= utilisateur.getPseudo() %></b></p>
-									        <p><a href="Edit.jsp">Edit</a></p>
-									        <p>Debut Encheres : ${article.dateDebutEncheres}</p>
+									        <p><a href="ArticleUpdateServlet?articleId=${article.noArticle}">Edit</a></p>
 									    </c:when>
-									    <c:otherwise>
-									        <h3>${article.nomArticle}</h3>
-									        <p>Prix : BESOIN MONTANT_ENCHERE</p>
-									        <p>Fin Enchere : ${article.dateFinEncheres}</p>
-									        <p><b>Vendeur : <%= utilisateur.getPseudo() %></b></p>
-									    </c:otherwise>
 									</c:choose>
-	                            </td>
-	                        </tr>
-	                    </table>
+
+						        </td>
+						    </tr>
+						</table>
 	                </td>
 	                <c:if test="${loop.index % 2 == 1 || loop.last}">
 	                    </tr>

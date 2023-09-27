@@ -19,7 +19,7 @@ public class ProfileCreationServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Forward to the JSP for account creation
-        request.getRequestDispatcher("/ProfileCreation.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/ProfileCreation.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

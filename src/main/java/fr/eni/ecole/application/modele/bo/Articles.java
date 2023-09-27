@@ -13,7 +13,9 @@ public class Articles {
     private int noUtilisateur;
     private Integer noCategorie;
 	private Utilisateurs utilisateur;
-
+	private Retraits retrait;
+	private Encheres enchere;
+	
     public Articles() {
     }
 
@@ -107,5 +109,24 @@ public class Articles {
 	public void setUtilisateur(Utilisateurs utilisateur) {
 		this.utilisateur = utilisateur;		
 	}
+	
+	public void setRetraits(Retraits retrait) {
+		this.retrait = retrait;
+	}
 
+    public Retraits getRetrait() {
+		return retrait;
+	}
+
+	public void setRetrait(Retraits retrait) {
+		this.retrait = retrait;
+	}
+
+	public Encheres getEnchere() {
+		return enchere;
+	}
+
+	public void setEnchere(Encheres enchere) {
+		this.enchere = enchere;
+	}
 }

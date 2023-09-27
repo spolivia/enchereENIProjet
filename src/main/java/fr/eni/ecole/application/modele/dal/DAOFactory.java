@@ -4,6 +4,7 @@ import fr.eni.ecole.application.modele.dal.jdbc.ArticlesDAOJdbcImpl;
 import fr.eni.ecole.application.modele.dal.jdbc.RetraitsDAOJdbcImpl;
 import fr.eni.ecole.application.modele.dal.jdbc.UtilisateursDAOJdbcImpl;
 import fr.eni.ecole.application.modele.dal.jdbc.CategoriesDAOJdbcImpl;
+import fr.eni.ecole.application.modele.dal.jdbc.EncheresDAOJdbcImpl;
 
 public class DAOFactory {
 
@@ -21,5 +22,9 @@ public class DAOFactory {
 	
 	public static UtilisateursDAO getUtilisateursDAO() {
 		return new UtilisateursDAOJdbcImpl();
+	}
+	
+	public static EncheresDAO getEncheresDAO() {
+		return new EncheresDAOJdbcImpl();
 	}
 }

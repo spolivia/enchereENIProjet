@@ -21,7 +21,7 @@ public class ArticleCreationServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/ArticleCreation.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/ArticleCreation.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

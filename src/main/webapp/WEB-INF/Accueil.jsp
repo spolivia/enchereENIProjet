@@ -8,8 +8,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/ListeArticleFormat.css">
-    ENI-Encheres
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
     <title>Liste des enchères</title>
 
 </head>
@@ -18,14 +17,14 @@
     <c:choose>
         <c:when test="${sessionScope.no_utilisateur > 0}">
             <a href="#">Enchères</a>
-            <a href="ArticleCreation.jsp">Vendre un article</a>
-            <a href="ProfileMon.jsp">Mon Profil</a>
+            <a href="ArticleCreation">Vendre un article</a>
+            <a href="ProfileMon">Mon Profil</a>
             ${sessionScope.pseudo}
             <a href="Deconnexion">Déconnexion</a>
             
         </c:when>
         <c:otherwise>
-            <a href="Connexion.jsp">S'inscrire - Se connecter</a>
+            <a href="Connexion">S'inscrire - Se connecter</a>
         </c:otherwise>
     </c:choose>
 </div>
@@ -73,7 +72,7 @@
 
     <c:choose>
          <c:when test="${sessionScope.no_utilisateur > 0}">
-         	<center><p style="color:red;"><b>Functionaliter des Radio et Checkboxes pas actif</b></p></center>
+         	<center><p style="color:red;"><b>Fonctionnalité des Radio et Checkboxes pas actif</b></p></center>
             <table align="center">
 			<tr>
 				<td>
@@ -164,24 +163,46 @@
         <p align="center">Aucun article trouvé.</p>
     </c:when>
     <c:otherwise>
+            <!-- Section pour l'affichage des articles -->
         <table border="0" cellspacing="20" align="center">
+            <tr>
+                <td colspan="2" align="center">
+                    <h2>Mes enchères</h2>
+                </td>
+            </tr>
             <c:forEach var="article" items="${listeArticles}" varStatus="loop">
                 <c:if test="${loop.index % 2 == 0}">
-                    <tr> 
+                    <tr>
                 </c:if>
                 <td>
-                    <table border="1">
+                    <table border="1" 
+                           <c:choose>
+                               <c:when test="${sessionScope.no_utilisateur > 0}">
+                                   onclick="window.location.href='ArticleDetailsServlet?articleId=${article.noArticle}'" <!-- TODO : ca renvoit vers où ?  -->
+                               </c:when>
+                               <c:otherwise>
+                               </c:otherwise>
+                           </c:choose>
+                    >
+                        <!-- Contenu de l'article -->
                         <tr>
                             <td>Photo</td>
                             <td>
                                 <h3>${article.nomArticle}</h3>
-                                <p>Prix : BESOIN MONTANT_ENCHERE</p>
-                                <p>Fin Enchere : ${article.dateFinEncheres}</p>
+                                <c:choose>
+								    <c:when test="${article.enchere.montant_enchere == null || article.enchere.montant_enchere == 0}">
+								        Prix : ${article.prixInitial}
+								    </c:when>
+								    <c:otherwise>
+								        <p>Prix : ${article.enchere.montant_enchere}</p>
+								    </c:otherwise>
+								</c:choose>
+                                	<p>Fin Enchere : ${article.dateFinEncheres}</p>
                                 <c:choose>
                                     <c:when test="${sessionScope.no_utilisateur > 0}">
                                         <c:choose>
                                             <c:when test="${sessionScope.no_utilisateur == article.utilisateur.noUtilisateur}">
-                                                <p><b>Vendeur : <a href="ProfileMon.jsp">${article.utilisateur.pseudo}</a></b></p>
+                                                <p><b>Vendeur : <a href="WEB_INF/ProfileMon.jsp">${article.utilisateur.pseudo}</a></b></p>
                                             </c:when>
                                             <c:otherwise>
                                                 <p><b>Vendeur : <a href="ProfileUserServlet?userId=${article.utilisateur.noUtilisateur}">${article.utilisateur.pseudo}</a></b></p>
@@ -197,7 +218,7 @@
                     </table>
                 </td>
                 <c:if test="${loop.index % 2 == 1 || loop.last}">
-                    </tr> 
+                    </tr>
                 </c:if>
             </c:forEach>
         </table>

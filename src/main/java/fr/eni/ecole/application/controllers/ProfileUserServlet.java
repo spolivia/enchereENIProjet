@@ -6,6 +6,8 @@ import fr.eni.ecole.application.modele.bll.BLLException;
 import fr.eni.ecole.application.modele.bll.UtilisateursManager;
 import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
+import fr.eni.ecole.application.modele.bll.EncheresManager;
+import fr.eni.ecole.application.modele.bo.Encheres;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,10 +40,20 @@ public class ProfileUserServlet extends HttpServlet {
                 // Create an ArticlesManager and fetch the user's articles filtered by userID
                 ArticlesManager articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
                 List<Articles> listeArticles = articlesManager.selectByUserID(userId);
+               
+                // Create an EncheresManager
+                EncheresManager encheresManager = new EncheresManager(DAOFactory.getEncheresDAO());
+
+                // Retrieve the highest enchere for each article in the user's list
+                for (Articles article : listeArticles) {
+                    Encheres enchere = encheresManager.highestEnchere(article.getNoArticle());
+                    article.setEnchere(enchere);
+                }                
+                
                 request.setAttribute("listeArticles", listeArticles);
 
                 // Forward the request to the user profile JSP
-                request.getRequestDispatcher("/ProfileUser.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/ProfileUser.jsp").forward(request, response);
             } else {
                 // Handle the case when userIdParam is missing or invalid
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user ID");

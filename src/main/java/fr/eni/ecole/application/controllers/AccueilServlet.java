@@ -4,8 +4,10 @@ import fr.eni.ecole.application.modele.bll.ArticlesManager;
 import fr.eni.ecole.application.modele.bll.BLLException;
 import fr.eni.ecole.application.modele.bll.CategoriesManager;
 import fr.eni.ecole.application.modele.bll.UtilisateursManager;
+import fr.eni.ecole.application.modele.bll.EncheresManager;
 import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.bo.Categories;
+import fr.eni.ecole.application.modele.bo.Encheres;
 import fr.eni.ecole.application.modele.bo.Utilisateurs;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
 
@@ -25,12 +27,14 @@ public class AccueilServlet extends HttpServlet {
     private ArticlesManager articlesManager;
     private CategoriesManager categoriesManager;
     private UtilisateursManager utilisateursManager;
-
+    private EncheresManager encheresManager;
+    
     public void init() throws ServletException {
         super.init();
         articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
         categoriesManager = new CategoriesManager(DAOFactory.getCategoriesDAO());
         utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
+        encheresManager = new EncheresManager(DAOFactory.getEncheresDAO());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,6 +48,9 @@ public class AccueilServlet extends HttpServlet {
             for (Articles article : listeArticles) {
                 Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(article.getNoUtilisateur());
                 article.setUtilisateur(utilisateur);
+                
+                Encheres enchere = encheresManager.highestEnchere(article.getNoArticle());
+				article.setEnchere(enchere);
             }
 
             List<Categories> categories = categoriesManager.getAllCategories();
@@ -51,7 +58,7 @@ public class AccueilServlet extends HttpServlet {
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
 
-            request.getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/Accueil.jsp").forward(request, response);
 
         } catch (BLLException e) {
             e.printStackTrace();
@@ -80,7 +87,7 @@ public class AccueilServlet extends HttpServlet {
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
 
-            request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/Accueil.jsp").forward(request, response);
 
         } catch (BLLException e) {
             e.printStackTrace();

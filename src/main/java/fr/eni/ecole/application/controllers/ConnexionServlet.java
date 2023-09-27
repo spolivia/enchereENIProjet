@@ -26,7 +26,7 @@ public class ConnexionServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("Connexion.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/Connexion.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,7 +46,7 @@ public class ConnexionServlet extends HttpServlet {
 		            System.out.println("Connected");
 
 		        } else {
-		            response.sendRedirect("Connexion.jsp");
+		            response.sendRedirect("/WEB-INF/Connexion.jsp");
 		            System.out.println("Failed Connection");
 		        }
 		} catch (DALException e) {

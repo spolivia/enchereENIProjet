@@ -21,6 +21,9 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	private static final String UPDATE = "UPDATE Encheres SET no_utilisateur = ?, no_article = ?, date_enchere = ?,  montant_enchere = ? WHERE id_encheres = ?";
 	private static final String INSERT = "INSERT INTO Encheres (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?, ?, ?, ?)";
 	private static final String DELETE = "DELETE FROM Encheres WHERE id_encheres = ?";
+	private static final String SELECT_BY_ARTICLE_ID = "SELECT * FROM Encheres WHERE no_article = ?";
+	private static final String SELECT_BY_USER_ID = "SELECT * FROM Encheres WHERE no_utilisateur = ?";
+	private static final String HIGHEST_ENCHERE = "SELECT MAX(montant_enchere) FROM Encheres WHERE no_article = ?";
 
 	@Override
 	public Encheres selectById(int id) throws DALException {
@@ -53,7 +56,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		}
 		return encheres;
 	}
-
+/*
 	@Override
 	public void update(Encheres a) throws DALException {
 		Encheres existingArticle = selectById(a.getId_encheres());
@@ -132,17 +135,89 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		this.delete(a.getId_encheres());
 
 	}
-
+*/
 	private Encheres resultSetToEncheres(ResultSet resultSet) throws SQLException {
-		int id_encheres = resultSet.getInt("id_encheres");
 		int no_utilisateur = resultSet.getInt("no_utilisateur");
 		int no_article = resultSet.getInt("no_article");
 		LocalDateTime date_enchere = resultSet.getTimestamp("date_enchere").toLocalDateTime();
 		int montant_enchere = resultSet.getInt("montant_enchere");
 
-		Encheres encheres = new Encheres(id_encheres, no_utilisateur, no_article, date_enchere, montant_enchere);
+		Encheres encheres = new Encheres(no_utilisateur, no_article, date_enchere, montant_enchere);
 
 		return encheres;
 	}
 
+	@Override
+	public List<Encheres> selectByArticleId(int articleId) throws DALException {
+		List<Encheres> encheres = new ArrayList<>();
+		try (Connection connection = JdbcTools.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(SELECT_BY_ARTICLE_ID)) {
+			while (resultSet.next()) {
+				Encheres enchere = resultSetToEncheres(resultSet);
+				encheres.add(enchere);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la récupération de la liste des enchères par article", e);
+		}
+		return encheres;
+	}
+
+	@Override
+	public List<Encheres> selectByUserId(int userId) throws DALException {
+		List<Encheres> encheres = new ArrayList<>();
+		try (Connection connection = JdbcTools.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet resultSet = statement.executeQuery(SELECT_BY_USER_ID)) {
+			while (resultSet.next()) {
+				Encheres enchere = resultSetToEncheres(resultSet);
+				encheres.add(enchere);
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur lors de la récupération de la liste des enchères par article", e);
+		}
+		return encheres;
+	}
+
+	@Override
+	public Encheres highestEnchere(int no_article) throws DALException {
+	    try (Connection connection = JdbcTools.getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement(HIGHEST_ENCHERE)) {
+	        preparedStatement.setInt(1, no_article);
+	        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+	            if (resultSet.next()) {
+	                int maxMontantEnchere = resultSet.getInt(1); // Get the maximum montant_enchere
+	                // Create an Encheres object with only the montant_enchere set
+	                return new Encheres(0, no_article, null, maxMontantEnchere);
+	            }
+	            return null; // Return null if no result is found
+	        }
+	    } catch (SQLException e) {
+	        throw new DALException("Erreur lors de la récupération de l'enchère la plus haute", e);
+	    }
+	}
+
+	@Override
+	public void update(Encheres a) throws DALException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insert(Encheres a) throws DALException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(int id) throws DALException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Encheres a) throws DALException {
+		// TODO Auto-generated method stub
+		
+	}
 }
