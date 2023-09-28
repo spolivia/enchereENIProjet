@@ -11,6 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Article</title>
+    <link rel="stylesheet" type="text/css" href="css/styles_olivia.css"> 
     <script>
         function toggleAddressFields() {
             var checkbox = document.getElementById("useOwnAddressCheckbox");
@@ -25,6 +26,7 @@
     </script>
 </head>
 <body>
+
     <%
         int userId = (int) session.getAttribute("no_utilisateur");
         UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
@@ -77,7 +79,7 @@
             <input type="text" id="ville" name="ville" value="<%= utilisateur.getVille() %>"><br>
         </div>
 
-        <input type="submit" value="Create Article">
+        <button  class="btnAccept" type="submit">Créer l'annonce </button>
     </form>
 
     <br>

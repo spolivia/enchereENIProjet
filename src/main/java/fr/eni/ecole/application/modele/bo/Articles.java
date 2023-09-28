@@ -19,7 +19,7 @@ public class Articles {
     public Articles() {
     }
 
-    public Articles(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur) {
+    public Articles(int noArticle, String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres, int prixInitial, int prixVente, int noUtilisateur, Integer noCategorie) {
         this.noArticle = noArticle;
         this.nomArticle = nomArticle;
         this.description = description;
@@ -28,6 +28,7 @@ public class Articles {
         this.prixInitial = prixInitial;
         this.prixVente = prixVente;
         this.noUtilisateur = noUtilisateur;
+        this.noCategorie = noCategorie; 
     }
 
     public int getNoArticle() {

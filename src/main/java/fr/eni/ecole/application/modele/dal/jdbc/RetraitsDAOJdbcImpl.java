@@ -16,7 +16,7 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
 	private static final String SELECT_BY_ID = "SELECT * FROM Retraits WHERE no_article = ?";
 	private static final String SELECT_ALL = "SELECT * FROM Retraits";
-	private static final String UPDATE = "UPDATE Retraits SET rue = ?, code_postal = ?, ville = ? WHERE getNoArticle = ?";
+	private static final String UPDATE = "UPDATE Retraits SET rue = ?, code_postal = ?, ville = ? WHERE no_article = ?";
 	private static final String INSERT = "INSERT INTO Retraits (no_article, rue, code_postal, ville) VALUES (?, ?, ?, ?)";
 	private static final String DELETE = "DELETE FROM Retraits WHERE no_article = ?";
 

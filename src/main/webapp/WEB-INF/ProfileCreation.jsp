@@ -9,6 +9,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/styles_olivia.css"> 
     <title>Create Account</title>
 </head>
 <body>
