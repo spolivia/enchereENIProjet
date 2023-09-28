@@ -86,5 +86,14 @@ public class UtilisateursManager {
             throw new BLLException("Error updating user", e);
         }
     }
+    
+    public Utilisateurs getUtilisateursByArticle(int articleId) throws BLLException {
+        try {
+            return utilisateursDAO.selectByArticle(articleId);
+        } catch (DALException e) {
+            throw new BLLException("Error retrieving user by article", e);
+        }
+    }
+    
 }
 

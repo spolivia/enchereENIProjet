@@ -17,4 +17,6 @@ public interface UtilisateursDAO extends DAO<Utilisateurs> {
 	public Utilisateurs getUtilisateursByPseudo(String pseudo) throws DALException;
 
 	void updateUtilisateurProfile(Utilisateurs user) throws DALException;
+
+	Utilisateurs selectByArticle(int articleId) throws DALException;
 }

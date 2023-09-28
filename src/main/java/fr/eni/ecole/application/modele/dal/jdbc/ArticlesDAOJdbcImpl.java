@@ -33,6 +33,7 @@ public class ArticlesDAOJdbcImpl implements ArticlesDAO{
         article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
         article.setPrixVente(rs.getInt("prix_initial"));
         article.setNoUtilisateur(rs.getInt("no_utilisateur"));
+        article.setNoCategorie(rs.getInt ("no_categorie"));
         
         System.out.println("ResultSetArticles returning to method");
         return article;

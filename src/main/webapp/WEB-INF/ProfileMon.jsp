@@ -80,7 +80,7 @@
     <form action="listeArticles">
         <input type="submit" value="Retour à l'accueil">
     </form>
-	<form action="ProfileUpdate.jsp" method="post">
+	<form action="ProfileUpdateServlet" method="post">
 	    <input type="submit" value="Changer vos détails">
 	</form>
 	

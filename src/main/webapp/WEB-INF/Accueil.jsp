@@ -18,8 +18,8 @@
     <c:choose>
         <c:when test="${sessionScope.no_utilisateur > 0}">
             <a href="#">Enchères</a>
-            <a href="ArticleCreation">Vendre un article</a>
-            <a href="ProfileMon.jsp">Mon Profil</a>
+            <a href="ArticleCreationServlet">Vendre un article</a>
+            <a href="ProfileMonServlet">Mon Profil</a>
             ${sessionScope.pseudo}
             <a href="Deconnexion">Déconnexion</a>      
         </c:when>
@@ -190,7 +190,7 @@
                                 <h3>${article.nomArticle}</h3>
                                 <c:choose>
 								    <c:when test="${article.enchere.montant_enchere == null || article.enchere.montant_enchere == 0}">
-								        Prix : ${article.prixInitial}
+								        Prix : ${article.prixVente}
 								    </c:when>
 								    <c:otherwise>
 								        <p>Prix : ${article.enchere.montant_enchere}</p>
@@ -201,7 +201,7 @@
                                     <c:when test="${sessionScope.no_utilisateur > 0}">
                                         <c:choose>
                                             <c:when test="${sessionScope.no_utilisateur == article.utilisateur.noUtilisateur}">
-                                                <p><b>Vendeur : <a href="WEB_INF/ProfileMon.jsp">${article.utilisateur.pseudo}</a></b></p>
+                                                <p><b>Vendeur : <a href="ProfileMonServlet">${article.utilisateur.pseudo}</a></b></p>
                                             </c:when>
                                             <c:otherwise>
                                                 <p><b>Vendeur : <a href="ProfileUserServlet?userId=${article.utilisateur.noUtilisateur}">${article.utilisateur.pseudo}</a></b></p>

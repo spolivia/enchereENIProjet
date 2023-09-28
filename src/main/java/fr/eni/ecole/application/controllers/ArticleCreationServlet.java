@@ -15,7 +15,7 @@ import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.bo.Retraits;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
 
-@WebServlet("/ArticleCreation")
+@WebServlet("/ArticleCreationServlet")
 public class ArticleCreationServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
