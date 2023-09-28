@@ -23,7 +23,7 @@
         <p>Date de début: ${requestScope.article.dateDebutEncheres}</p>
         <p>Date de fin: ${requestScope.article.dateFinEncheres}</p>
         <p>Prix initial: ${requestScope.article.prixVente}</p>
-        <p>Montant Courant: BESOIN MONTANT_ENCHERE</p>
+        <p>Montant Courant: ${requestScope.enchere.montant_enchere}</p>
        	<p>Catégorie:
 		    <c:choose>
 		        <c:when test="${requestScope.article.noCategorie == 1}">Informatique</c:when>

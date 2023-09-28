@@ -5,6 +5,9 @@
 <%@ page import="fr.eni.ecole.application.modele.bo.Utilisateurs" %>
 <%@ page import="fr.eni.ecole.application.modele.bll.UtilisateursManager" %>
 <%@ page import="fr.eni.ecole.application.modele.dal.DAOFactory" %>
+<%@ page import="fr.eni.ecole.application.modele.bo.Encheres" %>
+<%@ page import="fr.eni.ecole.application.modele.bll.EncheresManager" %>
+
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List" %>
@@ -31,10 +34,20 @@
 	    ArticlesManager articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
 	    List<Articles> listeArticles = articlesManager.selectByUserID(userId);
 	    request.setAttribute("listeArticles", listeArticles);
+	   
 	    
 	    // Fetch the user's information
 	    UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
 	    utilisateur = utilisateursManager.getUtilisateursById(userId);
+	    
+	    Encheres enchere = null;
+	    EncheresManager encheresManager = new EncheresManager(DAOFactory.getEncheresDAO());
+	    for (Articles article : listeArticles) {
+            enchere = encheresManager.highestEnchere(article.getNoArticle());
+            article.setEnchere(enchere);
+        }                
+
+
 	%>
 
 

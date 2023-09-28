@@ -61,6 +61,6 @@
     </script>
     <br>
 
-    <a href="ProfileMon.jsp">Cancel</a>
+    <a href="ProfileMonServlet">Cancel</a>
 </body>
 </html>
