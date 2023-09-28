@@ -13,7 +13,6 @@ public class Articles {
 	private int noUtilisateur;
 	private Integer noCategorie;
 	private Utilisateurs utilisateur;
-	private Encheres enchere;
 
 	public Articles() {
 	}
@@ -108,14 +107,6 @@ public class Articles {
 
 	public void setUtilisateur(Utilisateurs utilisateur) {
 		this.utilisateur = utilisateur;
-	}
-
-	public Encheres getEnchere() {
-		return enchere;
-	}
-
-	public void setEnchere(Encheres enchere) {
-		this.enchere = enchere;
 	}
 
 }

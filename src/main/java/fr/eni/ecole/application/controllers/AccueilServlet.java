@@ -16,7 +16,6 @@ import fr.eni.ecole.application.modele.bll.EncheresManager;
 import fr.eni.ecole.application.modele.bll.UtilisateursManager;
 import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.bo.Categories;
-import fr.eni.ecole.application.modele.bo.Encheres;
 import fr.eni.ecole.application.modele.bo.Utilisateurs;
 import fr.eni.ecole.application.modele.dal.DAOFactory;
 
@@ -50,8 +49,8 @@ public class AccueilServlet extends HttpServlet {
 			for (Articles article : listeArticles) {
 				Utilisateurs utilisateur = utilisateursManager.getUtilisateursById(article.getNoUtilisateur());
 				article.setUtilisateur(utilisateur);
-				Encheres enchere = encheresManager.highestEnchere(article.getNoArticle());
-				article.setEnchere(enchere);
+				int enchere = encheresManager.lastEnchere(article.getNoArticle());
+				article.setPrixVente(enchere);
 			}
 
 			List<Categories> categories = categoriesManager.getAllCategories();
@@ -59,7 +58,7 @@ public class AccueilServlet extends HttpServlet {
 			request.setAttribute("listeArticles", listeArticles);
 			request.setAttribute("categories", categories);
 
-			request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
 
 		} catch (BLLException e) {
 			e.printStackTrace();
@@ -91,7 +90,7 @@ public class AccueilServlet extends HttpServlet {
 			request.setAttribute("listeArticles", listeArticles);
 			request.setAttribute("categories", categories);
 
-			request.getRequestDispatcher("/Accueil.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
 
 		} catch (BLLException e) {
 			e.printStackTrace();

@@ -90,10 +90,10 @@ public class EncheresManager {
 		}
 	}
 
-	public Encheres highestEnchere(int highestEnchere) throws BLLException {
+	public int lastEnchere(int no_article) throws BLLException {
 
 		try {
-			return encheresDAO.highestEnchere(highestEnchere);
+			return encheresDAO.lastEnchere(no_article);
 		} catch (DALException e) {
 			throw new BLLException("Erreur récupération dernière enchère ", e);
 		}

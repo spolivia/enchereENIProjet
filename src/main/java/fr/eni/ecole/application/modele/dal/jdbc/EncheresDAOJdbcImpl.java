@@ -10,20 +10,21 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.ecole.application.modele.bo.Articles;
 import fr.eni.ecole.application.modele.bo.Encheres;
 import fr.eni.ecole.application.modele.dal.DALException;
 import fr.eni.ecole.application.modele.dal.EncheresDAO;
 
 public class EncheresDAOJdbcImpl implements EncheresDAO {
 
-	private static final String SELECT_BY_ID = "SELECT * FROM Encheres WHERE id_encheres = ?";
-	private static final String SELECT_ALL = "SELECT * FROM Encheres";
-	private static final String UPDATE = "UPDATE Encheres SET no_utilisateur = ?, no_article = ?, date_enchere = ?,  montant_enchere = ? WHERE id_encheres = ?";
-	private static final String INSERT = "INSERT INTO Encheres (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?, ?, ?, ?)";
-	private static final String DELETE = "DELETE FROM Encheres WHERE id_encheres = ?";
-	private static final String SELECT_BY_ARTICLE_ID = "SELECT * FROM Encheres WHERE no_article = ?";
-	private static final String SELECT_BY_USER_ID = "SELECT * FROM Encheres WHERE no_utilisateur = ?";
-	private static final String HIGHEST_ENCHERE = "SELECT MAX(montant_enchere) FROM Encheres WHERE no_article = ?";
+	private static final String SELECT_BY_ID = "SELECT * FROM ENCHERES WHERE id_encheres = ?";
+	private static final String SELECT_ALL = "SELECT * FROM ENCHERES";
+	private static final String UPDATE = "UPDATE ENCHERES SET no_utilisateur = ?, no_article = ?, date_enchere = ?,  montant_enchere = ? WHERE id_encheres = ?";
+	private static final String INSERT = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (?, ?, ?, ?)";
+	private static final String DELETE = "DELETE FROM ENCHERES WHERE id_encheres = ?";
+	private static final String SELECT_BY_ARTICLE_ID = "SELECT * FROM ENCHERES WHERE no_article = ?";
+	private static final String SELECT_BY_USER_ID = "SELECT * FROM ENCHERES WHERE no_utilisateur = ?";
+	private static final String HIGHEST_ENCHERE = "SELECT MAX(montant_enchere) FROM ENCHERES WHERE no_article = ?";
 
 	@Override
 	public Encheres selectById(int id) throws DALException {
@@ -181,19 +182,23 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	}
 
 	@Override
-	public Encheres highestEnchere(int no_article) throws DALException {
-
+	public int lastEnchere(int no_article) throws DALException {
+		Articles article = new Articles();
 		try (Connection connection = JdbcTools.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(HIGHEST_ENCHERE)) {
 			preparedStatement.setInt(1, no_article);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSetToEncheres(resultSet);
+					int montantMax = resultSet.getInt("montant_enchere");
+					return montantMax;
+				} else {
+					return article.getPrixInitial();
 				}
-				return null;
+
 			}
 		} catch (SQLException e) {
 			throw new DALException("Erreur lors de la récupération de l'enchère la plus haute", e);
 		}
+
 	}
 }

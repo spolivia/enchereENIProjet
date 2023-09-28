@@ -10,6 +10,6 @@ public interface EncheresDAO extends DAO<Encheres> {
 
 	public List<Encheres> selectByUserId(int userId) throws DALException;
 
-	public Encheres highestEnchere(int highestEnchere) throws DALException;
+	public int lastEnchere(int no_article) throws DALException;
 
 }

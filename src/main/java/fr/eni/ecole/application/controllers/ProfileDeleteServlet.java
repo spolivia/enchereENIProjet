@@ -15,29 +15,29 @@ import fr.eni.ecole.application.modele.dal.DAOFactory;
 @WebServlet("/ProfileDeleteServlet")
 public class ProfileDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public ProfileDeleteServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/ProfileDelete.jsp").forward(request, response);
+	public ProfileDeleteServlet() {
+		super();
 	}
-	
-	
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("/WEB-INF/ProfileDelete.jsp").forward(request, response);
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+			throws ServletException, IOException {
 
 		int userId = (int) request.getSession().getAttribute("no_utilisateur");
 
-        UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
-         	try {
-				utilisateursManager.deleteUtilisateur(userId);
-			} catch (BLLException e) {
-				e.printStackTrace();
-			}
-        	System.out.println("USER DELETED");
-            request.getSession().invalidate();
-            response.sendRedirect(request.getContextPath() + "/listeArticles");
-    }
+		UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
+		try {
+			utilisateursManager.deleteUtilisateur(userId);
+		} catch (BLLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("USER DELETED");
+		request.getSession().invalidate();
+		response.sendRedirect(request.getContextPath() + "/listeArticles");
+	}
 }
