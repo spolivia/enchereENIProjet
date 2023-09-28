@@ -7,6 +7,10 @@
 	margin-top: 1%;
 }
 
+tr {
+	text-align: center;
+}
+
 .logo {
 	font-family: "Dangrek", sans-serif;
 	color: rgb(125, 194, 165);
@@ -21,6 +25,9 @@ h1{
 
 h2{
 	font-size: 34px;
+}
+h3{
+	font-size: 44px;
 }
 
 
@@ -72,14 +79,7 @@ a {
 }
 
 .btnCancel{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  width: 190px;
-  height: 40px;
-  left: 430px;
-  top: 11px;
+  
 }
 
 .btnUpload{

@@ -18,7 +18,7 @@
     <title>User Profile</title>
 </head>
 <body>
-<h2 class="logo">RECYCLO</h2>
+<h3 class="logo">RECYCLO</h3>
     <h1>Votre Profile</h1>
     
 

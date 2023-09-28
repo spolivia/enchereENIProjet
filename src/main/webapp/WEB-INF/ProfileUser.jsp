@@ -14,7 +14,7 @@
     <title>User Profile</title>
 </head>
 <body>
-<h2 class="logo">RECYCLO</h2>
+<h3 class="logo">RECYCLO</h3>
     <h1>Profile de ${user.pseudo}</h1>
 
    <table>
@@ -52,7 +52,7 @@
     <br>
     
     <form action="listeArticles">
-        <input type="submit" value="Retour à l'accueil">
+        <input type="submit" value="Retour à l'accueil" class="btnCancel">
     </form>
 
 

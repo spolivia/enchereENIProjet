@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/maeva.css"> 
 </head>
 <body>
-<h2 class="logo">RECYCLO</h2>
+<h3 class="logo">RECYCLO</h3>
     <div class="container">
         <h1>Se connecter</h1>
         <form action="Connexion" method="post">

@@ -13,6 +13,7 @@
 
 </head>
 <body>
+<h3 class="logo">RECYCLO</h3>
 <div style="float : right;">
     <c:choose>
         <c:when test="${sessionScope.no_utilisateur > 0}">
@@ -43,7 +44,7 @@
                 <table>
                     <tr>
                         <td>
-							<input type="text" id="requeteRecherche" name="requeteRecherche" placeholder="Le nom ou la description de l'article contient">
+							<input type="text" id="requeteRecherche" name="requeteRecherche" placeholder="Que cherches vous ?">
                         </td>
                         <td>
                             <input type="submit" value="Rechercher">
@@ -53,7 +54,7 @@
                         <td>
                             Catégorie :
                         
-							<select id="filtreCategorie" name="filtreCategorie">
+							<select id="filtreCategorie" name="filtreCategorie" class="rollCategorie">
 							    <option value="0">Toutes</option>
 							    <c:forEach var="category" items="${categories}">
 							        <option value="${category.noCategorie}">${category.libelle}</option>

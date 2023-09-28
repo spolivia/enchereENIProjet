@@ -13,7 +13,7 @@
     <title>Update Profile</title>
 </head>
 <body>
-<h2 class="logo">RECYCLO</h2>
+<h3 class="logo">RECYCLO</h3>
     <h1>Modifier votre Profile</h1>
     
     <%
