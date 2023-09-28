@@ -14,10 +14,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/styles_olivia.css"> 
     <title>User Profile</title>
 </head>
 <body>
-    <h1>Votre Profile</h1>
+    <h1>Votre Profil</h1>
     
 
 <%
@@ -121,7 +122,7 @@
 
 						            <p>Fin Enchere : ${article.dateFinEncheres}</p>
 						            <p><b>Vendeur : <%= utilisateur.getPseudo() %></b></p>
-									<c:choose>
+									<c:choose> 
 									    <c:when test="${article.dateDebutEncheres.after(now)}">
 									        <p><a href="ArticleUpdateServlet?articleId=${article.noArticle}">Edit</a></p>
 									    </c:when>
