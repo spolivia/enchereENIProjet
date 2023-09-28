@@ -61,8 +61,6 @@ CREATE TABLE ARTICLES_VENDUS (
 ALTER TABLE ARTICLES_VENDUS ADD constraint articles_vendus_pk PRIMARY KEY (no_article)
 
 
-
-
 ALTER TABLE ARTICLES_VENDUS
     ADD CONSTRAINT encheres_utilisateur_fk FOREIGN KEY ( no_utilisateur ) REFERENCES UTILISATEURS ( no_utilisateur )
 ON DELETE NO ACTION 
