@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Date" %>
+
 <%@ page import="fr.eni.ecole.application.modele.bo.Articles" %>
 <%@ page import="fr.eni.ecole.application.modele.bll.ArticlesManager" %>
 <%@ page import="fr.eni.ecole.application.modele.bo.Utilisateurs" %>
 <%@ page import="fr.eni.ecole.application.modele.bll.UtilisateursManager" %>
 <%@ page import="fr.eni.ecole.application.modele.dal.DAOFactory" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="now" value="<%= new java.util.Date() %>" />
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+
+<c:set var="now" value="<%= new java.util.Date() %>" />
 
 <!DOCTYPE html>
 <html>
@@ -20,19 +22,19 @@
     <h1>Votre Profile</h1>
     
 
-<%
-    int userId = (int) session.getAttribute("no_utilisateur");
-    Utilisateurs utilisateur = null; // Declare the utilisateur variable
-
-    // Create an ArticlesManager and fetch the user's articles
-    ArticlesManager articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
-    List<Articles> listeArticles = articlesManager.selectByUserID(userId);
-    request.setAttribute("listeArticles", listeArticles);
-    
-    // Fetch the user's information
-    UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
-    utilisateur = utilisateursManager.getUtilisateursById(userId);
-%>
+	<%
+	    int userId = (int) session.getAttribute("no_utilisateur");
+	    Utilisateurs utilisateur = null; // Declare the utilisateur variable
+	
+	    // Create an ArticlesManager and fetch the user's articles
+	    ArticlesManager articlesManager = new ArticlesManager(DAOFactory.getArticlesDAO());
+	    List<Articles> listeArticles = articlesManager.selectByUserID(userId);
+	    request.setAttribute("listeArticles", listeArticles);
+	    
+	    // Fetch the user's information
+	    UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());
+	    utilisateur = utilisateursManager.getUtilisateursById(userId);
+	%>
 
 
     <table>
@@ -82,7 +84,6 @@
 	<form action="ProfileUpdate.jsp" method="post">
 	    <input type="submit" value="Changer vos détails">
 	</form>
-	
 	
 	
 	<c:choose>

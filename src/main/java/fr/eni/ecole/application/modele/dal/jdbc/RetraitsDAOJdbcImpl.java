@@ -16,8 +16,8 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
 	private static final String SELECT_BY_ID = "SELECT * FROM Retraits WHERE no_article = ?";
 	private static final String SELECT_ALL = "SELECT * FROM Retraits";
-	private static final String UPDATE = "UPDATE Retraits SET rue = ?, code_postale = ?, ville = ? WHERE getNoArticle = ?";
-	private static final String INSERT = "INSERT INTO Retraits (no_article, rue, code_postale, ville) VALUES (?, ?, ?, ?)";
+	private static final String UPDATE = "UPDATE Retraits SET rue = ?, code_postal = ?, ville = ? WHERE getNoArticle = ?";
+	private static final String INSERT = "INSERT INTO Retraits (no_article, rue, code_postal, ville) VALUES (?, ?, ?, ?)";
 	private static final String DELETE = "DELETE FROM Retraits WHERE no_article = ?";
 
 	@Override
@@ -123,9 +123,9 @@ public class RetraitsDAOJdbcImpl implements RetraitsDAO {
 
 	private Retraits resultSetToRetraits(ResultSet resultSet) throws SQLException {
 
-		int noArticle = resultSet.getInt("noArticle");
+		int noArticle = resultSet.getInt("no_article");
 		String rue = resultSet.getString("rue");
-		int codePostale = resultSet.getInt("codePostale");
+		int codePostale = resultSet.getInt("code_postal");
 		String ville = resultSet.getString("ville");
 
 		Retraits retraits = new Retraits(noArticle, rue, codePostale, ville);
