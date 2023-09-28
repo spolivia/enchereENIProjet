@@ -10,10 +10,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/maeva.css">
     <title>User Profile</title>
 </head>
 <body>
-    <h1>Profile of ${user.pseudo}</h1>
+<h2 class="logo">RECYCLO</h2>
+    <h1>Profile de ${user.pseudo}</h1>
 
    <table>
 

@@ -25,6 +25,7 @@
     </script>
 </head>
 <body>
+<h2 class="logo">RECYCLO</h2>
     <%
         int userId = (int) session.getAttribute("no_utilisateur");
         UtilisateursManager utilisateursManager = new UtilisateursManager(DAOFactory.getUtilisateursDAO());

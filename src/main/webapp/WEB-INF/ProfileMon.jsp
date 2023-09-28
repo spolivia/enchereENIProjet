@@ -14,9 +14,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/maeva.css">
     <title>User Profile</title>
 </head>
 <body>
+<h2 class="logo">RECYCLO</h2>
     <h1>Votre Profile</h1>
     
 

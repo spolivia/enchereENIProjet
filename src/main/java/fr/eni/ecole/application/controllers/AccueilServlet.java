@@ -58,7 +58,7 @@ public class AccueilServlet extends HttpServlet {
             request.setAttribute("listeArticles", listeArticles);
             request.setAttribute("categories", categories);
 
-            request.getRequestDispatcher("WEB-INF/Accueil.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/Accueil.jsp").forward(request, response);
 
         } catch (BLLException e) {
             e.printStackTrace();

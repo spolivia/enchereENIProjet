@@ -9,10 +9,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/maeva.css">
     <title>Update Profile</title>
 </head>
 <body>
-    <h1>Update Your Profile</h1>
+<h2 class="logo">RECYCLO</h2>
+    <h1>Modifier votre Profile</h1>
     
     <%
         int userId = (int) session.getAttribute("no_utilisateur");
@@ -42,7 +44,7 @@
         <label for="ville">Ville:</label>
         <input type="text" id="ville" name="ville" value="<%= utilisateur.getVille() %>" required><br>
         
-        <input type="submit" value="UpdateProfile">
+        <input type="submit" value="UpdateProfile" class="btnAccept">
     </form>
 	<script>
 	    function displaySuccessMessage() {
