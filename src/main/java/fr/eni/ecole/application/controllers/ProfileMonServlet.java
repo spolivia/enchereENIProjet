@@ -10,8 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/ProfileMonServlet")
 public class ProfileMonServlet extends HttpServlet {
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		request.getRequestDispatcher("WEB-INF/ProfileMon.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		request.getRequestDispatcher("ProfileUpdateServlet").forward(request, response);
 	}
 }

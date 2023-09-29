@@ -95,7 +95,7 @@
     <form action="listeArticles">
         <input type="submit" value="Retour à l'accueil">
     </form>
-	<form action="ProfileUpdateServlet" method="post">
+	<form action="ProfileUpdateServlet">
 	    <input type="submit" value="Changer vos détails">
 	</form>
 	
