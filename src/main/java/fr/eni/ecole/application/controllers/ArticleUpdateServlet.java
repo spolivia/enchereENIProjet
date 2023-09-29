@@ -130,7 +130,7 @@ public class ArticleUpdateServlet extends HttpServlet {
 		}
 
 		// Redirect to the list of articles
-		response.sendRedirect(request.getContextPath() + "/ProfileMon.jsp");
+		response.sendRedirect(request.getContextPath() + "/ProfileMonServlet");
 	}
 
 }

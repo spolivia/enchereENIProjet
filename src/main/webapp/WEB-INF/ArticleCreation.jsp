@@ -39,7 +39,7 @@
 
     <form action="ArticleCreationServlet" method="post">
         <label for="noUtilisateurs">User Identity Number: </label>
-        <input type="number" id="noUtilisateurs" name="noUtilisateurs" value="<%= utilisateur.getNoUtilisateur() %>" readonly required><br>
+        <input type="hidden" id="noUtilisateurs" name="noUtilisateurs" value="<%= utilisateur.getNoUtilisateur() %>" required><br>
 
         <label for="nomArticle">Nom d'article : </label>
         <input type="text" id="nomArticle" name="nomArticle" required><br>

@@ -31,7 +31,7 @@
             <input type="text" id="dateFinEncheresStr" name="dateFinEncheresStr" value="${requestScope.article.dateFinEncheres}" required><br>
 
             <label for="prixInitial">Prix initial :</label>
-            <input type="number" id="prixInitial" name="prixInitial" value="${requestScope.article.prixInitial}" required><br>
+            <input type="number" id="prixInitial" name="prixInitial" value="${requestScope.article.prixVente}" required><br>
 
             <label for="categorie">Catégorie:</label>
             <select id="categorie" name="categorie">

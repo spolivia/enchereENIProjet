@@ -127,7 +127,7 @@
 						            <h3>${article.nomArticle}</h3>
 										<c:choose>
 										    <c:when test="${article.enchere == null || article.enchere.montant_enchere == 0}">
-										        Prix : ${article.prixInitial}
+										        Prix : ${article.prixVente}
 										    </c:when>
 										    <c:otherwise>
 										        <p>Prix : ${article.enchere.montant_enchere}</p>
