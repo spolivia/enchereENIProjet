@@ -14,13 +14,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/styles_olivia.css"> 
+    <link rel="stylesheet" type="text/css" href="css/maeva.css"> 
     <title>User Profile</title>
 </head>
+
 <body>
+<h3 class="logo">RECYCLO</h3>
     <h1>Votre Profil</h1>
     
-
 <%
     int userId = (int) session.getAttribute("no_utilisateur");
     Utilisateurs utilisateur = null; // Declare the utilisateur variable
@@ -36,7 +37,7 @@
 %>
 
 
-    <table>
+    <table border="0" cellspacing="20" align="center">
         <tr>
             <th>Field</th>
             <th>Value</th>

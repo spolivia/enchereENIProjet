@@ -1,0 +1,113 @@
+@charset "UTF-8";
+
+
+:not(h3){
+	font-family: 'DM Sans', sans-serif;
+	text-align: center;
+	margin-top: 1%;
+}
+
+tr {
+	text-align: center;
+}
+
+.logo {
+	font-family: "Dangrek", sans-serif;
+	color: rgb(125, 194, 165);
+	text-align: left;
+	vertical-align: 0%;
+	margin-top: 0%;
+	margin-bottom: 0%;
+}
+
+h1{
+	font-size: 24px;
+}
+
+h2{
+	font-size: 18px;
+}
+
+h3{
+	font-size: 44px;
+}
+
+h4{
+	font-size: 18px;
+}
+
+.user{
+	columns: 1;
+	text-align: center;
+	margin-left: 50px;
+}
+
+
+.profile {
+	columns: 2;
+    width: 80%; 
+    margin: 0 auto; 
+    }
+
+label {
+	min-width: 20%;
+	display: inline-block;
+	margin-bottom: 4px;
+	text-align: left;
+}
+
+input {
+	border-radius: 10px;
+}
+
+button {
+	border-radius: 10px;
+}
+
+input.creation {	
+	width: 40%;
+}
+
+a {
+	align-items: center;
+    justify-content: center;
+	color: rgb(125, 194, 165);
+	text-align: right;
+	vertical-align: 0%;
+	margin-top: 0%;
+}
+
+.btnAccept{
+  align-items: center;
+  justify-content: center;
+  margin: 2%;
+  color: rgba(106, 141, 124, 1);
+  
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0px;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.btnCancel{
+  
+}
+
+.btnUpload{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 211px;
+  height: 25px;
+  left: 184px;
+  top: 205px;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.rollCategorie{
+  width: 300px;
+  height: 20px;
+}

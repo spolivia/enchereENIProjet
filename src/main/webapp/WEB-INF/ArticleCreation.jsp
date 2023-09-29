@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Article</title>
-    <link rel="stylesheet" type="text/css" href="css/styles_olivia.css"> 
+    <link rel="stylesheet" type="text/css" href="css/maeva.css"> 
     <script>
         function toggleAddressFields() {
             var checkbox = document.getElementById("useOwnAddressCheckbox");
@@ -26,6 +26,10 @@
     </script>
 </head>
 <body>
+
+
+
+<h3 class="logo">RECYCLO</h3>
 
     <%
         int userId = (int) session.getAttribute("no_utilisateur");

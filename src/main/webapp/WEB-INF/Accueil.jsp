@@ -8,34 +8,32 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/styles_olivia.css">
+    <link rel="stylesheet" type="text/css" href="css/maeva.css">
     <title>Liste des enchères</title>
+
 </head>
 <body>
 
-<div class="global">
-<div class="liens">
+<div style="float : right;">
     <c:choose>
         <c:when test="${sessionScope.no_utilisateur > 0}">
             <a href="#">Enchères</a>
             <a href="ArticleCreationServlet">Vendre un article</a>
             <a href="ProfileMonServlet">Mon Profil</a>
             ${sessionScope.pseudo}
-            <a href="Deconnexion">Déconnexion</a>      
+            <a href="Deconnexion">Déconnexion</a>
+            
         </c:when>
         <c:otherwise>
             <a href="Connexion">S'inscrire - Se connecter</a>
         </c:otherwise>
     </c:choose>
 </div>
+<h3 class="logo">RECYCLO</h3>
 
-<div class="baniere">
-	<img src="img/banniere.png" alt="banniere">
-</div>
+<h1 align="center">Liste des enchères</h1>
 
-<h1>Liste des enchères</h1>
-
-<table>
+<table align="center">
     <tr>
         <td>
             <h2>Filtres : </h2>
@@ -47,15 +45,16 @@
                 <table>
                     <tr>
                         <td>
-							<input type="text" id="requeteRecherche" name="requeteRecherche" placeholder="Le nom ou la description de l'article contient">
+							<input type="text" id="requeteRecherche" name="requeteRecherche" placeholder="Que cherches vous ?">
                         </td>
                         <td>
-                            <button type="submit" class="btnAccept">Rechercher</button>
+                            <input type="submit" value="Rechercher" class="btnUpload" >
                         </td>
                     </tr>
                     <tr>
                         <td>
                             Catégorie :
+                        
 							<select id="filtreCategorie" name="filtreCategorie" class="rollCategorie">
 							    <option value="0">Toutes</option>
 							    <c:forEach var="category" items="${categories}">
@@ -71,40 +70,42 @@
 </table>
 
 
+<br>
+
     <c:choose>
          <c:when test="${sessionScope.no_utilisateur > 0}">
-            <table class="formFiltre">
+         	
+            <table align="center">
 			<tr>
 				<td>
-				    <form id="radioAchats" class="radio">
-				        <label class="labelRadio">
-				            <input type="radio" name="options" id="achatsRadio" value="achats" class="checkBox" checked> Achats
+				    <form id="radioAchats">
+				        <label>
+				            <input type="radio" name="options" id="achatsRadio" value="achats" checked> Achats
 				        </label><br>
-				        <label class="labelRadio">
-				            <input type="checkbox" id="checkbox1" value="enchères ouvertes" class="checkBox" checked> enchères ouvertes
+				        <label>
+				            <input type="checkbox" id="checkbox1" value="enchères ouvertes" checked> enchères ouvertes
 				        </label><br>
-				        <label class="labelRadio">
-				            <input type="checkbox" id="checkbox2" value="mes enchères en cours" class="checkBox"> mes enchères en cours
+				        <label>
+				            <input type="checkbox" id="checkbox2" value="mes enchères en cours"> mes enchères en cours
 				        </label><br>
-				        <label class="labelRadio">
-				            <input type="checkbox" id="checkbox3" value="mes enchères remportées" class="checkBox"> mes enchères remportées
+				        <label>
+				            <input type="checkbox" id="checkbox3" value="mes enchères remportées"> mes enchères remportées
 				        </label><br>
 				    </form>
 				</td>
-				
 				<td>
-				    <form id="radioVentes" class="radio">
-				        <label class="labelRadio">
-				            <input type="radio" name="options" id="ventesRadio" value="ventes" class="checkBox"> Ventes 
+				    <form id="radioVentes">
+				        <label>
+				            <input type="radio" name="options" id="ventesRadio" value="ventes"> Ventes
 				        </label><br>
-				        <label class="labelRadio">
-				            <input type="checkbox" id="checkbox4" value="mes ventes en cours" class="checkBox" disabled> mes ventes en cours
+				        <label>
+				            <input type="checkbox" id="checkbox4" value="mes ventes en cours" disabled> mes ventes en cours
 				        </label><br>
-				        <label class="labelRadio">
-				            <input type="checkbox" id="checkbox5" value="ventes non débutées" disabled class="checkBox"> ventes non débutées
+				        <label>
+				            <input type="checkbox" id="checkbox5" value="ventes non débutées" disabled> ventes non débutées
 				        </label><br>
-				        <label class="labelRadio">
-				            <input type="checkbox" id="checkbox6" value="ventes terminées" disabled class="checkBox"> ventes terminées
+				        <label>
+				            <input type="checkbox" id="checkbox6" value="ventes terminées" disabled> ventes terminées
 				        </label><br>
 				    </form>
 				</td>
@@ -157,13 +158,15 @@
 		    });
 		</script>
     
+<br>
+
 <c:choose>
     <c:when test="${empty listeArticles}">
         <p align="center">Aucun article trouvé.</p>
     </c:when>
     <c:otherwise>
             <!-- Section pour l'affichage des articles -->
-        <table>
+        <table border="0" cellspacing="20" align="center">
             <tr>
                 <td colspan="2" align="center">
                     <h2>Mes enchères</h2>
@@ -187,10 +190,10 @@
                         <tr>
                             <td>Photo</td>
                             <td>
-                                <h3>${article.nomArticle}</h3>
+                                <h4>${article.nomArticle}</h4>
                                 <c:choose>
 								    <c:when test="${article.enchere.montant_enchere == null || article.enchere.montant_enchere == 0}">
-								        Prix : ${article.prixVente}
+								        Prix : ${article.prixInitial}
 								    </c:when>
 								    <c:otherwise>
 								        <p>Prix : ${article.enchere.montant_enchere}</p>
@@ -223,7 +226,7 @@
         </table>
     </c:otherwise>
 </c:choose>
-</div>
+
     
 </body>
 </html>

@@ -10,13 +10,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/styles_olivia.css"> 
+    <link rel="stylesheet" type="text/css" href="css/maeva.css">
     <title>User Profile</title>
 </head>
 <body>
-    <h1>Profile of ${user.pseudo}</h1>
+<h3 class="logo">RECYCLO</h3>
+    <h1>Profile de ${user.pseudo}</h1>
 
-   <table>
+   <table class="user">
 
         <tr>
             <td>Nom</td>
@@ -51,7 +52,7 @@
     <br>
     
     <form action="listeArticles">
-        <input type="submit" value="Retour à l'accueil">
+        <input type="submit" value="Retour à l'accueil" class="btnCancel">
     </form>
 
 

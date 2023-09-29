@@ -9,43 +9,45 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/styles_olivia.css"> 
+    <link rel="stylesheet" type="text/css" href="css/maeva.css">
     <title>Create Account</title>
 </head>
 <body>
-    <h1>Create Your Account</h1>
+	<h2 class="logo">RECYCLO</h2>
+    <h1>Creer votre compte</h1>
 
-    <form action="ProfileCreationServlet" method="post">
-        <label for="pseudo">Pseudo:</label>
-        <input type="text" id="pseudo" name="pseudo" required><br>
+	<div class="profile">
+    <form action="ProfileCreationServlet" method="post" >
+        <label class="creatio" for="pseudo">Pseudo:</label>
+        <input type="text" class="creation" id="pseudo" name="pseudo" required><br>
 
-        <label for="nom">Nom:</label>
-        <input type="text" id="nom" name="nom" required><br>
+        <label class="creatio" for="nom">Nom:</label>
+        <input type="text" class="creation" id="nom" name="nom" required><br>
 
-        <label for="prenom">Prenom:</label>
-        <input type="text" id="prenom" name="prenom" required><br>
+        <label class="creatio" for="prenom">Prenom:</label>
+        <input type="text" class="creation" id="prenom" name="prenom" required><br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+        <label class="creatio" for="email">Email:</label>
+        <input type="email" class="creation" id="email" name="email" required><br>
 
-        <label for="telephone">Telephone:</label>
-        <input type="text" id="telephone" name="telephone" required><br>
+        <label class="creatio" for="telephone">Telephone:</label>
+        <input type="text" class="creation" id="telephone" name="telephone" required><br>
 
-        <label for="rue">Rue:</label>
-        <input type="text" id="rue" name="rue" required><br>
+        <label class="creatio" for="rue">Rue:</label>
+        <input type="text" class="creation" id="rue" name="rue" required><br>
 
-        <label for="codePostal">Code Postal:</label>
-        <input type="text" id="codePostal" name="codePostal" required><br>
+        <label class="creatio" for="codePostal">Code Postal:</label>
+        <input type="text" class="creation" id="codePostal" name="codePostal" required><br>
 
-        <label for="ville">Ville:</label>
-        <input type="text" id="ville" name="ville" required><br>
+        <label class="creatio" for="ville">Ville:</label>
+        <input type="text" class="creation" id="ville" name="ville" required><br>
 
-        <label for="motDePasse">Mot de passe:</label>
-        <input type="password" id="motDePasse" name="motDePasse" required><br>
-
-        <input type="submit" value="Create Account">
-    </form>
-
+        <label class="creatio" for="motDePasse">Mot de passe:</label>
+        <input type="password" class="creation" id="motDePasse" name="motDePasse" required><br>
+	 </div>
+	 </form>
+        <button type="submit" class="btnAccept">Creer compte</button>
+   
     <br>
 
     <a href="Connexion">Deja un compte? Connecter ici!</a>

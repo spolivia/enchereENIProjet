@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Connexion</title>
-    <link rel="stylesheet" type="text/css" href="css/styles_olivia.css"> 
+    <link rel="stylesheet" type="text/css" href="css/maeva.css"> 
+
 </head>
 <body>
+<h3 class="logo">RECYCLO</h3>
     <div class="container">
-        <h2>Sign In</h2>
+        <h1>Se connecter</h1>
         <form action="Connexion" method="post">
             <label for="pseudo">Pseudo : </label>
             <input type="text" id="pseudo" name="pseudo" required><br>
