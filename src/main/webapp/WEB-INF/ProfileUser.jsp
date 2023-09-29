@@ -17,7 +17,7 @@
 <h3 class="logo">RECYCLO</h3>
     <h1>Profile de ${user.pseudo}</h1>
 
-   <table>
+   <table class="user">
 
         <tr>
             <td>Nom</td>

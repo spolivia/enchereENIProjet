@@ -13,7 +13,7 @@
 
 </head>
 <body>
-<h3 class="logo">RECYCLO</h3>
+
 <div style="float : right;">
     <c:choose>
         <c:when test="${sessionScope.no_utilisateur > 0}">
@@ -29,6 +29,7 @@
         </c:otherwise>
     </c:choose>
 </div>
+<h3 class="logo">RECYCLO</h3>
 
 <h1 align="center">Liste des enchères</h1>
 
@@ -189,7 +190,7 @@
                         <tr>
                             <td>Photo</td>
                             <td>
-                                <h3>${article.nomArticle}</h3>
+                                <h4>${article.nomArticle}</h4>
                                 <c:choose>
 								    <c:when test="${article.enchere.montant_enchere == null || article.enchere.montant_enchere == 0}">
 								        Prix : ${article.prixInitial}
